@@ -7,7 +7,6 @@ interface IUser {
   password: string;
 }
 
-// Создание API
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     addNewUser: builder.mutation<void, IUser>({

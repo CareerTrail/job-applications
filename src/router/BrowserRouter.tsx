@@ -1,14 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorPage } from "./ErrorPage.tsx";
-import Dashboard from "../pages/Applications";
-import DashboardWrapper from "../components/DashboardWrapper";
-import Main from "../pages/Main";
-import Application from "../pages/Application";
-import Add from "../pages/Applications/components";
+import Dashboard from "pages/Applications";
+import DashboardWrapper from "components/DashboardWrapper";
+import Main from "pages/Main";
+import Login from "pages/Login";
+import Registration from "pages/Registration";
+import Application from "pages/Application";
+import Add from "pages/Applications/components";
+import { Pages } from "core/variables/constants.ts";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: Pages.main,
     element: (
       <DashboardWrapper>
         <Main />
@@ -17,7 +20,25 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/applications",
+    path: Pages.reg,
+    element: (
+      <DashboardWrapper>
+        <Registration />
+      </DashboardWrapper>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: Pages.auth,
+    element: (
+      <DashboardWrapper>
+        <Login />
+      </DashboardWrapper>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: Pages.applications,
     element: (
       <DashboardWrapper>
         <Dashboard />
@@ -25,11 +46,11 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/applications/:applicationId",
+        path: `${Pages.applications}/:applicationId`,
         element: <Application />,
       },
       {
-        path: "/applications/add",
+        path: `${Pages.applications}/:add`,
         element: <Add />,
       },
     ]

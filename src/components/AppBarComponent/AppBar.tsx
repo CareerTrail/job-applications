@@ -9,7 +9,7 @@ import { Drawer } from "@mui/material";
 import AppMenu from "../Menu";
 import {ReactElement, useState} from "react";
 import { useLocation } from "react-router-dom";
-
+import { Pages } from "core/variables/constants";
 
 /**
  * AppBarComponent for rendering the application's top app bar.
@@ -68,7 +68,8 @@ export const AppBarComponent = (): ReactElement => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {getDashboardItemName()}
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" href={Pages.reg}>Sign up</Button>
+          <Button color="inherit" href={Pages.auth}>Sign in</Button>
         </Toolbar>
         <Drawer anchor={"left"} open={isMenuOpen} onClose={appMenuCloseHandler}>
           <AppMenu />

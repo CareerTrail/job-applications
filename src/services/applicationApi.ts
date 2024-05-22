@@ -110,7 +110,7 @@ export const applicationApi = api.injectEndpoints({
           body: {
             ...body,
             //TODO: change to real after implementation user service on BE
-            userId: "3e09650d-03cf-4fae-bbb4-260619d2a8d7",
+            userId: "4c4e84e9-178a-4157-8c19-07fae3141dd9",
           },
         };
       },

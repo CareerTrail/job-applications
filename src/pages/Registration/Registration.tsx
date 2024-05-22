@@ -44,6 +44,7 @@ export const Registration = () => {
           email: values.email,
           password: values.password,
         }).unwrap();
+        alert("Congratilations!!");
         formik.resetForm();
       } catch (err) {
         console.error("Failed to register user:", err);
@@ -141,7 +142,7 @@ export const Registration = () => {
           {isSuccess && <div>User registered successfully!</div>}
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link href="/auth" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

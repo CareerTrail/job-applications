@@ -1,5 +1,11 @@
 import Typography from "@mui/material/Typography";
+import AppBarComponent from "components/AppBarComponent";
 
 export const Main = () => {
-  return <Typography color={"#000"}>Main</Typography>;
+  return (
+    <>
+      <AppBarComponent />
+      <Typography color={"#000"}>Main</Typography>;
+    </>
+  );
 };

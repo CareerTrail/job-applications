@@ -7,6 +7,11 @@ interface IUser {
   password: string;
 }
 
+interface ILoginUser {
+  email: string;
+  password: string;
+}
+
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     addNewUser: builder.mutation<void, IUser>({
@@ -17,7 +22,14 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Users", id: "LIST" } as const],
     }),
+    loginUser: builder.mutation<{ access_token: string }, ILoginUser>({
+      query: (loginUser) => ({
+        url: "auth/login",
+        method: "POST",
+        body: loginUser,
+      }),
+    }),
   }),
 });
 
-export const { useAddNewUserMutation } = userApi;
+export const { useAddNewUserMutation, useLoginUserMutation } = userApi;

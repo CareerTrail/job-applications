@@ -5,6 +5,13 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers) => {
     headers.set("access-control-allow-origin", "*");
     headers.set("Content-Type", "application/json");
+
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      headers.set("Authorization", `Bearer ${accessToken}`);
+    }
+
     return headers;
   },
 });
@@ -34,7 +41,7 @@ export const api = createApi({
    * Tag types must be defined in the original API definition
    * for any tags that would be provided by injected endpoints
    */
-  tagTypes: ["Applications" , 'Users'],
+  tagTypes: ["Applications", "Users"],
   /**
    * This api has endpoints injected in adjacent files,
    * which is why no endpoints are shown below.

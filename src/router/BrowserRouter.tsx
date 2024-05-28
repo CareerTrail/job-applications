@@ -7,7 +7,9 @@ import Login from "pages/Login";
 import Registration from "pages/Registration";
 import Application from "pages/Application";
 import Add from "pages/Applications/components";
+import RecoveryPass from "pages/RecoveryPass";
 import { Pages } from "core/variables/constants.ts";
+import RequireAuth from "hooks/RequireAuth.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -38,11 +40,22 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: Pages.applications,
+    path: Pages.recoveryPass,
     element: (
       <DashboardWrapper>
-        <Dashboard />
+        <RecoveryPass />
       </DashboardWrapper>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: Pages.applications,
+    element: (
+      <RequireAuth>
+        <DashboardWrapper>
+          <Dashboard />
+        </DashboardWrapper>
+      </RequireAuth>
     ),
     children: [
       {
@@ -50,10 +63,9 @@ export const router = createBrowserRouter([
         element: <Application />,
       },
       {
-        path: `${Pages.applications}/:add`,
+        path: `${Pages.applications}/add`,
         element: <Add />,
       },
-    ]
+    ],
   },
-
 ]);

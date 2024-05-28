@@ -1,18 +1,36 @@
+import React, { useState } from "react";
 import {
+  Box,
   Button,
   Container,
   Grid,
-  Link,
   TextField,
-  Typography,
+  Alert,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 import { useAddNewUserMutation } from "services/userApi";
+import { Link } from "react-router-dom";
+import { Pages } from "core/variables/constants";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-export const Registration = () => {
-  const [addNewUser, { isLoading, isError, isSuccess }] =
-    useAddNewUserMutation();
+export const Registration: React.FC = () => {
+  const [addNewUser, { isLoading }] = useAddNewUserMutation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const AddUserSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -36,7 +54,7 @@ export const Registration = () => {
       password: "",
     },
     validationSchema: AddUserSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
       try {
         await addNewUser({
           firstName: values.firstName,
@@ -44,111 +62,135 @@ export const Registration = () => {
           email: values.email,
           password: values.password,
         }).unwrap();
-        alert("Congratilations!!");
+        setSuccessMessage("You have successfully registered to our site.");
         formik.resetForm();
+        navigate(Pages.auth);
       } catch (err) {
+        setErrorMessage("Failed to register user. Please try again.");
         console.error("Failed to register user:", err);
+      } finally {
+        setSubmitting(false);
       }
     },
   });
 
   return (
     <Container component="main" maxWidth="xs">
-      <div>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form onSubmit={formik.handleSubmit} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.firstName && Boolean(formik.errors.firstName)
-                }
-                helperText={formik.touched.firstName && formik.errors.firstName}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.lastName && Boolean(formik.errors.lastName)
-                }
-                helperText={formik.touched.lastName && formik.errors.lastName}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </Grid>
-          </Grid>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mx: "auto",
+          width: "fit-content",
+        }}
+      >
+        <Box
+          component="form"
+          onSubmit={formik.handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            autoComplete="firstName"
+            autoFocus
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="lastName"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            autoComplete="current-password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
-            disabled={isLoading}
+            sx={{ mt: 3, mb: 2 }}
+            disabled={formik.isSubmitting || isLoading}
           >
-            {isLoading ? "Signing up..." : "Sign Up"}
+            {formik.isSubmitting || isLoading ? "Registering..." : "Register"}
           </Button>
-          {isError && <div>Failed to register user.</div>}
-          {isSuccess && <div>User registered successfully!</div>}
-          <Grid container justifyContent="flex-end">
+          {errorMessage && (
+            <Alert severity="error" onClose={() => setErrorMessage(null)}>
+              {errorMessage}
+            </Alert>
+          )}
+          {successMessage && (
+            <Alert severity="success" onClose={() => setSuccessMessage(null)}>
+              {successMessage}
+            </Alert>
+          )}
+          <Grid container>
             <Grid item>
-              <Link href="/auth" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <Link to={Pages.auth}>{"Already have an account? Sign In"}</Link>
             </Grid>
           </Grid>
-        </form>
-      </div>
+        </Box>
+      </Box>
     </Container>
   );
 };

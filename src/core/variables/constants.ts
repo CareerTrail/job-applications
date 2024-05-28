@@ -1,6 +1,7 @@
 export enum Pages {
   main = "/",
   auth = "/auth",
-  reg = "/reg",
+  reg = "/sign-up",
   applications = "/applications",
+  recoveryPass = "/recoveryPass",
 }

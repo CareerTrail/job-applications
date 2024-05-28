@@ -1,22 +1,33 @@
+import React from "react";
 import {
   Box,
   Button,
   Container,
   Grid,
-  Link,
   TextField,
-  Typography,
   Alert,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "services/userApi";
+import { Link } from "react-router-dom";
 import { Pages } from "core/variables/constants";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const LoginUserSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is Required."),
@@ -53,11 +64,10 @@ export const Login = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          mx: "auto",
+          width: "fit-content",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <Box
           component="form"
           onSubmit={formik.handleSubmit}
@@ -85,7 +95,7 @@ export const Login = () => {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
             value={formik.values.password}
@@ -93,7 +103,22 @@ export const Login = () => {
             onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
+
           <Button
             type="submit"
             fullWidth
@@ -108,14 +133,10 @@ export const Login = () => {
           )}
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <Link to={Pages.recoveryPass}>Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link href={Pages.reg} variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link to={Pages.reg}>{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
         </Box>

@@ -11,17 +11,18 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useLoginUserMutation } from "services/userApi";
-import { Link } from "react-router-dom";
 import { Pages } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useAuth } from "hooks/authHooks";
 
 export const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -46,7 +47,7 @@ export const Login = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const { access_token } = await loginUser(values).unwrap();
-        localStorage.setItem("accessToken", access_token);
+        login(access_token);
         navigate(Pages.applications);
       } catch (err) {
         console.error("Failed to login user:", err);
@@ -129,8 +130,11 @@ export const Login = () => {
             {formik.isSubmitting || isLoading ? "Signing in..." : "Sign In"}
           </Button>
           {isError && (
-            <Alert severity="error">Failed to login. Please try again.</Alert>
+            <Alert severity="error" sx={{ mb: 2 }}>
+              Failed to login. Please try again.
+            </Alert>
           )}
+
           <Grid container>
             <Grid item xs>
               <Link to={Pages.recoveryPass}>Forgot password?</Link>

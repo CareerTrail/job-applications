@@ -6,7 +6,6 @@ import {
   ReactNode,
 } from "react";
 
-// types.d.ts
 export interface User {
   accessToken: string;
 }
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (accessToken: string) => {
-    localStorage.setItem("token", accessToken);
+    localStorage.setItem("accessToken", accessToken);
     setUser({ accessToken });
   };
 

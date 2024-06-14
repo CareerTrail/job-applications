@@ -16,25 +16,29 @@ export interface AuthContextType {
   logout: () => void;
 }
 
+enum LocalStorageKeys {
+  AccessToken = "accessToken",
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem(LocalStorageKeys.AccessToken);
     if (accessToken) {
       setUser({ accessToken });
     }
   }, []);
 
   const login = (accessToken: string) => {
-    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem(LocalStorageKeys.AccessToken, accessToken);
     setUser({ accessToken });
   };
 
   const logout = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem(LocalStorageKeys.AccessToken);
     setUser(null);
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   Alert,
   InputAdornment,
   IconButton,
+  Snackbar,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,12 +17,14 @@ import { useLoginUserMutation } from "services/userApi";
 import { Pages } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "hooks/authHooks";
+import { IServerError } from "core/interfaces/dataModels";
 
 export const Login = () => {
-  const [loginUser, { isLoading, isError }] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
 
   const handleMouseDownPassword = (
@@ -38,6 +41,10 @@ export const Login = () => {
       .matches(/(?=.*[0-9])/, "Password must contain a number."),
   });
 
+  const handleSnackbarClose = () => {
+    setErrorMessage(null);
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -50,7 +57,11 @@ export const Login = () => {
         login(access_token);
         navigate(Pages.applications);
       } catch (err) {
-        console.error("Failed to login user:", err);
+        const serverError = err as IServerError;
+        const errorResponse =
+          serverError.data?.message ||
+          "Failed to register user. Please try again.";
+        setErrorMessage(errorResponse);
       } finally {
         setSubmitting(false);
       }
@@ -129,11 +140,16 @@ export const Login = () => {
           >
             {formik.isSubmitting || isLoading ? "Signing in..." : "Sign In"}
           </Button>
-          {isError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              Failed to login. Please try again.
+          <Snackbar
+            open={Boolean(errorMessage)}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Alert severity="error" onClose={handleSnackbarClose}>
+              {errorMessage}
             </Alert>
-          )}
+          </Snackbar>
 
           <Grid container>
             <Grid item xs>

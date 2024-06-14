@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { Pages } from "core/variables/constants";
 import { useAuth } from "./authHooks";
-import { IRequireAuthProps } from "core/interfaces/propsInterfaces";
+
+interface IRequireAuthProps {
+  children: ReactNode;
+}
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
   const location = useLocation();

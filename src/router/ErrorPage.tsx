@@ -9,7 +9,6 @@ import KeyboardReturnSharpIcon from "@mui/icons-material/KeyboardReturnSharp";
 export const ErrorPage = () => {
   const navigate = useNavigate();
   const error = useRouteError() as { statusText: string; message: string };
-  console.log(error);
 
   return (
     <Container component="main" maxWidth="xs">

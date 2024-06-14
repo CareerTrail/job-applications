@@ -21,7 +21,11 @@ import { useRegisterUserMutation } from "services/userApi";
 import { Pages } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IServerError } from "core/interfaces/dataModels";
-import { IRegistrationProps } from "core/interfaces/propsInterfaces";
+
+interface IRegistrationProps {
+  onSuccess?: () => void; //
+  onError?: (error: unknown) => void;
+}
 
 export const Registration: React.FC<IRegistrationProps> = ({
   onSuccess,
@@ -29,7 +33,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
 }) => {
   const [addNewUser, { isLoading }] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -71,7 +75,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
           email: values.email,
           password: values.password,
         }).unwrap();
-        setOpenDialog(true);
+        setIsDialogOpen(true);
         onSuccess?.();
         formik.resetForm();
       } catch (err) {
@@ -93,7 +97,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
   };
 
   const handleOkClick = () => {
-    setOpenDialog(false);
+    setIsDialogOpen(false);
     navigate(Pages.auth);
   };
 
@@ -207,7 +211,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
               {errorMessage}
             </Alert>
           </Snackbar>
-          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+          <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
             <DialogTitle>{"Registration Successful!"}</DialogTitle>
             <DialogContent>
               <Grid container spacing={2} alignItems="center">

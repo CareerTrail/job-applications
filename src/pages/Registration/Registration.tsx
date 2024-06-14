@@ -1,26 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
   Container,
   Grid,
   TextField,
-  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   InputAdornment,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { useAddNewUserMutation } from "services/userApi";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useRegisterUserMutation } from "services/userApi";
 import { Pages } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IServerError } from "core/interfaces/dataModels";
+import { IRegistrationProps } from "core/interfaces/propsInterfaces";
 
-export const Registration: React.FC = () => {
-  const [addNewUser, { isLoading }] = useAddNewUserMutation();
+export const Registration: React.FC<IRegistrationProps> = ({
+  onSuccess,
+  onError,
+}) => {
+  const [addNewUser, { isLoading }] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -62,17 +71,31 @@ export const Registration: React.FC = () => {
           email: values.email,
           password: values.password,
         }).unwrap();
-        setSuccessMessage("You have successfully registered to our site.");
+        setOpenDialog(true);
+        onSuccess?.();
         formik.resetForm();
-        navigate(Pages.auth);
       } catch (err) {
-        setErrorMessage("Failed to register user. Please try again.");
-        console.error("Failed to register user:", err);
+        const serverError = err as IServerError;
+        const errorResponse =
+          serverError.data?.message ||
+          "Failed to register user. Please try again.";
+        setErrorMessage(errorResponse);
+        console.error("Failed to register user:", serverError);
+        onError?.(err);
       } finally {
         setSubmitting(false);
       }
     },
   });
+
+  const handleSnackbarClose = () => {
+    setErrorMessage(null);
+  };
+
+  const handleOkClick = () => {
+    setOpenDialog(false);
+    navigate(Pages.auth);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -174,16 +197,31 @@ export const Registration: React.FC = () => {
           >
             {formik.isSubmitting || isLoading ? "Registering..." : "Register"}
           </Button>
-          {errorMessage && (
-            <Alert severity="error" onClose={() => setErrorMessage(null)}>
+          <Snackbar
+            open={Boolean(errorMessage)}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Alert severity="error" onClose={handleSnackbarClose}>
               {errorMessage}
             </Alert>
-          )}
-          {successMessage && (
-            <Alert severity="success" onClose={() => setSuccessMessage(null)}>
-              {successMessage}
-            </Alert>
-          )}
+          </Snackbar>
+          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            <DialogTitle>{"Registration Successful!"}</DialogTitle>
+            <DialogContent>
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>
+                  <p>You have successfully registered to our site.</p>
+                </Grid>
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleOkClick} color="primary" autoFocus>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Grid container>
             <Grid item>
               <Link to={Pages.auth}>{"Already have an account? Sign In"}</Link>

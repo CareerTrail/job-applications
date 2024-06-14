@@ -1,12 +1,14 @@
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { Pages } from "core/variables/constants";
 import { useAuth } from "./authHooks";
+import { IRequireAuthProps } from "core/interfaces/propsInterfaces";
 
-function RequireAuth({ children }: { children: ReactNode }) {
+const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
   const location = useLocation();
   const { user } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
   useEffect(() => {
     async function checkAuth() {
       if (!user) {
@@ -41,7 +43,7 @@ function RequireAuth({ children }: { children: ReactNode }) {
     return <Navigate to={Pages.auth} state={{ from: location }} replace />;
   }
 
-  return children;
-}
+  return <>{children}</>;
+};
 
 export default RequireAuth;

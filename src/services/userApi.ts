@@ -18,11 +18,11 @@ interface IResetPassword {
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    addNewUser: builder.mutation<void, IUser>({
-      query: (newUser) => ({
+    registerUser: builder.mutation<void, IUser>({
+      query: (registerUser) => ({
         url: "users",
         method: "POST",
-        body: newUser,
+        body: registerUser,
       }),
       invalidatesTags: [{ type: "Users", id: "LIST" } as const],
     }),
@@ -44,7 +44,7 @@ export const userApi = api.injectEndpoints({
 });
 
 export const {
-  useAddNewUserMutation,
+  useRegisterUserMutation,
   useLoginUserMutation,
   useSendResetPasswordEmailMutation,
 } = userApi;

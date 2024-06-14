@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Button,
@@ -11,7 +10,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSendResetPasswordEmailMutation } from "services/userApi";
 
-export const RecoveryPass: React.FC = () => {
+export const RecoveryPass = () => {
   const [sendResetPasswordEmail, { isLoading, isError, isSuccess }] =
     useSendResetPasswordEmailMutation();
 

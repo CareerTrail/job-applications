@@ -1,15 +1,21 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import React, { ReactElement, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Drawer } from "@mui/material";
+import {
+  Drawer,
+  Avatar,
+  Menu,
+  MenuItem,
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
 import AppMenu from "../Menu";
-import {ReactElement, useState} from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Pages } from "core/variables/constants";
+import { useAuth } from "hooks/authHooks";
 
 /**
  * AppBarComponent for rendering the application's top app bar.
@@ -20,7 +26,10 @@ import { Pages } from "core/variables/constants";
  */
 export const AppBarComponent = (): ReactElement => {
   const { pathname } = useLocation();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   /**
    * Handles the click event for the menu button, toggling the menu's open state.
@@ -51,6 +60,36 @@ export const AppBarComponent = (): ReactElement => {
       ? "MAIN"
       : pathname.slice(1, pathname.length).toUpperCase();
   };
+
+  /**
+   * Handles opening the user menu.
+   * @function
+   * @private
+   */
+  const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  /**
+   * Handles closing the user menu.
+   * @function
+   * @private
+   */
+  const handleUserMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  /**
+   * Handles user logout.
+   * @function
+   * @private
+   */
+  const handleLogout = () => {
+    logout();
+    handleUserMenuClose();
+    navigate(Pages.auth);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -68,8 +107,29 @@ export const AppBarComponent = (): ReactElement => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {getDashboardItemName()}
           </Typography>
-          <Button color="inherit" href={Pages.reg}>Sign up</Button>
-          <Button color="inherit" href={Pages.auth}>Sign in</Button>
+          {user ? (
+            <>
+              <IconButton onClick={handleUserMenuOpen} color="inherit">
+                <Avatar />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleUserMenuClose}
+              >
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" href={Pages.reg}>
+                Sign up
+              </Button>
+              <Button color="inherit" href={Pages.auth}>
+                Sign in
+              </Button>
+            </>
+          )}
         </Toolbar>
         <Drawer anchor={"left"} open={isMenuOpen} onClose={appMenuCloseHandler}>
           <AppMenu />

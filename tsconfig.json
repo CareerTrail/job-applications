@@ -21,7 +21,8 @@
       "features": ["features/*"],
       "pages": ["pages/*"],
       "services": ["services/*"],
-      "hooks": ["hooks/*"]
+      "hooks": ["hooks/*"],
+      "store": ["store/*"]
     },
 
     /* Linting */

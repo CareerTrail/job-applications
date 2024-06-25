@@ -14,7 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { useLoginUserMutation } from "services/userApi";
-import { Pages } from "core/variables/constants";
+import { Pages, getPath } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "hooks/authHooks";
 import { IServerError } from "core/interfaces/dataModels";
@@ -55,7 +55,7 @@ export const Login = () => {
       try {
         const { access_token } = await loginUser(values).unwrap();
         login(access_token);
-        navigate(Pages.applications);
+        navigate(getPath(Pages.Applications));
       } catch (err) {
         const serverError = err as IServerError;
         const errorResponse =
@@ -153,10 +153,12 @@ export const Login = () => {
 
           <Grid container>
             <Grid item xs>
-              <Link to={Pages.recoveryPass}>Forgot password?</Link>
+              <Link to={getPath(Pages.RecoveryPass)}>Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link to={Pages.reg}>{"Don't have an account? Sign Up"}</Link>
+              <Link to={getPath(Pages.Reg)}>
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
           </Grid>
         </Box>

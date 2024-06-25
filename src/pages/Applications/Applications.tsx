@@ -6,13 +6,14 @@ import {
   ApplicationStatus,
   ApplicationSources,
   InterviewType,
-  useGetApplicationsQuery,
 } from "../../services/applicationApi.ts";
 import { Info } from "@mui/icons-material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
+import { useEffect, useMemo } from "react";
+import { Pages } from "core/variables/constants.ts";
 
 const applicationSourcesArray = Object.values(ApplicationSources);
 const applicationStatusArray = Object.values(ApplicationStatus);
@@ -20,11 +21,47 @@ const interviewTypeArray = Object.values(InterviewType);
 
 export const Applications = () => {
   // TODO: control page, sorting and limit in query
-  const { data } = useGetApplicationsQuery({
-    page: 1,
-    limit: 10,
-    sort: "",
-  });
+
+  // const { data } = useGetApplicationsQuery({
+  //   page: 1,
+  //   limit: 10,
+  //   sort: "",
+  // });
+
+  const data = useMemo(
+    () => ({
+      data: [
+        {
+          id: "1",
+          company: { name: "Test Company" },
+          applyingDate: "2023-06-01",
+          position: "Developer",
+          source: "Online",
+          status: "Applied",
+          salary: "1000-2000",
+          nextInterviewDate: "2023-06-10",
+          currentStage: "Phone Screen",
+        },
+        {
+          id: "2",
+          company: { name: "Another Company" },
+          applyingDate: "2023-06-02",
+          position: "Designer",
+          source: "Referral",
+          status: "Interviewed",
+          salary: "1500-2500",
+          nextInterviewDate: "2023-06-12",
+          currentStage: "Onsite Interview",
+        },
+      ],
+      pagination: {
+        limit: 10,
+        page: 1,
+      },
+    }),
+    []
+  );
+
   const navigate = useNavigate();
   const infoButtonClickHandler = (rowId: string) => {
     navigate(`/applications/${rowId}`);
@@ -106,6 +143,15 @@ export const Applications = () => {
       editable: true,
     },
   ];
+
+  useEffect(() => {
+    if (data) {
+      console.log("Application data loaded:", data);
+    } else {
+      console.log("empty");
+    }
+  }, [data]);
+
   return (
     <>
       <Box
@@ -127,7 +173,7 @@ export const Applications = () => {
           }}
         >
           <Typography color={"#000"} variant={"h5"}>
-            Applications
+            {Pages.Applications}
           </Typography>
           <IconButton color={"success"} onClick={addButtonClickHandler}>
             <ControlPointIcon />

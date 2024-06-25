@@ -1,2 +1,2 @@
-import { Add } from "./Add.tsx";
-export default Add;
+import { AddApplication } from "./AddApplication.tsx";
+export default AddApplication;

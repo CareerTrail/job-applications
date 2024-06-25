@@ -12,15 +12,15 @@ import {
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {ReactElement, useState} from "react";
+import { ReactElement, useState } from "react";
 import { Close, Edit, ExpandMore } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetApplicationQuery,
   useUpdateApplicationMutation,
-} from "../../services/applicationApi.ts";
+} from "services/applicationApi.ts";
 import Box from "@mui/material/Box";
-import EditableText from "../../components/EditableText/EditableText.tsx";
+import EditableText from "components/EditableText/EditableText.tsx";
 
 export const Application = () => {
   const [open, setOpen] = useState(true);
@@ -32,6 +32,7 @@ export const Application = () => {
     setOpen(false);
     navigate("/applications");
   };
+
   return (
     <Dialog
       onClose={handleClose}
@@ -64,6 +65,7 @@ export const Application = () => {
           <Skeleton variant="rounded" width={210} height={60} />
         </>
       )}
+
       {data && (
         <>
           <DialogContent dividers sx={{ background: "#F2F4F6" }}>
@@ -283,35 +285,6 @@ export const Application = () => {
                   />
                 </AccordionDetails>
               </Accordion>
-              {/*<Accordion defaultExpanded={true}>*/}
-              {/*  <AccordionSummary expandIcon={<ExpandMore />}>*/}
-              {/*    <Box*/}
-              {/*      component={"div"}*/}
-              {/*      sx={{ display: "flex", flexDirection: "row", gap: "20px" }}*/}
-              {/*    >*/}
-              {/*      <Typography variant="h6">Interviews Info</Typography>*/}
-              {/*      <Edit color={"primary"} />*/}
-              {/*    </Box>*/}
-              {/*  </AccordionSummary>*/}
-              {/*  <AccordionDetails*/}
-              {/*    sx={{ borderTop: "1px solid rgba(0, 0, 0, .125)" }}*/}
-              {/*  >*/}
-              {/*    {data.interviews.map((interview, index) => {*/}
-              {/*      return (*/}
-              {/*        <Box>*/}
-              {/*          <Typography>Stage {index + 1}</Typography>*/}
-              {/*          <DataRow name={"Type"} value={interview.type} />*/}
-              {/*          <DataRow name={"Date"} value={interview.date} />*/}
-              {/*          <DataRow name={"Notes"} value={interview.notes} />*/}
-              {/*          <DataRow*/}
-              {/*            name={"Feedback from recruiter"}*/}
-              {/*            value={interview.feedback}*/}
-              {/*          />*/}
-              {/*        </Box>*/}
-              {/*      );*/}
-              {/*    })}*/}
-              {/*  </AccordionDetails>*/}
-              {/*</Accordion>*/}
             </Box>
           </DialogContent>
           <DialogActions>

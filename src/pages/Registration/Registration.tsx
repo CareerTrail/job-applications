@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { useRegisterUserMutation } from "services/userApi";
-import { Pages } from "core/variables/constants";
+import { Pages, getPath } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IServerError } from "core/interfaces/dataModels";
 
@@ -98,7 +98,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
 
   const handleOkClick = () => {
     setIsDialogOpen(false);
-    navigate(Pages.auth);
+    navigate(getPath(Pages.Auth));
   };
 
   return (
@@ -228,7 +228,9 @@ export const Registration: React.FC<IRegistrationProps> = ({
           </Dialog>
           <Grid container>
             <Grid item>
-              <Link to={Pages.auth}>{"Already have an account? Sign In"}</Link>
+              <Link to={getPath(Pages.Auth)}>
+                {"Already have an account? Sign In"}
+              </Link>
             </Grid>
           </Grid>
         </Box>

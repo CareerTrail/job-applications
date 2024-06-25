@@ -1,19 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorPage } from "./ErrorPage.tsx";
-import Dashboard from "pages/Applications";
+import Dashboard from "pages/Dashboard";
 import DashboardWrapper from "components/DashboardWrapper";
 import Main from "pages/Main";
 import Login from "pages/Login";
 import Registration from "pages/Registration";
+import Profile from "pages/Profile";
 import Application from "pages/Application";
-import Add from "pages/Applications/components";
+import Applications from "pages/Applications";
+import AddApplication from "pages/Applications/components";
 import RecoveryPass from "pages/RecoveryPass";
-import { Pages } from "core/variables/constants.ts";
+import Boards from "pages/Boards";
+import { Pages, getPath } from "core/variables/constants.ts";
 import RequireAuth from "hooks/RequireAuth.tsx";
+import RequireGuest from "hooks/RequireGuest.tsx";
+import Kanban from "pages/DND/Kanban.tsx";
 
 export const router = createBrowserRouter([
   {
-    path: Pages.main,
+    path: getPath(Pages.Main),
     element: (
       <DashboardWrapper>
         <Main />
@@ -22,34 +27,67 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: Pages.reg,
+    path: getPath(Pages.Reg),
     element: (
-      <DashboardWrapper>
-        <Registration />
-      </DashboardWrapper>
+      <RequireGuest>
+        <DashboardWrapper>
+          <Registration />
+        </DashboardWrapper>
+      </RequireGuest>
     ),
     errorElement: <ErrorPage />,
   },
   {
-    path: Pages.auth,
+    path: getPath(Pages.Auth),
     element: (
-      <DashboardWrapper>
-        <Login />
-      </DashboardWrapper>
+      <RequireGuest>
+        <DashboardWrapper>
+          <Login />
+        </DashboardWrapper>
+      </RequireGuest>
     ),
     errorElement: <ErrorPage />,
   },
   {
-    path: Pages.recoveryPass,
+    path: getPath(Pages.Profile),
     element: (
-      <DashboardWrapper>
-        <RecoveryPass />
-      </DashboardWrapper>
+      <RequireAuth>
+        <DashboardWrapper>
+          <Profile />
+        </DashboardWrapper>
+      </RequireAuth>
     ),
     errorElement: <ErrorPage />,
   },
   {
-    path: Pages.applications,
+    path: getPath(Pages.RecoveryPass),
+    element: (
+      <RequireGuest>
+        <DashboardWrapper>
+          <RecoveryPass />
+        </DashboardWrapper>
+      </RequireGuest>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.Board),
+    element: (
+      <RequireAuth>
+        <DashboardWrapper>
+          <Boards />
+        </DashboardWrapper>
+      </RequireAuth>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.Kanban),
+    element: <Kanban />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.Dashboard),
     element: (
       <RequireAuth>
         <DashboardWrapper>
@@ -57,14 +95,25 @@ export const router = createBrowserRouter([
         </DashboardWrapper>
       </RequireAuth>
     ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.Applications),
+    element: (
+      <RequireAuth>
+        <DashboardWrapper>
+          <Applications />
+        </DashboardWrapper>
+      </RequireAuth>
+    ),
     children: [
       {
-        path: `${Pages.applications}/:applicationId`,
+        path: `${getPath(Pages.Applications)}/:applicationId`,
         element: <Application />,
       },
       {
-        path: `${Pages.applications}/add`,
-        element: <Add />,
+        path: `${getPath(Pages.Applications)}/add`,
+        element: <AddApplication />,
       },
     ],
   },

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import AppMenu from "../Menu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Pages } from "core/variables/constants";
+import { Pages, getPath } from "core/variables/constants";
 import { useAuth } from "hooks/authHooks";
 
 /**
@@ -87,7 +87,17 @@ export const AppBarComponent = (): ReactElement => {
   const handleLogout = () => {
     logout();
     handleUserMenuClose();
-    navigate(Pages.auth);
+    navigate(getPath(Pages.Auth));
+  };
+
+  const showProfile = () => {
+    handleUserMenuClose();
+    navigate(getPath(Pages.Profile));
+  };
+
+  const showApplications = () => {
+    handleUserMenuClose();
+    navigate(getPath(Pages.Applications));
   };
 
   return (
@@ -117,21 +127,30 @@ export const AppBarComponent = (): ReactElement => {
                 open={Boolean(anchorEl)}
                 onClose={handleUserMenuClose}
               >
+                <MenuItem onClick={showProfile}>Your profile</MenuItem>
+                <MenuItem onClick={showApplications}>
+                  Your applications
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>
           ) : (
             <>
-              <Button color="inherit" href={Pages.reg}>
+              <Button color="inherit" href={getPath(Pages.Reg)}>
                 Sign up
               </Button>
-              <Button color="inherit" href={Pages.auth}>
+              <Button color="inherit" href={getPath(Pages.Auth)}>
                 Sign in
               </Button>
             </>
           )}
         </Toolbar>
-        <Drawer anchor={"left"} open={isMenuOpen} onClose={appMenuCloseHandler}>
+        <Drawer
+          anchor={"left"}
+          open={isMenuOpen}
+          onClose={appMenuCloseHandler}
+          onClick={appMenuCloseHandler}
+        >
           <AppMenu />
         </Drawer>
       </AppBar>

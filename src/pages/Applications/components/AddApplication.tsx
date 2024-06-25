@@ -40,7 +40,7 @@ const AddApplicationSchema = Yup.object().shape({
  * @returns {ReactElement} The rendered Add component.
  */
 
-export const Add = (): ReactElement => {
+export const AddApplication = (): ReactElement => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const [addApp, { isSuccess }] = useAddNewApplicationMutation();
@@ -50,7 +50,7 @@ export const Add = (): ReactElement => {
   };
 
   /**
-   * Formik's configuration for the Add Application form.
+   * Formik's configuration for the AddApplication Application form.
    */
   const formik = useFormik({
     initialValues: {

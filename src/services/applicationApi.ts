@@ -138,5 +138,5 @@ export const {
   useGetApplicationsQuery,
   useGetApplicationQuery,
   useAddNewApplicationMutation,
-    useUpdateApplicationMutation
+  useUpdateApplicationMutation,
 } = applicationApi;

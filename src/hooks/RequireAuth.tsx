@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { Pages } from "core/variables/constants";
+import { Pages, getPath } from "core/variables/constants";
 import { useAuth } from "./authHooks";
 
 interface IRequireAuthProps {
@@ -43,7 +43,9 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to={Pages.auth} state={{ from: location }} replace />;
+    return (
+      <Navigate to={getPath(Pages.Auth)} state={{ from: location }} replace />
+    );
   }
 
   return <>{children}</>;

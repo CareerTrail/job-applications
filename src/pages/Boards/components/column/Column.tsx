@@ -1,18 +1,17 @@
+import React from "react";
 import { Box, IconButton, Paper, Typography } from "@mui/material";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 import AddIcon from "@mui/icons-material/Add";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { IBoard } from "store/data";
-import Draggable from "react-draggable";
 
-export const Column = ({
-  title,
-  icon,
-  boards,
-}: {
+interface ColumnProps {
   title: string;
   icon: JSX.Element;
   boards: IBoard[];
-}) => (
+}
+
+export const Column: React.FC<ColumnProps> = ({ title, icon, boards }) => (
   <Box sx={{ flex: 1, justifyContent: "center", alignItems: "flex-start" }}>
     <Box
       sx={{
@@ -35,10 +34,9 @@ export const Column = ({
         <IconButton color="inherit">{icon}</IconButton>
         <Typography sx={{ fontWeight: "bold" }}>{title}</Typography>
         <IconButton color="inherit">
-          <MenuOutlinedIcon fontSize={"small"} />
+          <MenuOutlinedIcon fontSize="small" />
         </IconButton>
       </Box>
-
       <Box
         sx={{
           display: "flex",
@@ -90,53 +88,64 @@ export const Column = ({
             },
           }}
         >
-          <AddIcon fontSize={"large"} />
+          <AddIcon fontSize="large" />
         </Paper>
       </IconButton>
     </Box>
     <Box>
-      {boards.map((board) => (
-        <Draggable>
-          <IconButton sx={{ width: "100%", padding: 0 }} key={board.id}>
-            <Paper
-              elevation={3}
-              sx={{
-                margin: "0.5rem",
-                height: "5rem",
-                width: "100%",
-                padding: "1rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                transition: "all 0.3s ease-in-out",
-                ":hover": {
-                  borderColor: "grey.800",
-                  transform: "scale(1.05)",
-                },
-              }}
-            >
-              <Typography
-                sx={{
-                  alignSelf: "center",
-                  fontWeight: "bold",
-                }}
+      <Droppable droppableId={title} key={title} type="group">
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            {boards.map((board, index) => (
+              <Draggable
+                draggableId={board.id.toString()}
+                key={board.id.toString()}
+                index={index}
               >
-                {board.position}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "0.875rem",
-                  marginTop: "0.5rem",
-                }}
-              >
-                {board.company.name}
-              </Typography>
-            </Paper>
-          </IconButton>
-        </Draggable>
-      ))}
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    {/* <IconButton sx={{ width: "100%", padding: 0 }}> */}
+                    <Paper
+                      elevation={3}
+                      sx={{
+                        margin: "0.5rem",
+                        height: "5rem",
+                        width: "100%",
+                        padding: "1rem",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        transition: "all 0.3s ease-in-out",
+                        ":hover": {
+                          borderColor: "grey.800",
+                          transform: "scale(1.05)",
+                        },
+                      }}
+                    >
+                      <Typography
+                        sx={{ alignSelf: "center", fontWeight: "bold" }}
+                      >
+                        {board.position}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: "0.875rem", marginTop: "0.5rem" }}
+                      >
+                        {board.company.name}
+                      </Typography>
+                    </Paper>
+                    {/* </IconButton> */}
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </Box>
   </Box>
 );
-
-export default Column;

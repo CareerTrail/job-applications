@@ -14,7 +14,6 @@ import Boards from "pages/Boards";
 import { Pages, getPath } from "core/variables/constants.ts";
 import RequireAuth from "hooks/RequireAuth.tsx";
 import RequireGuest from "hooks/RequireGuest.tsx";
-import Kanban from "pages/DND/Kanban.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -79,11 +78,6 @@ export const router = createBrowserRouter([
         </DashboardWrapper>
       </RequireAuth>
     ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: getPath(Pages.Kanban),
-    element: <Kanban />,
     errorElement: <ErrorPage />,
   },
   {

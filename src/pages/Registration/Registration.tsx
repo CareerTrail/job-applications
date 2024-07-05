@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -13,17 +13,17 @@ import {
   IconButton,
   Snackbar,
   Alert,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useNavigate, Link } from "react-router-dom";
-import { useRegisterUserMutation } from "services/userApi";
-import { Pages, getPath } from "core/variables/constants";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IServerError } from "core/interfaces/dataModels";
+} from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate, Link } from 'react-router-dom';
+import { useRegisterUserMutation } from 'services/userApi';
+import { Pages, getPath } from 'core/variables/constants';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IServerError } from 'core/interfaces/dataModels';
 
 interface IRegistrationProps {
-  onSuccess?: () => void; //
+  onSuccess?: () => void;
   onError?: (error: unknown) => void;
 }
 
@@ -40,31 +40,31 @@ export const Registration: React.FC<IRegistrationProps> = ({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
 
   const AddUserSchema = Yup.object().shape({
     firstName: Yup.string()
-      .required("First Name is Required.")
-      .min(1, "First Name is Too Short."),
+      .required('First Name is Required.')
+      .min(1, 'First Name is Too Short.'),
     lastName: Yup.string()
-      .required("Last Name is Required.")
-      .min(1, "Last Name is Too Short."),
-    email: Yup.string().email().required("Email is Required."),
+      .required('Last Name is Required.')
+      .min(1, 'Last Name is Too Short.'),
+    email: Yup.string().email().required('Email is Required.'),
     password: Yup.string()
-      .required("No password provided.")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(/(?=.*[0-9])/, "Password must contain a number."),
+      .required('No password provided.')
+      .min(8, 'Password is too short - should be 8 chars minimum.')
+      .matches(/(?=.*[0-9])/, 'Password must contain a number.'),
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
     },
     validationSchema: AddUserSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -82,9 +82,9 @@ export const Registration: React.FC<IRegistrationProps> = ({
         const serverError = err as IServerError;
         const errorResponse =
           serverError.data?.message ||
-          "Failed to register user. Please try again.";
+          'Failed to register user. Please try again.';
         setErrorMessage(errorResponse);
-        console.error("Failed to register user:", serverError);
+        console.error('Failed to register user:', serverError);
         onError?.(err);
       } finally {
         setSubmitting(false);
@@ -106,11 +106,11 @@ export const Registration: React.FC<IRegistrationProps> = ({
       <Box
         sx={{
           marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mx: "auto",
-          width: "fit-content",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mx: 'auto',
+          width: 'fit-content',
         }}
       >
         <Box
@@ -168,7 +168,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
             fullWidth
             name="password"
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             autoComplete="current-password"
             value={formik.values.password}
@@ -199,20 +199,20 @@ export const Registration: React.FC<IRegistrationProps> = ({
             sx={{ mt: 3, mb: 2 }}
             disabled={formik.isSubmitting || isLoading}
           >
-            {formik.isSubmitting || isLoading ? "Registering..." : "Register"}
+            {formik.isSubmitting || isLoading ? 'Registering...' : 'Register'}
           </Button>
           <Snackbar
             open={Boolean(errorMessage)}
             autoHideDuration={6000}
             onClose={handleSnackbarClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
             <Alert severity="error" onClose={handleSnackbarClose}>
               {errorMessage}
             </Alert>
           </Snackbar>
           <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-            <DialogTitle>{"Registration Successful!"}</DialogTitle>
+            <DialogTitle>{'Registration Successful!'}</DialogTitle>
             <DialogContent>
               <Grid container spacing={2} alignItems="center">
                 <Grid item>
@@ -229,7 +229,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
           <Grid container>
             <Grid item>
               <Link to={getPath(Pages.Auth)}>
-                {"Already have an account? Sign In"}
+                {'Already have an account? Sign In'}
               </Link>
             </Grid>
           </Grid>

@@ -1,7 +1,8 @@
-import { ReactNode, useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { Pages, getPath } from "core/variables/constants";
-import { useAuth } from "./authHooks";
+import { ReactNode, useEffect, useState } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { Pages, getPath } from 'core/variables/constants';
+import { useAuth } from './authHooks';
+import { useLazyGetUserQuery } from 'services/userApi';
 
 interface IRequireAuthProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
   const location = useLocation();
   const { user } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [getUser, { isLoading, isError }] = useLazyGetUserQuery();
 
   useEffect(() => {
     async function checkAuth() {
@@ -19,30 +21,21 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
         return;
       }
       try {
-        const response = await fetch("users/me", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        });
-        if (response.ok) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
+        await getUser().unwrap();
+        setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false);
       }
     }
 
     checkAuth();
-  }, [user]);
+  }, [user, getUser]);
 
-  if (isAuthenticated === null) {
+  if (isLoading || isAuthenticated === null) {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || isError) {
     return (
       <Navigate to={getPath(Pages.Auth)} state={{ from: location }} replace />
     );

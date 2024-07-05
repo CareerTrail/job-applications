@@ -1,25 +1,25 @@
-import { api } from "./api.ts";
-import { PaginatedResponse } from "../common/res/paginated.response.ts";
+import { api } from './api.ts';
+import { PaginatedResponse } from '../common/res/paginated.response.ts';
 
 export enum ApplicationSources {
-  LINKEDIN = "LINKEDIN",
-  TELEGRAM = "TELEGRAM",
+  LINKEDIN = 'LINKEDIN',
+  TELEGRAM = 'TELEGRAM',
 }
 
 export enum ApplicationStatus {
-  NO_ANSWER = "NO_ANSWER",
-  WATCHED = "Watched by recruiter",
-  OFFER = "OFFER",
+  NO_ANSWER = 'NO_ANSWER',
+  WATCHED = 'Watched by recruiter',
+  OFFER = 'OFFER',
 }
 
 export enum AnswerAfterInterview {
-  NO_ANSWER = "No Answer",
-  REFUSE = "REFUSE",
+  NO_ANSWER = 'No Answer',
+  REFUSE = 'REFUSE',
 }
 
 export enum InterviewType {
-  PRE_SCREEN = "Pre-screen",
-  TECHNICAL = "Technical",
+  PRE_SCREEN = 'Pre-screen',
+  TECHNICAL = 'Technical',
 }
 
 interface Recruiter {
@@ -46,7 +46,7 @@ interface Interview {
 }
 
 export interface Application {
-  id: number;
+  id: string;
   userId: string;
   recruiter: Recruiter;
   company: Company;
@@ -54,7 +54,7 @@ export interface Application {
   applyingDate: Date;
   position: string;
   source: ApplicationSources;
-  status: ApplicationStatus;
+  status: string;
   nextInterviewDate: Date;
   currentStage: InterviewType;
   salary: string;
@@ -67,7 +67,7 @@ export interface IAddNewApplication {
   source: ApplicationSources;
   salary: string;
   link: string;
-  status: ApplicationStatus;
+  status: string;
   currentStage?: string;
   nextInterviewDate?: string;
   company: {
@@ -96,25 +96,25 @@ export const applicationApi = api.injectEndpoints({
           params: { page, limit, sort },
         };
       },
-      providesTags: () => [{ type: "Applications", id: "LIST" }],
+      providesTags: () => [{ type: 'Applications', id: 'LIST' }],
     }),
     getApplication: builder.query<Application, string>({
       query: (id) => `/applications/${id}`,
-      providesTags: (data) => [{ type: "Applications", id: data?.id }],
+      providesTags: (data) => [{ type: 'Applications', id: data?.id }],
     }),
     addNewApplication: builder.mutation<Application, IAddNewApplication>({
       query(body) {
         return {
-          url: "applications",
-          method: "POST",
+          url: 'applications',
+          method: 'POST',
           body: {
             ...body,
             //TODO: change to real after implementation user service on BE
-            userId: "4c4e84e9-178a-4157-8c19-07fae3141dd9",
+            userId: '4c4e84e9-178a-4157-8c19-07fae3141dd9',
           },
         };
       },
-      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+      invalidatesTags: [{ type: 'Applications', id: 'LIST' }],
     }),
     updateApplication: builder.mutation<
       Application,
@@ -123,13 +123,13 @@ export const applicationApi = api.injectEndpoints({
       query({ id, data }) {
         return {
           url: `applications/${id}`,
-          method: "PUT",
+          method: 'PUT',
           body: {
             ...data,
           },
         };
       },
-      invalidatesTags: (data) => [{ type: "Applications", id: data?.id }],
+      invalidatesTags: (data) => [{ type: 'Applications', id: data?.id }],
     }),
   }),
 });

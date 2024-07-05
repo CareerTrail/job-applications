@@ -6,19 +6,19 @@ import {
   Grid,
   MenuItem,
   TextField,
-} from "@mui/material";
-import { ReactElement, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+} from '@mui/material';
+import { ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
   ApplicationSources,
   ApplicationStatus,
   useAddNewApplicationMutation,
-} from "../../../services/applicationApi.ts";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+} from 'services/applicationApi.ts';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const AddApplicationSchema = Yup.object().shape({
   positionName: Yup.string().required(),
@@ -54,15 +54,15 @@ export const AddApplication = (): ReactElement => {
    */
   const formik = useFormik({
     initialValues: {
-      positionName: "",
-      applicationSource: "",
+      positionName: '',
+      applicationSource: '',
       applicationDate: new Date().toISOString(),
-      applicationLink: "",
-      salaryRange: "",
-      companyName: "",
-      companyType: "",
-      recruiterName: "",
-      recruiterContact: "",
+      applicationLink: '',
+      salaryRange: '',
+      companyName: '',
+      companyType: '',
+      recruiterName: '',
+      recruiterContact: '',
     },
     validationSchema: AddApplicationSchema,
     onSubmit: (values) => {
@@ -72,12 +72,12 @@ export const AddApplication = (): ReactElement => {
         source: values.applicationSource as ApplicationSources,
         salary: values.salaryRange,
         link: values.applicationLink,
-        status: ApplicationStatus.NO_ANSWER,
+        status: ApplicationStatus.OFFER,
         company: {
           name: values.companyName,
           type: values.companyType,
-          link: "",
-          notes: "",
+          link: '',
+          notes: '',
         },
         recruiter: {
           name: values.recruiterName,
@@ -98,7 +98,7 @@ export const AddApplication = (): ReactElement => {
       onClose={handleClose}
       aria-labelledby="customized-dialog-title"
       open={open}
-      maxWidth={"md"}
+      maxWidth={'md'}
       fullWidth
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -106,17 +106,17 @@ export const AddApplication = (): ReactElement => {
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
-          <SectionHeader name={"General info"} />
+          <SectionHeader name={'General info'} />
           <Grid
             container
             spacing={4}
             sx={{
-              paddingTop: "20px",
+              paddingTop: '20px',
             }}
           >
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Position name*"}
+                label={'Position name*'}
                 id="positionName"
                 name="positionName"
                 type="text"
@@ -131,7 +131,7 @@ export const AddApplication = (): ReactElement => {
             <Grid item md={4} sm={6} xs={12}>
               <TextField
                 select
-                label={"Application source"}
+                label={'Application source'}
                 id="applicationSource"
                 name="applicationSource"
                 type="text"
@@ -153,7 +153,7 @@ export const AddApplication = (): ReactElement => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Application date"}
+                label={'Application date'}
                 id="applicationDate"
                 name="applicationDate"
                 type="date"
@@ -167,7 +167,7 @@ export const AddApplication = (): ReactElement => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Link"}
+                label={'Link'}
                 id="applicationLink"
                 name="applicationLink"
                 type="text"
@@ -181,7 +181,7 @@ export const AddApplication = (): ReactElement => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Salary range"}
+                label={'Salary range'}
                 id="salaryRange"
                 name="salaryRange"
                 type="text"
@@ -194,17 +194,17 @@ export const AddApplication = (): ReactElement => {
               />
             </Grid>
           </Grid>
-          <SectionHeader name={"Company info"} />
+          <SectionHeader name={'Company info'} />
           <Grid
             container
             spacing={4}
             sx={{
-              paddingTop: "20px",
+              paddingTop: '20px',
             }}
           >
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Company name"}
+                label={'Company name'}
                 id="companyName"
                 name="companyName"
                 type="text"
@@ -218,7 +218,7 @@ export const AddApplication = (): ReactElement => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Company type"}
+                label={'Company type'}
                 id="companyType"
                 name="companyType"
                 type="text"
@@ -231,17 +231,17 @@ export const AddApplication = (): ReactElement => {
               />
             </Grid>
           </Grid>
-          <SectionHeader name={"Recruiter info"} />
+          <SectionHeader name={'Recruiter info'} />
           <Grid
             container
             spacing={4}
             sx={{
-              paddingTop: "20px",
+              paddingTop: '20px',
             }}
           >
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Recruiter name"}
+                label={'Recruiter name'}
                 id="recruiterName"
                 name="recruiterName"
                 type="text"
@@ -255,7 +255,7 @@ export const AddApplication = (): ReactElement => {
             </Grid>
             <Grid item md={4} sm={6} xs={12}>
               <TextField
-                label={"Recruiter contact"}
+                label={'Recruiter contact'}
                 id="recruiterContact"
                 name="recruiterContact"
                 type="text"
@@ -271,28 +271,28 @@ export const AddApplication = (): ReactElement => {
 
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              marginTop: "10px",
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              marginTop: '10px',
             }}
           >
             <Divider />
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "10px",
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '10px',
               }}
             >
-              <Button type="submit" color={"success"} variant={"contained"}>
+              <Button type="submit" color={'success'} variant={'contained'}>
                 Add
               </Button>
               <Button
                 autoFocus
                 onClick={handleClose}
-                color={"error"}
-                variant={"contained"}
+                color={'error'}
+                variant={'contained'}
               >
                 Cancel
               </Button>
@@ -320,7 +320,7 @@ interface SectionHeaderProps {
  */
 const SectionHeader = ({ name }: SectionHeaderProps): ReactElement => {
   return (
-    <Box component={"div"} marginTop={"10px"}>
+    <Box component={'div'} marginTop={'10px'}>
       <Typography>{name}</Typography>
       <Divider />
     </Box>

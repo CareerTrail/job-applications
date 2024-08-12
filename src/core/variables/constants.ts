@@ -26,3 +26,14 @@ export enum BoardMenu {
   INTERVIEW = "INTERVIEW",
   OFFER = "OFFER",
 }
+
+export enum Colors {
+  accent = "#FE6E06",
+  button_bg_hover = "#EA690C",
+  button_bg_active = "#DC6109",
+  tertiary_stroke = "#DEDEDE",
+  bg_white = "#FFFFFF",
+  secondary = "#929292",
+  error_stroke = "#C13515",
+  input_disabled = "#F9F9F9",
+}

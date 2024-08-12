@@ -16,7 +16,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useLoginUserMutation } from "services/userApi";
 import { Pages, getPath } from "core/variables/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAuth } from "hooks/authHooks";
+import { useAuth } from "shared/hooks/authHooks";
 import { IServerError } from "core/interfaces/dataModels";
 
 export const Login = () => {

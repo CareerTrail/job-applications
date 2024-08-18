@@ -1,54 +1,34 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Alert,
-  InputAdornment,
-  IconButton,
-  Snackbar,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useNavigate, Link } from "react-router-dom";
-import { useLoginUserMutation } from "services/userApi";
-import { Pages, getPath } from "core/variables/constants";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAuth } from "hooks/authHooks";
-import { IServerError } from "core/interfaces/dataModels";
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate, Link } from 'react-router-dom';
+import { useLoginUserMutation } from 'services/userApi';
+import { Pages, getPath } from 'core/variables/constants';
+import { useAuth } from 'hooks/authHooks';
+import { IServerError } from 'core/interfaces/dataModels';
+import styles from './Login.module.css';
+import loginBg from 'assets/images/auth/login-bg.jpg';
+import Input from 'components/Input/Input';
+import Button from 'components/Button/Button';
 
 export const Login = () => {
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
   const LoginUserSchema = Yup.object().shape({
-    email: Yup.string().email().required("Email is Required."),
+    email: Yup.string().email().required('Email is Required.'),
     password: Yup.string()
-      .required("No password provided.")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(/(?=.*[0-9])/, "Password must contain a number."),
+      .required('No password provided.')
+      .min(8, 'Password is too short - should be 8 chars minimum.')
+      .matches(/(?=.*[0-9])/, 'Password must contain a number.'),
   });
-
-  const handleSnackbarClose = () => {
-    setErrorMessage(null);
-  };
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: LoginUserSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -60,7 +40,7 @@ export const Login = () => {
         const serverError = err as IServerError;
         const errorResponse =
           serverError.data?.message ||
-          "Failed to register user. Please try again.";
+          'Failed to register user. Please try again.';
         setErrorMessage(errorResponse);
       } finally {
         setSubmitting(false);
@@ -69,24 +49,24 @@ export const Login = () => {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mx: "auto",
-          width: "fit-content",
-        }}
-      >
-        <Box
-          component="form"
-          onSubmit={formik.handleSubmit}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-          <TextField
+    <div className={styles.wrapper}>
+      <div className={styles.imageContainer}>
+        <img src={loginBg} alt="Background"></img>
+      </div>
+      <div className={styles.formContainer}>
+        <form onSubmit={formik.handleSubmit}>
+          <Input
+            backgroundColor="bg_white"
+            borderColor="tertiary_stroke"
+            borderRadius="12px"
+            borderStyle="solid"
+            borderWidth="1px"
+            height="52px"
+            padding="16px"
+            placeholder="Your email"
+            width="400px"
+          />
+          {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -100,14 +80,27 @@ export const Login = () => {
             onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
+          /> */}
+
+          <Input
+            backgroundColor="bg_white"
+            borderColor="tertiary_stroke"
+            borderRadius="12px"
+            borderStyle="solid"
+            borderWidth="1px"
+            height="52px"
+            isPassword
+            padding="16px"
+            placeholder="Password"
+            width="400px"
           />
-          <TextField
+          {/* <TextField
             margin="normal"
             required
             fullWidth
             name="password"
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             autoComplete="current-password"
             value={formik.values.password}
@@ -129,40 +122,41 @@ export const Login = () => {
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
 
           <Button
+            color="accent"
+            fontSize="16px"
+            fontWeight="500"
+            gap="8px"
+            height="52px"
+            padding="16px 207px"
+            radius="12px"
+            textTransform="none"
+            width="400px"
+          />
+          {/* <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             disabled={formik.isSubmitting || isLoading}
           >
-            {formik.isSubmitting || isLoading ? "Signing in..." : "Sign In"}
-          </Button>
-          <Snackbar
-            open={Boolean(errorMessage)}
-            autoHideDuration={6000}
-            onClose={handleSnackbarClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <Alert severity="error" onClose={handleSnackbarClose}>
-              {errorMessage}
-            </Alert>
-          </Snackbar>
+            {formik.isSubmitting || isLoading ? 'Signing in...' : 'Sign In'}
+          </Button> */}
 
-          <Grid container>
-            <Grid item xs>
+          <div>
+            <div>
               <Link to={getPath(Pages.RecoveryPass)}>Forgot password?</Link>
-            </Grid>
-            <Grid item>
+            </div>
+            <div>
               <Link to={getPath(Pages.Reg)}>
                 {"Don't have an account? Sign Up"}
               </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };

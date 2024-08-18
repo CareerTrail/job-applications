@@ -1,54 +1,57 @@
-import React, { useState } from "react";
+mport { useState, useEffect } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { useLoginUserMutation } from 'services/userApi';
+import { Pages, SocialLinks, getPath } from 'core/variables/constants';
+import { useAuth } from 'hooks/authHooks';
+import { IServerError } from 'core/interfaces/dataModels';
+import loginBg from 'assets/images/auth/login-bg.jpg';
+import GoogleIcon from 'assets/images/google.svg';
+import AppleIcon from 'assets/images/apple.svg';
+import FacebookIcon from 'assets/images/facebook.svg';
+import Input from 'components/Input/Input';
+import Button from 'components/Button/Button';
 import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Alert,
-  InputAdornment,
-  IconButton,
-  Snackbar,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useNavigate, Link } from "react-router-dom";
-import { useLoginUserMutation } from "services/userApi";
-import { Pages, getPath } from "core/variables/constants";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useAuth } from "shared/hooks/authHooks";
-import { IServerError } from "core/interfaces/dataModels";
+  GlobalStyle,
+  Wrapper,
+  ImageContainer,
+  FormContainer,
+  AuthActions,
+  CheckBox,
+  RememberMeLabel,
+  StyledLink,
+  Title1,
+  Title2,
+  LaberForEmail,
+  ActionToReg,
+  LaberForReg,
+  Body1,
+  SocialIcons,
+  SocialIconWrapper,
+  ErrorMessage,
+} from './Login.styles';
 
 export const Login = () => {
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+  const [isTouched, setIsTouched] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const LoginUserSchema = Yup.object().shape({
-    email: Yup.string().email().required("Email is Required."),
+    email: Yup.string().email().required('Email is Required.'),
     password: Yup.string()
-      .required("No password provided.")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(/(?=.*[0-9])/, "Password must contain a number."),
+      .required('No password provided.')
+      .min(8, 'Password is too short - should be 8 chars minimum.')
+      .matches(/(?=.*[0-9])/, 'Password must contain a number.'),
   });
-
-  const handleSnackbarClose = () => {
-    setErrorMessage(null);
-  };
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: LoginUserSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -60,109 +63,121 @@ export const Login = () => {
         const serverError = err as IServerError;
         const errorResponse =
           serverError.data?.message ||
-          "Failed to register user. Please try again.";
-        setErrorMessage(errorResponse);
-      } finally {
+          'User with these credentials was not found.';
+        setFormError(errorResponse);
         setSubmitting(false);
       }
     },
   });
 
+  useEffect(() => {
+    if (formik.touched.email || formik.touched.password) {
+      setIsTouched(true);
+    }
+  }, [formik.touched]);
+
+  const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
+  const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
+
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mx: "auto",
-          width: "fit-content",
-        }}
-      >
-        <Box
-          component="form"
-          onSubmit={formik.handleSubmit}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            id="password"
-            autoComplete="current-password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={formik.isSubmitting || isLoading}
-          >
-            {formik.isSubmitting || isLoading ? "Signing in..." : "Sign In"}
-          </Button>
-          <Snackbar
-            open={Boolean(errorMessage)}
-            autoHideDuration={6000}
-            onClose={handleSnackbarClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <Alert severity="error" onClose={handleSnackbarClose}>
-              {errorMessage}
-            </Alert>
-          </Snackbar>
-
-          <Grid container>
-            <Grid item xs>
-              <Link to={getPath(Pages.RecoveryPass)}>Forgot password?</Link>
-            </Grid>
-            <Grid item>
-              <Link to={getPath(Pages.Reg)}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <ImageContainer>
+          <img src={loginBg} alt="Background" />
+        </ImageContainer>
+        <FormContainer>
+          <form onSubmit={formik.handleSubmit}>
+            <Title1>Log in</Title1>
+            <Title2>
+              Log in to access the best job opportunities and career tools
+            </Title2>
+            <LaberForEmail htmlFor="email">Email</LaberForEmail>
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Your email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              variant={
+                formError
+                  ? 'error'
+                  : formik.touched.email
+                    ? 'active'
+                    : 'default'
+              }
+              children={
+                formik.touched.email && formik.errors.email
+                  ? formik.errors.email
+                  : ''
+              }
+              error={!!(formik.touched.email && formik.errors.email)}
+            />
+            <LaberForEmail htmlFor="password">Password</LaberForEmail>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Your password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              variant={
+                formError
+                  ? 'error'
+                  : formik.touched.password
+                    ? 'active'
+                    : 'default'
+              }
+              children={
+                formik.touched.password && formik.errors.password
+                  ? formik.errors.password
+                  : ''
+              }
+              error={!!(formik.touched.password && formik.errors.password)}
+            />
+            <AuthActions>
+              <div>
+                <CheckBox type="checkbox" id="rememberMe" name="rememberMe" />
+                <RememberMeLabel htmlFor="rememberMe">
+                  Remember me
+                </RememberMeLabel>
+              </div>
+              <div>
+                <StyledLink to={getPath(Pages.RecoveryPass)}>
+                  Forgot your password?
+                </StyledLink>
+              </div>
+            </AuthActions>
+            <Button
+              type="submit"
+              variant={buttonVariant}
+              disabled={isButtonDisabled}
+            >
+              Log in
+            </Button>
+            {formError && <ErrorMessage>{formError}</ErrorMessage>}{' '}
+            <ActionToReg>
+              <LaberForReg>Don’t have an account yet? </LaberForReg>
+              <StyledLink to={getPath(Pages.Reg)}>Sign up </StyledLink>
+            </ActionToReg>
+            <Body1>or</Body1>
+            <SocialIcons>
+              <SocialIconWrapper href={SocialLinks.Google}>
+                <img src={GoogleIcon} alt="Google" />
+              </SocialIconWrapper>
+              <SocialIconWrapper href={SocialLinks.Apple}>
+                <img src={AppleIcon} alt="Apple" />
+              </SocialIconWrapper>
+              <SocialIconWrapper href={SocialLinks.Facebook}>
+                <img src={FacebookIcon} alt="Facebook" />
+              </SocialIconWrapper>
+            </SocialIcons>
+          </form>
+        </FormContainer>
+      </Wrapper>
+    </>
   );
 };

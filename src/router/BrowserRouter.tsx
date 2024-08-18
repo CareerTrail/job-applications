@@ -10,9 +10,10 @@ import Application from 'pages/Application';
 import Applications from 'pages/Applications';
 import AddApplication from 'pages/Applications/components';
 import RecoveryPass from 'pages/RecoveryPass';
+import Boards from 'pages/Boards';
 import { Pages, getPath } from 'core/variables/constants.ts';
 import RequireAuth from 'shared/hooks/RequireAuth.tsx';
-import RequireGuest from 'shared/hooks/RequireAuth.tsx';
+import RequireGuest from 'shared/hooks/RequireGuest.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -28,9 +29,7 @@ export const router = createBrowserRouter([
     path: getPath(Pages.Reg),
     element: (
       <RequireGuest>
-        <DashboardWrapper>
-          <Registration />
-        </DashboardWrapper>
+        <Registration />
       </RequireGuest>
     ),
     errorElement: <ErrorPage />,
@@ -39,9 +38,7 @@ export const router = createBrowserRouter([
     path: getPath(Pages.Auth),
     element: (
       <RequireGuest>
-        <DashboardWrapper>
-          <Login />
-        </DashboardWrapper>
+        <Login />
       </RequireGuest>
     ),
     errorElement: <ErrorPage />,

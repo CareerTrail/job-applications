@@ -34,6 +34,7 @@ export enum Colors {
   tertiary_stroke = '#DEDEDE',
   bg_white = '#FFFFFF',
   secondary = '#929292',
+  error_bg = '#FFF5F5',
   error_stroke = '#C13515',
-  input_disabled = '#F9F9F9',
+  input_bg_disabled = '#F9F9F9',
 }

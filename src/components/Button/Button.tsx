@@ -5,22 +5,22 @@ import { Colors } from 'core/variables/constants';
 type ColorKeys = keyof typeof Colors;
 
 interface ButtonProps extends ComponentProps<'button'> {
-  color?: ColorKeys;
+  backgroundColor?: ColorKeys;
   textColor?: ColorKeys;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  color = 'accent',
+  backgroundColor = 'accent',
   textColor = 'bg_white',
   children,
   ...props
 }) => {
-  const buttonColor = Colors[color] || Colors.accent;
+  const buttonColor = Colors[backgroundColor] || Colors.accent;
   const textColorValue = Colors[textColor] || Colors.bg_white;
 
   const buttonStyle: React.CSSProperties = {
-    backgroundColor: buttonColor,
-    color: textColorValue,
+    backgroundColor: buttonColor, // Цвет фона
+    color: textColorValue, // Цвет текста
   };
 
   return (

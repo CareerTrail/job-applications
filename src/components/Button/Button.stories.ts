@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
       ],
       description: 'Цвет фона кнопки',
     },
-    textColor: {
+    color: {
       control: 'select',
       options: ['bg_white', 'secondary'],
       description: 'Цвет текста кнопки',
@@ -31,27 +31,27 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {
   args: {
     backgroundColor: 'accent',
-    textColor: 'bg_white',
+    color: 'bg_white',
   },
 };
 
 export const Hover: Story = {
   args: {
     backgroundColor: 'button_bg_hover',
-    textColor: 'bg_white',
+    color: 'bg_white',
   },
 };
 
 export const Active: Story = {
   args: {
     backgroundColor: 'button_bg_active',
-    textColor: 'bg_white',
+    color: 'bg_white',
   },
 };
 
 export const Disabled: Story = {
   args: {
     backgroundColor: 'tertiary_stroke',
-    textColor: 'secondary',
+    color: 'secondary',
   },
 };

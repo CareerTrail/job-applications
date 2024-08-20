@@ -25,6 +25,16 @@ const meta: Meta<typeof Input> = {
     value: {
       control: 'text',
     },
+    isPassword: {
+      control: 'boolean',
+    },
+    helperText: {
+      control: 'text',
+    },
+    helperTextColor: {
+      control: 'select',
+      options: ['error_stroke'],
+    },
   },
 };
 
@@ -38,6 +48,7 @@ export const Default: Story = {
     placeholder: 'Your email',
     borderWidth: '1px',
     borderColor: 'tertiary_stroke',
+    isPassword: false,
   },
 };
 
@@ -47,6 +58,7 @@ export const Default_password_eye_on: Story = {
     placeholder: 'Your password',
     borderWidth: '1px',
     borderColor: 'tertiary_stroke',
+    isPassword: true,
   },
 };
 export const Active: Story = {
@@ -56,6 +68,7 @@ export const Active: Story = {
     borderWidth: '2px',
     borderColor: 'accent',
     value: 'froggy@gmail.',
+    isPassword: false,
   },
 };
 export const Active_password: Story = {
@@ -65,6 +78,7 @@ export const Active_password: Story = {
     borderWidth: '2px',
     borderColor: 'accent',
     value: '12334',
+    isPassword: true,
   },
 };
 export const After_active: Story = {
@@ -74,6 +88,7 @@ export const After_active: Story = {
     borderWidth: '1px',
     borderColor: 'tertiary_stroke',
     value: 'froggy@gmail.com',
+    isPassword: false,
   },
 };
 export const Error: Story = {
@@ -83,6 +98,9 @@ export const Error: Story = {
     borderWidth: '2px',
     borderColor: 'error_stroke',
     value: 'email.com',
+    isPassword: false,
+    helperText: 'Invalid email format',
+    helperTextColor: 'error_stroke',
   },
 };
 export const Disabled: Story = {
@@ -91,5 +109,6 @@ export const Disabled: Story = {
     placeholder: 'Your email',
     borderWidth: '1px',
     borderColor: 'tertiary_stroke',
+    isPassword: false,
   },
 };

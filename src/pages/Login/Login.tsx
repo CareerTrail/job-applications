@@ -1,19 +1,42 @@
-import React, { useState } from 'react';
+// Login.tsx
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from 'services/userApi';
 import { Pages, getPath } from 'core/variables/constants';
 import { useAuth } from 'hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
-import styles from './Login.module.css';
 import loginBg from 'assets/images/auth/login-bg.jpg';
+import GoogleIcon from 'assets/images/google.svg';
+import AppleIcon from 'assets/images/apple.svg';
+import FacebookIcon from 'assets/images/facebook.svg';
 import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
+import {
+  GlobalStyle,
+  Wrapper,
+  ImageContainer,
+  FormContainer,
+  AuthActions,
+  CheckBox,
+  RememberMeLabel,
+  StyledLink,
+  Title1,
+  Title2,
+  LaberForEmail,
+  ActionToReg,
+  LaberForReg,
+  Body1,
+  SocialIcons,
+  SocialIconWrapper,
+  ErrorMessage,
+} from './Login.styles';
 
 export const Login = () => {
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
 
@@ -48,115 +71,92 @@ export const Login = () => {
     },
   });
 
+  const isButtonDisabled = !formik.isValid || formik.isSubmitting;
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.imageContainer}>
-        <img src={loginBg} alt="Background"></img>
-      </div>
-      <div className={styles.formContainer}>
-        <form onSubmit={formik.handleSubmit}>
-          <Input
-            backgroundColor="bg_white"
-            borderColor="tertiary_stroke"
-            borderRadius="12px"
-            borderStyle="solid"
-            borderWidth="1px"
-            height="52px"
-            padding="16px"
-            placeholder="Your email"
-            width="400px"
-          />
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          /> */}
-
-          <Input
-            backgroundColor="bg_white"
-            borderColor="tertiary_stroke"
-            borderRadius="12px"
-            borderStyle="solid"
-            borderWidth="1px"
-            height="52px"
-            isPassword
-            padding="16px"
-            placeholder="Password"
-            width="400px"
-          />
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            autoComplete="current-password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          /> */}
-
-          <Button
-            color="accent"
-            fontSize="16px"
-            fontWeight="500"
-            gap="8px"
-            height="52px"
-            padding="16px 207px"
-            radius="12px"
-            textTransform="none"
-            width="400px"
-          />
-          {/* <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={formik.isSubmitting || isLoading}
-          >
-            {formik.isSubmitting || isLoading ? 'Signing in...' : 'Sign In'}
-          </Button> */}
-
-          <div>
-            <div>
-              <Link to={getPath(Pages.RecoveryPass)}>Forgot password?</Link>
-            </div>
-            <div>
-              <Link to={getPath(Pages.Reg)}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <ImageContainer>
+          <img src={loginBg} alt="Background" />
+        </ImageContainer>
+        <FormContainer>
+          <form onSubmit={formik.handleSubmit}>
+            <Title1>Log in</Title1>
+            <Title2>
+              Log in to access the best job opportunities and career tools
+            </Title2>
+            <LaberForEmail htmlFor="email">Email</LaberForEmail>
+            <Input
+              backgroundColor="bg_white"
+              type="text"
+              id="email"
+              name="email"
+              borderColor="tertiary_stroke"
+              borderWidth="1px"
+              placeholder="Your email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.email && formik.errors.email && (
+              <ErrorMessage>{formik.errors.email}</ErrorMessage>
+            )}
+            <LaberForEmail htmlFor="password">Password</LaberForEmail>
+            <Input
+              backgroundColor="bg_white"
+              borderColor="tertiary_stroke"
+              borderWidth="1px"
+              isPassword
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Your password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.password && formik.errors.password && (
+              <ErrorMessage>{formik.errors.password}</ErrorMessage>
+            )}
+            <AuthActions>
+              <div>
+                <CheckBox type="checkbox" id="rememberMe" name="rememberMe" />
+                <RememberMeLabel htmlFor="rememberMe">
+                  Remember me
+                </RememberMeLabel>
+              </div>
+              <div>
+                <StyledLink to={getPath(Pages.RecoveryPass)}>
+                  Forgot your password?
+                </StyledLink>
+              </div>
+            </AuthActions>
+            <Button
+              backgroundColor="accent"
+              color="bg_white"
+              type="submit"
+              isDisabled={isButtonDisabled}
+            />
+            <ActionToReg>
+              <LaberForReg>Don’t have an account yet? </LaberForReg>
+              <StyledLink to={getPath(Pages.Reg)}>Sign up </StyledLink>
+            </ActionToReg>
+            <Body1>or</Body1>
+            <SocialIcons>
+              <SocialIconWrapper href="https://google.com">
+                <img src={GoogleIcon} alt="Google" />
+              </SocialIconWrapper>
+              <SocialIconWrapper href="https://apple.com">
+                <img src={AppleIcon} alt="Apple" />
+              </SocialIconWrapper>
+              <SocialIconWrapper href="https://facebook.com">
+                <img src={FacebookIcon} alt="Facebook" />
+              </SocialIconWrapper>
+            </SocialIcons>
+          </form>
+        </FormContainer>
+      </Wrapper>
+    </>
   );
 };

@@ -37,4 +37,5 @@ export enum Colors {
   error_bg = '#FFF5F5',
   error_stroke = '#C13515',
   input_bg_disabled = '#F9F9F9',
+  primary = '#363232',
 }

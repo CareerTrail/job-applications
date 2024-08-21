@@ -15,6 +15,10 @@ interface InputProps extends ComponentProps<'input'> {
   isPassword?: boolean;
   helperText?: string;
   helperTextColor?: ColorKeys;
+  name: string;
+  id: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -23,13 +27,16 @@ const Input: React.FC<InputProps> = ({
   borderWidth,
   borderColor = 'tertiary_stroke',
   isPassword = false,
+  id,
   value,
+  onChange,
+  onBlur,
   helperText,
   helperTextColor = 'error_stroke',
+  name,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -58,8 +65,11 @@ const Input: React.FC<InputProps> = ({
         className={styles.input}
         style={inputStyle}
         placeholder={placeholder ? placeholder : ''}
-        value={inputValue || ''}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={value || ''}
+        onChange={onChange}
+        onBlur={onBlur}
+        id={id}
+        name={name}
         {...props}
       />
       {isPassword && (

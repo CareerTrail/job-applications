@@ -1,0 +1,35 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  white-space: nowrap;
+  width: 400px;
+  height: 52px;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  border: none;
+  box-sizing: border-box;
+  background-color: #fe6e06;
+  color: #ffff;
+}
+
+.button:hover {
+  background-color: #ea690c !important;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: #dc6109 !important;
+}
+
+.button:disabled {
+  color: #929292 !important;
+  background-color: #dedede !important;
+  cursor: not-allowed;
+}

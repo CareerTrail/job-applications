@@ -8,19 +8,28 @@
   white-space: nowrap;
   width: 400px;
   height: 52px;
-  padding: 16px 207px;
+  padding: 16px;
   border-radius: 12px;
   font-size: 16px;
   font-weight: 500;
   text-transform: none;
   border: none;
+  box-sizing: border-box;
+  background-color: #fe6e06;
+  color: #ffff;
 }
 
 .button:hover {
-  filter: brightness(0.9);
+  background-color: #ea690c !important;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: #dc6109 !important;
 }
 
 .button:disabled {
-  pointer-events: none;
-  opacity: 0.5;
+  color: #929292 !important;
+  background-color: #dedede !important;
+  cursor: not-allowed;
 }

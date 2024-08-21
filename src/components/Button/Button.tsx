@@ -7,11 +7,13 @@ type ColorKeys = keyof typeof Colors;
 interface ButtonProps extends ComponentProps<'button'> {
   backgroundColor?: ColorKeys;
   color?: ColorKeys;
+  isDisabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   backgroundColor = 'accent',
   color = 'bg_white',
+  isDisabled = false,
   children,
   ...props
 }) => {
@@ -24,7 +26,12 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button {...props} className={styles.button} style={buttonStyle}>
+    <button
+      {...props}
+      className={styles.button}
+      style={buttonStyle}
+      disabled={isDisabled}
+    >
       {children || 'Log in'}
     </button>
   );

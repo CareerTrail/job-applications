@@ -1,0 +1,40 @@
+@import 'src/index.css';
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  white-space: nowrap;
+  width: 400px;
+  height: 52px;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* variants */
+.default {
+  background-color: var(--accent-color);
+  color: var(--bg_white-color);
+}
+.hover {
+  background-color: var(--button_bg_hover-color);
+  color: var(--bg_white-color);
+}
+.active {
+  background-color: var(--button_bg_active-color);
+  color: var(--bg_white-color);
+}
+.button.disabled {
+  background-color: var(--tertiary_stroke-color);
+  color: var(--secondary-color);
+  cursor: not-allowed !important;
+}

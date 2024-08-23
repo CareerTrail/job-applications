@@ -1,3 +1,5 @@
+@import 'src/index.css';
+
 .inputContainer {
   position: relative;
   width: 400px;
@@ -30,4 +32,45 @@ input:focus {
   margin-top: 4px;
   line-height: 1.2;
   font-size: 16px;
+  color: var(--error_stroke-color);
+}
+
+/* variants */
+
+.default {
+  background-color: var(--bg_white-color);
+  border-width: 1px;
+  border-color: var(--tertiary_stroke-color);
+}
+.defaultPasswordEyeOn {
+  background-color: var(--bg_white-color);
+  border-width: 1px;
+  border-color: var(--tertiary_stroke-color);
+}
+.active {
+  background-color: var(--bg_white-color);
+  border-width: 2px;
+  border-color: var(--accent-color);
+}
+.activePassword {
+  background-color: var(--bg_white-color);
+  border-width: 2px;
+  border-color: var(--accent-color);
+}
+.afterActive {
+  background-color: var(--bg_white-color);
+  border-width: 1px;
+  border-color: var(--tertiary_stroke-color);
+}
+.error {
+  background-color: var(--error_bg-color);
+  border-width: 2px;
+  border-color: var(--error_stroke-color);
+}
+.disabled {
+  background-color: var(--input_bg_disabled-color);
+  border-width: 1px;
+  border-color: var(--tertiary_stroke-color);
+  cursor: not-allowed;
+  pointer-events: none;
 }

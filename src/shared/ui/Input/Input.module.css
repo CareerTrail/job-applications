@@ -1,0 +1,38 @@
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+input:focus {
+  outline: none;
+}
+
+.bordered {
+  width: 100%;
+  height: 100%;
+  border-width: var(--borderWidth, 1px);
+  border-style: var(--borderStyle, solid);
+  border-color: var(--borderColor, #ccc);
+  padding: var(--padding, 0px);
+  box-sizing: border-box;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  height: 24px;
+  width: 24px;
+}
+
+.helperText {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.2;
+}

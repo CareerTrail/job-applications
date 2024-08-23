@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from 'services/userApi';
 import { Pages, SocialLinks, getPath } from 'core/variables/constants';
-import { useAuth } from 'hooks/authHooks';
+import { useAuth } from 'shared/hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
 import loginBg from 'assets/images/auth/login-bg.jpg';
 import GoogleIcon from 'assets/images/google.svg';

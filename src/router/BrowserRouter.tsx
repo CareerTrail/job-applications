@@ -13,6 +13,7 @@ import RecoveryPass from 'pages/RecoveryPass';
 import { Pages, getPath } from 'core/variables/constants.ts';
 import RequireAuth from 'shared/hooks/RequireAuth.tsx';
 import RequireGuest from 'shared/hooks/RequireAuth.tsx';
+import Boards from 'pages/Boards';
 
 export const router = createBrowserRouter([
   {
@@ -35,11 +36,7 @@ export const router = createBrowserRouter([
   },
   {
     path: getPath(Pages.Auth),
-    element: (
-      <RequireGuest>
-        <Login />
-      </RequireGuest>
-    ),
+    element: <Login />,
     errorElement: <ErrorPage />,
   },
   {

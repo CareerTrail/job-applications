@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import AppMenu from '../Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Pages } from 'core/variables/constants';
+import { Pages, getPath } from 'core/variables/constants';
 import { useAuth } from 'shared/hooks/authHooks';
 
 /**

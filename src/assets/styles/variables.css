@@ -1,0 +1,12 @@
+:root {
+  --accent-color: #fe6e06;
+  --button_bg_hover-color: #ea690c;
+  --button_bg_active-color: #dc6109;
+  --tertiary_stroke-color: #dedede;
+  --bg_white-color: #ffffff;
+  --secondary-color: #929292;
+  --error_bg-color: #fff5f5;
+  --error_stroke-color: #c13515;
+  --input_bg_disabled-color: #f9f9f9;
+  --primary-color: #363232;
+}

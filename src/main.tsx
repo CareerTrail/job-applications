@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router/BrowserRouter';
 import { Provider } from 'react-redux';
 import { store } from 'store/store.js';
-import { AuthProvider } from 'hooks/authHooks';
+import { AuthProvider } from 'shared/hooks/authHooks';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

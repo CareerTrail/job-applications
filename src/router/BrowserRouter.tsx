@@ -28,9 +28,7 @@ export const router = createBrowserRouter([
     path: getPath(Pages.Reg),
     element: (
       <RequireGuest>
-        <DashboardWrapper>
-          <Registration />
-        </DashboardWrapper>
+        <Registration />
       </RequireGuest>
     ),
     errorElement: <ErrorPage />,
@@ -39,9 +37,7 @@ export const router = createBrowserRouter([
     path: getPath(Pages.Auth),
     element: (
       <RequireGuest>
-        <DashboardWrapper>
-          <Login />
-        </DashboardWrapper>
+        <Login />
       </RequireGuest>
     ),
     errorElement: <ErrorPage />,

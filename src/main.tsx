@@ -4,8 +4,8 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/BrowserRouter';
 import { Provider } from 'react-redux';
-import { store } from 'store/store.ts';
-import { AuthProvider } from 'shared/hooks/authHooks';
+import { store } from 'store/store.js';
+import { AuthProvider } from 'hooks/authHooks';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

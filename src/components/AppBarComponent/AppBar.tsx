@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { ReactElement, useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   Drawer,
   Avatar,
@@ -11,11 +11,11 @@ import {
   Typography,
   Button,
   IconButton,
-} from "@mui/material";
-import AppMenu from "../Menu";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Pages, getPath } from "core/variables/constants";
-import { useAuth } from "hooks/authHooks";
+} from '@mui/material';
+import AppMenu from '../Menu';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Pages, getPath } from 'core/variables/constants';
+import { useAuth } from 'shared/hooks/authHooks';
 
 /**
  * AppBarComponent for rendering the application's top app bar.
@@ -56,8 +56,8 @@ export const AppBarComponent = (): ReactElement => {
    * @returns {string} The dashboard item name.
    */
   const getDashboardItemName = (): string => {
-    return pathname === "/"
-      ? "MAIN"
+    return pathname === '/'
+      ? 'MAIN'
       : pathname.slice(1, pathname.length).toUpperCase();
   };
 
@@ -146,7 +146,7 @@ export const AppBarComponent = (): ReactElement => {
           )}
         </Toolbar>
         <Drawer
-          anchor={"left"}
+          anchor={'left'}
           open={isMenuOpen}
           onClose={appMenuCloseHandler}
           onClick={appMenuCloseHandler}

@@ -1,38 +1,42 @@
+import React, { useState } from 'react';
 import styles from './Button.module.css';
 import { ComponentProps } from 'react';
-import { Colors } from 'core/variables/constants';
 
-type ColorKeys = keyof typeof Colors;
+type ButtonVariant = 'default' | 'hover' | 'active' | 'disabled';
 
 interface ButtonProps extends ComponentProps<'button'> {
-  backgroundColor?: ColorKeys;
-  color?: ColorKeys;
-  isDisabled?: boolean;
+  variant?: ButtonVariant;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  backgroundColor = 'accent',
-  color = 'bg_white',
-  isDisabled = false,
+  variant = 'default',
   children,
   ...props
 }) => {
-  const buttonColor = Colors[backgroundColor] || Colors.accent;
-  const textColorValue = Colors[color] || Colors.bg_white;
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-  const buttonStyle: React.CSSProperties = {
-    backgroundColor: buttonColor,
-    color: textColorValue,
-  };
+  let appliedVariant = variant;
+  if (props.disabled) {
+    appliedVariant = 'disabled';
+  } else if (isActive) {
+    appliedVariant = 'active';
+  } else if (isHovered) {
+    appliedVariant = 'hover';
+  }
+
+  const buttonClass = `${styles.button} ${styles[appliedVariant]}`;
 
   return (
     <button
       {...props}
-      className={styles.button}
-      style={buttonStyle}
-      disabled={isDisabled}
+      className={buttonClass}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseDown={() => setIsActive(true)}
+      onMouseUp={() => setIsActive(false)}
     >
-      {children || 'Log in'}
+      {children}
     </button>
   );
 };

@@ -1,4 +1,17 @@
 :root {
+  --accent-color: #fe6e06;
+  --button_bg_hover-color: #ea690c;
+  --button_bg_active-color: #dc6109;
+  --tertiary_stroke-color: #dedede;
+  --bg_white-color: #ffffff;
+  --secondary-color: #929292;
+  --error_bg-color: #fff5f5;
+  --error_stroke-color: #c13515;
+  --input_bg_disabled-color: #f9f9f9;
+  --primary-color: #363232;
+}
+body {
+  margin: 0;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -14,24 +27,20 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
-  margin: 0;
-}
-
 @font-face {
-  font-family: "Onest";
-  src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
+  font-family: 'Onest';
+  src: url('./assets/fonts/Onest-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "Onest";
-  src: url("./assets/fonts/Onest-Medium.ttf") format("truetype");
+  font-family: 'Onest';
+  src: url('./assets/fonts/Onest-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Onest";
-  src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
+  font-family: 'Onest';
+  src: url('./assets/fonts/Onest-Bold.ttf') format('truetype');
   font-weight: 700;
 }

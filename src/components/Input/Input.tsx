@@ -1,92 +1,78 @@
 import React, { useState, ComponentProps } from 'react';
 import styles from './Input.module.css';
-import { Colors } from 'core/variables/constants';
 import eye from 'assets/images/eye.svg';
 import eyeOff from 'assets/images/eyeOff.svg';
 
-type ColorKeys = keyof typeof Colors;
-
 interface InputProps extends ComponentProps<'input'> {
-  backgroundColor?: ColorKeys;
-  placeholder?: string;
-  borderWidth?: string;
-  borderColor?: ColorKeys;
-  value?: string;
-  isPassword?: boolean;
-  helperText?: string;
-  helperTextColor?: ColorKeys;
-  name: string;
-  id: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  variant?:
+    | 'default'
+    | 'defaultPasswordEyeOn'
+    | 'active'
+    | 'activePassword'
+    | 'afterActive'
+    | 'error'
+    | 'disabled';
+  error?: boolean;
+  children?: React.ReactNode;
 }
 
 const Input: React.FC<InputProps> = ({
-  backgroundColor = 'bg_white',
-  placeholder,
-  borderWidth,
-  borderColor = 'tertiary_stroke',
-  isPassword = false,
-  id,
-  value,
-  onChange,
-  onBlur,
-  helperText,
-  helperTextColor = 'error_stroke',
-  name,
+  variant = 'default',
+  type = 'text',
+  error = false,
+  value = '',
+  children,
   ...props
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const inputClr = Colors[backgroundColor] || Colors.accent;
-  const borderClr = Colors[borderColor] || Colors.tertiary_stroke;
-  const helperClr = Colors[helperTextColor] || Colors.error_stroke;
-
-  const inputStyle: React.CSSProperties = {
-    backgroundColor: inputClr,
-    borderWidth,
-    borderColor: borderClr,
+  const handleFocus = () => {
+    setIsFocused(true);
   };
 
-  const helperStyle: React.CSSProperties = {
-    color: helperClr,
+  const handleBlur = () => {
+    setIsFocused(false);
   };
+
+  let currentVariant = variant;
+  if (error && children) {
+    currentVariant = 'error';
+  } else if (isFocused && type === 'password') {
+    currentVariant = 'activePassword';
+  } else if (isFocused) {
+    currentVariant = 'active';
+  }
+  const inputClass = `${styles.input} ${styles[currentVariant]}`;
 
   return (
     <div className={styles.inputContainer}>
       <input
-        type={
-          isPassword && showPassword ? 'text' : isPassword ? 'password' : 'text'
-        }
-        className={styles.input}
-        style={inputStyle}
-        placeholder={placeholder ? placeholder : ''}
-        value={value || ''}
-        onChange={onChange}
-        onBlur={onBlur}
-        id={id}
-        name={name}
+        type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+        className={inputClass}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        value={value}
         {...props}
       />
-      {isPassword && (
+      {type === 'password' && (
         <button
           type="button"
           onClick={toggleShowPassword}
           className={styles.eyeIcon}
           aria-label={showPassword ? 'Hide password' : 'Show password'}
         >
-          <img src={showPassword ? eye : eyeOff} alt="button" />
+          <img
+            src={showPassword ? eye : eyeOff}
+            alt="Toggle password visibility"
+          />
         </button>
       )}
-      {helperText && (
-        <div className={styles.helperText} style={helperStyle}>
-          {helperText}
-        </div>
-      )}
+      {children && <div className={styles.helperText}>{children}</div>}
     </div>
   );
 };

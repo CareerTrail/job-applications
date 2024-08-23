@@ -6,22 +6,11 @@ const meta: Meta<typeof Button> = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    backgroundColor: {
+    variant: {
       control: 'select',
-      options: [
-        'accent',
-        'button_bg_hover',
-        'button_bg_active',
-        'tertiary_stroke',
-      ],
-      description: 'Цвет фона кнопки',
+      options: ['default', 'hover', 'active', 'disabled'],
     },
-    color: {
-      control: 'select',
-      options: ['bg_white', 'secondary'],
-      description: 'Цвет текста кнопки',
-    },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
     },
   },
@@ -33,32 +22,32 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    backgroundColor: 'accent',
-    color: 'bg_white',
-    isDisabled: false,
+    variant: 'default',
+    disabled: false,
+    children: 'Log in',
   },
 };
 
 export const Hover: Story = {
   args: {
-    backgroundColor: 'button_bg_hover',
-    color: 'bg_white',
-    isDisabled: false,
+    variant: 'hover',
+    disabled: false,
+    children: 'Log in',
   },
 };
 
 export const Active: Story = {
   args: {
-    backgroundColor: 'button_bg_active',
-    color: 'bg_white',
-    isDisabled: false,
+    variant: 'active',
+    disabled: false,
+    children: 'Log in',
   },
 };
 
 export const Disabled: Story = {
   args: {
-    backgroundColor: 'tertiary_stroke',
-    color: 'secondary',
-    isDisabled: true,
+    variant: 'disabled',
+    disabled: true,
+    children: 'Log in',
   },
 };

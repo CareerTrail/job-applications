@@ -6,34 +6,29 @@ const meta: Meta<typeof Input> = {
   component: Input,
   tags: ['autodocs'],
   argTypes: {
-    backgroundColor: {
-      control: 'select',
-      options: ['bg_white', 'error_bg', 'input_bg_disabled'],
-    },
     placeholder: {
       control: 'text',
       description: 'Текст плейсхолдера',
     },
-    borderWidth: {
-      control: 'text',
-      description: 'Ширина бордера',
+    type: {
+      control: 'radio',
+      options: ['text', 'password'],
     },
-    borderColor: {
+    variant: {
       control: 'select',
-      options: ['tertiary_stroke', 'accent', 'error_stroke'],
+      options: [
+        'default',
+        'defaultPasswordEyeOn',
+        'active',
+        'activePassword',
+        'afterActive',
+        'error',
+        'disabled',
+      ],
     },
-    value: {
+    children: {
       control: 'text',
-    },
-    isPassword: {
-      control: 'boolean',
-    },
-    helperText: {
-      control: 'text',
-    },
-    helperTextColor: {
-      control: 'select',
-      options: ['error_stroke'],
+      description: 'Вспомогательный текст или элементы',
     },
   },
 };
@@ -44,71 +39,67 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   args: {
-    backgroundColor: 'bg_white',
     placeholder: 'Your email',
-    borderWidth: '1px',
-    borderColor: 'tertiary_stroke',
-    isPassword: false,
+    type: 'text',
+    variant: 'default',
+    children: '',
   },
 };
 
 export const Default_password_eye_on: Story = {
   args: {
-    backgroundColor: 'bg_white',
     placeholder: 'Your password',
-    borderWidth: '1px',
-    borderColor: 'tertiary_stroke',
-    isPassword: true,
+    type: 'password',
+    variant: 'defaultPasswordEyeOn',
+    children: '',
   },
 };
+
 export const Active: Story = {
   args: {
-    backgroundColor: 'bg_white',
     placeholder: undefined,
-    borderWidth: '2px',
-    borderColor: 'accent',
     value: 'froggy@gmail.',
-    isPassword: false,
+    type: 'text',
+    variant: 'active',
+    children: '',
   },
 };
+
 export const Active_password: Story = {
   args: {
-    backgroundColor: 'bg_white',
     placeholder: undefined,
-    borderWidth: '2px',
-    borderColor: 'accent',
     value: '12334',
-    isPassword: true,
+    type: 'password',
+    variant: 'activePassword',
+    children: '',
   },
 };
+
 export const After_active: Story = {
   args: {
-    backgroundColor: 'bg_white',
     placeholder: undefined,
-    borderWidth: '1px',
-    borderColor: 'tertiary_stroke',
     value: 'froggy@gmail.com',
-    isPassword: false,
+    type: 'text',
+    variant: 'afterActive',
+    children: '',
   },
 };
+
 export const Error: Story = {
   args: {
-    backgroundColor: 'error_bg',
     placeholder: undefined,
-    borderWidth: '2px',
-    borderColor: 'error_stroke',
     value: 'email.com',
-    isPassword: false,
-    helperText: 'Invalid email format',
-    helperTextColor: 'error_stroke',
+    type: 'text',
+    variant: 'error',
+    children: 'Invalid email format',
   },
 };
+
 export const Disabled: Story = {
   args: {
-    backgroundColor: 'input_bg_disabled',
     placeholder: 'Your email',
-    borderWidth: '1px',
-    borderColor: 'tertiary_stroke',
-    isPassword: false,
+    type: 'text',
+    variant: 'disabled',
+    children: '',
   },
 };

@@ -1,10 +1,9 @@
-// Login.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from 'services/userApi';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages, SocialLinks, getPath } from 'core/variables/constants';
 import { useAuth } from 'hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
 import loginBg from 'assets/images/auth/login-bg.jpg';
@@ -36,9 +35,10 @@ import {
 export const Login = () => {
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
+
+  const [isTouched, setIsTouched] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const LoginUserSchema = Yup.object().shape({
     email: Yup.string().email().required('Email is Required.'),
@@ -63,15 +63,21 @@ export const Login = () => {
         const serverError = err as IServerError;
         const errorResponse =
           serverError.data?.message ||
-          'Failed to register user. Please try again.';
-        setErrorMessage(errorResponse);
-      } finally {
+          'User with these credentials was not found.';
+        setFormError(errorResponse);
         setSubmitting(false);
       }
     },
   });
 
-  const isButtonDisabled = !formik.isValid || formik.isSubmitting;
+  useEffect(() => {
+    if (formik.touched.email || formik.touched.password) {
+      setIsTouched(true);
+    }
+  }, [formik.touched]);
+
+  const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
+  const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
 
   return (
     <>
@@ -88,26 +94,29 @@ export const Login = () => {
             </Title2>
             <LaberForEmail htmlFor="email">Email</LaberForEmail>
             <Input
-              backgroundColor="bg_white"
               type="text"
               id="email"
               name="email"
-              borderColor="tertiary_stroke"
-              borderWidth="1px"
               placeholder="Your email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              variant={
+                formError
+                  ? 'error'
+                  : formik.touched.email
+                    ? 'active'
+                    : 'default'
+              }
+              children={
+                formik.touched.email && formik.errors.email
+                  ? formik.errors.email
+                  : ''
+              }
+              error={!!(formik.touched.email && formik.errors.email)}
             />
-            {formik.touched.email && formik.errors.email && (
-              <ErrorMessage>{formik.errors.email}</ErrorMessage>
-            )}
             <LaberForEmail htmlFor="password">Password</LaberForEmail>
             <Input
-              backgroundColor="bg_white"
-              borderColor="tertiary_stroke"
-              borderWidth="1px"
-              isPassword
               type="password"
               id="password"
               name="password"
@@ -115,10 +124,20 @@ export const Login = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              variant={
+                formError
+                  ? 'error'
+                  : formik.touched.password
+                    ? 'active'
+                    : 'default'
+              }
+              children={
+                formik.touched.password && formik.errors.password
+                  ? formik.errors.password
+                  : ''
+              }
+              error={!!(formik.touched.password && formik.errors.password)}
             />
-            {formik.touched.password && formik.errors.password && (
-              <ErrorMessage>{formik.errors.password}</ErrorMessage>
-            )}
             <AuthActions>
               <div>
                 <CheckBox type="checkbox" id="rememberMe" name="rememberMe" />
@@ -133,24 +152,26 @@ export const Login = () => {
               </div>
             </AuthActions>
             <Button
-              backgroundColor="accent"
-              color="bg_white"
               type="submit"
-              isDisabled={isButtonDisabled}
-            />
+              variant={buttonVariant}
+              disabled={isButtonDisabled}
+            >
+              Log in
+            </Button>
+            {formError && <ErrorMessage>{formError}</ErrorMessage>}{' '}
             <ActionToReg>
               <LaberForReg>Don’t have an account yet? </LaberForReg>
               <StyledLink to={getPath(Pages.Reg)}>Sign up </StyledLink>
             </ActionToReg>
             <Body1>or</Body1>
             <SocialIcons>
-              <SocialIconWrapper href="https://google.com">
+              <SocialIconWrapper href={SocialLinks.Google}>
                 <img src={GoogleIcon} alt="Google" />
               </SocialIconWrapper>
-              <SocialIconWrapper href="https://apple.com">
+              <SocialIconWrapper href={SocialLinks.Apple}>
                 <img src={AppleIcon} alt="Apple" />
               </SocialIconWrapper>
-              <SocialIconWrapper href="https://facebook.com">
+              <SocialIconWrapper href={SocialLinks.Facebook}>
                 <img src={FacebookIcon} alt="Facebook" />
               </SocialIconWrapper>
             </SocialIcons>

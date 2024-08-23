@@ -39,3 +39,9 @@ export enum Colors {
   input_bg_disabled = '#F9F9F9',
   primary = '#363232',
 }
+
+export enum SocialLinks {
+  Google = 'https://google.com',
+  Apple = 'https://apple.com',
+  Facebook = 'https://facebook.com',
+}

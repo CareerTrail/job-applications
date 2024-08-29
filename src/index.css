@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'onest';
+  src: url('assets/fonts/Onest/OnestRegular.ttf') format('truetype');
+}
+
 :root {
   --accent-color: #fe6e06;
   --button_bg_hover-color: #ea690c;
@@ -26,22 +31,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-@font-face {
-  font-family: 'Onest';
-  src: url('./assets/fonts/Onest-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Onest';
-  src: url('./assets/fonts/Onest-Medium.ttf') format('truetype');
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: 'Onest';
-  src: url('./assets/fonts/Onest-Bold.ttf') format('truetype');
-  font-weight: 700;
 }

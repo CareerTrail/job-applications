@@ -1,8 +1,9 @@
-@import 'assets/styles/variables.css';
+/* @import 'assets/styles/variables.css'; */
 
 .inputContainer {
   position: relative;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .input {
@@ -12,6 +13,8 @@
   border-style: solid;
   box-sizing: border-box;
   padding: 16px;
+  font-family: 'onest', sans-serif;
+  font-size: 16px;
 }
 
 .eyeIcon {
@@ -66,6 +69,9 @@ input:focus {
   background-color: var(--error_bg-color);
   border-width: 2px;
   border-color: var(--error_stroke-color);
+  .eyeIcon {
+    top: 20%;
+  }
 }
 .disabled {
   background-color: var(--input_bg_disabled-color);

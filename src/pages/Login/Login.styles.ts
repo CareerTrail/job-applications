@@ -11,50 +11,123 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
-    overflow: hidden;
     font-family: Arial, sans-serif;
   }
 `;
 
 export const Wrapper = styled.div`
   position: relative;
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
 `;
-
 export const ImageContainer = styled.div`
-  position: absolute;
+  position: relative;
   width: 1334px;
-  height: 1040px;
-  top: 20px;
-  left: 20px;
-  border-radius: 40px 0px 0px 0px;
+  height: 100%;
+  z-index: 2;
   overflow: hidden;
-
   img {
     width: 100%;
     height: 100%;
+    border-radius: 40px;
     object-fit: cover;
+    position: absolute;
+    padding: 20px 0 20px 20px;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+`;
+
+export const Title = styled.div`
+  font-family: 'onest', sans-serif;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 467px;
+  height: 231px;
+`;
+
+export const Title1Image = styled.div`
+  color: #fff;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 500;
+`;
+export const Title2Image = styled.div`
+  padding-top: 12px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+`;
+
+export const Slider = styled.div`
+  width: 467px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      margin: 0 0.3em;
+    }
+
+    a {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    a.active {
+      background-color: ${Colors.accent};
+    }
   }
 `;
 
 export const FormContainer = styled.div`
-  position: absolute;
-  width: 400px;
-  height: 637px;
-  top: 222px;
-  left: calc(20px + 1334px + 48px + 20px);
-  bottom: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  max-height: 637px;
   background: #fff;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  z-index: 1;
+  margin: auto auto;
 `;
 
 export const Title1 = styled.div`
@@ -67,7 +140,7 @@ export const Title1 = styled.div`
 export const Title2 = styled.div`
   color: ${Colors.secondary};
   font-size: 18px;
-  font-weight: 400px;
+  font-weight: 400;
   text-align: center;
   margin-top: 16px;
   margin-bottom: 8px;
@@ -96,7 +169,7 @@ export const CheckBox = styled.input`
   width: 15px;
   height: 15px;
   display: inline-block;
-  position: absolute;
+  position: relative;
   margin-top: 4px;
   cursor: pointer;
   &:checked {

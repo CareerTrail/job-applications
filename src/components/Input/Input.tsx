@@ -50,28 +50,32 @@ const Input: React.FC<InputProps> = ({
   const inputClass = `${styles.input} ${styles[currentVariant]}`;
 
   return (
-    <div className={styles.inputContainer}>
-      <input
-        type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
-        className={inputClass}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        value={value}
-        {...props}
-      />
-      {type === 'password' && (
-        <button
-          type="button"
-          onClick={toggleShowPassword}
-          className={styles.eyeIcon}
-          aria-label={showPassword ? 'Hide password' : 'Show password'}
-        >
-          <img
-            src={showPassword ? eye : eyeOff}
-            alt="Toggle password visibility"
-          />
-        </button>
-      )}
+    <div>
+      <span className={styles.inputContainer}>
+        <input
+          type={
+            type === 'password' ? (showPassword ? 'text' : 'password') : type
+          }
+          className={inputClass}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          value={value}
+          {...props}
+        />
+        {type === 'password' && (
+          <button
+            type="button"
+            onClick={toggleShowPassword}
+            className={styles.eyeIcon}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+          >
+            <img
+              src={showPassword ? eye : eyeOff}
+              alt="Toggle password visibility"
+            />
+          </button>
+        )}
+      </span>
       {children && <div className={styles.helperText}>{children}</div>}
     </div>
   );

@@ -9,7 +9,11 @@ import { IServerError } from 'core/interfaces/dataModels';
 import loginBg from 'assets/images/auth/login-bg.jpg';
 import GoogleIcon from 'assets/images/google.svg';
 import AppleIcon from 'assets/images/apple.svg';
+import left from 'assets/images/left.svg';
 import FacebookIcon from 'assets/images/facebook.svg';
+import mainGraph from 'assets/images/auth/mainGraph.png';
+import leftGraph from 'assets/images/auth/leftGraph.png';
+import rightGraph from 'assets/images/auth/rightGraph.png';
 import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
 import {
@@ -30,12 +34,17 @@ import {
   SocialIcons,
   SocialIconWrapper,
   ErrorMessage,
+  Slider,
+  Title,
+  Title1Image,
+  Title2Image,
 } from './Login.styles';
 
 export const Login = () => {
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [activeIndex, setActiveIndex] = useState(2);
 
   const [isTouched, setIsTouched] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -85,6 +94,90 @@ export const Login = () => {
       <Wrapper>
         <ImageContainer>
           <img src={loginBg} alt="Background" />
+          <img
+            src={mainGraph}
+            alt="mainGraph"
+            style={{
+              width: '629px',
+              height: '331px',
+              top: '30vh',
+              left: '15vw',
+            }}
+          />
+          <img
+            src={leftGraph}
+            alt="leftGraph"
+            style={{
+              width: '318px',
+              height: '152px',
+              top: '25vh',
+              left: '7vw',
+            }}
+          />
+          <img
+            src={rightGraph}
+            alt="rightGraph"
+            style={{
+              width: '318px',
+              height: '152px',
+              top: '52vh',
+              left: '35vw',
+            }}
+          />
+          <Title>
+            <Title1Image>Simplify Your Job Search with JobBox</Title1Image>
+            <Title2Image>
+              At JobBox, we make it easy to find job opportunities tailored to
+              your skills and preferences. Our platform offers a wealth of
+              resources to support you in landing your ideal position
+            </Title2Image>
+            <Slider>
+              <div>
+                <a href="#">
+                  <img
+                    src={left}
+                    alt="left"
+                    style={{
+                      width: '18px',
+                      height: '27px',
+                      position: 'absolute',
+                      top: '232px',
+                      right: '450px',
+                    }}
+                  />
+                </a>
+              </div>
+              <ul>
+                {[0, 1, 2, 3].map((index) => (
+                  <li key={index}>
+                    <a
+                      href="#"
+                      className={index === activeIndex ? 'active' : ''}
+                      onClick={() => setActiveIndex(index)}
+                    >
+                      {index + 1}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div>
+                <a href="#">
+                  <img
+                    src={left}
+                    alt="right"
+                    style={{
+                      width: '18px',
+                      height: '27px',
+                      transform: 'rotate(180deg)',
+                      position: 'absolute',
+                      top: '232px',
+                      left: '445px',
+                    }}
+                  />
+                </a>
+              </div>
+            </Slider>
+          </Title>
         </ImageContainer>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>

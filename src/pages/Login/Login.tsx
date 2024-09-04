@@ -16,26 +16,25 @@ import leftGraph from 'assets/images/auth/leftGraph.png';
 import rightGraph from 'assets/images/auth/rightGraph.png';
 import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
+import { Link } from 'react-router-dom';
 import {
   GlobalStyle,
   Wrapper,
   ImageContainer,
   FormContainer,
   AuthActions,
-  CheckBox,
-  RememberMeLabel,
-  StyledLink,
-  Title1,
-  Title2,
-  LaberForEmail,
+  RememberMe,
+  Header,
+  Title,
+  SubTitle,
+  Form,
   ActionToReg,
-  LaberForReg,
   Body1,
   SocialIcons,
   SocialIconWrapper,
   ErrorMessage,
   Slider,
-  Title,
+  TitleImg,
   Title1Image,
   Title2Image,
 } from './Login.styles';
@@ -98,19 +97,21 @@ export const Login = () => {
             src={mainGraph}
             alt="mainGraph"
             style={{
-              width: '629px',
-              height: '331px',
-              top: '30vh',
-              left: '15vw',
+              position: 'absolute',
+              maxWidth: '50%',
+              height: 'auto',
+              top: '22vh',
+              left: '17vw',
             }}
           />
           <img
             src={leftGraph}
             alt="leftGraph"
             style={{
-              width: '318px',
-              height: '152px',
-              top: '25vh',
+              position: 'absolute',
+              width: '22%',
+              height: 'auto',
+              top: '15vh',
               left: '7vw',
             }}
           />
@@ -118,13 +119,14 @@ export const Login = () => {
             src={rightGraph}
             alt="rightGraph"
             style={{
-              width: '318px',
-              height: '152px',
-              top: '52vh',
-              left: '35vw',
+              position: 'absolute',
+              width: '22%',
+              height: 'auto',
+              top: '54vh',
+              left: '46vw',
             }}
           />
-          <Title>
+          <TitleImg>
             <Title1Image>Simplify Your Job Search with JobBox</Title1Image>
             <Title2Image>
               At JobBox, we make it easy to find job opportunities tailored to
@@ -177,73 +179,78 @@ export const Login = () => {
                 </a>
               </div>
             </Slider>
-          </Title>
+          </TitleImg>
         </ImageContainer>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
-            <Title1>Log in</Title1>
-            <Title2>
-              Log in to access the best job opportunities and career tools
-            </Title2>
-            <LaberForEmail htmlFor="email">Email</LaberForEmail>
-            <Input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Your email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              variant={
-                formError
-                  ? 'error'
-                  : formik.touched.email
-                    ? 'active'
-                    : 'default'
-              }
-              children={
-                formik.touched.email && formik.errors.email
-                  ? formik.errors.email
-                  : ''
-              }
-              error={!!(formik.touched.email && formik.errors.email)}
-            />
-            <LaberForEmail htmlFor="password">Password</LaberForEmail>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Your password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              variant={
-                formError
-                  ? 'error'
-                  : formik.touched.password
-                    ? 'active'
-                    : 'default'
-              }
-              children={
-                formik.touched.password && formik.errors.password
-                  ? formik.errors.password
-                  : ''
-              }
-              error={!!(formik.touched.password && formik.errors.password)}
-            />
-            <AuthActions>
+            <Header>
+              <Title>Log in</Title>
+              <SubTitle>
+                Log in to access the best job opportunities and career tools
+              </SubTitle>
+            </Header>
+            <Form>
               <div>
-                <CheckBox type="checkbox" id="rememberMe" name="rememberMe" />
-                <RememberMeLabel htmlFor="rememberMe">
-                  Remember me
-                </RememberMeLabel>
+                <label htmlFor="email">Email</label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Your email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  variant={
+                    formError
+                      ? 'error'
+                      : formik.touched.email
+                        ? 'active'
+                        : 'default'
+                  }
+                  children={
+                    formik.touched.email && formik.errors.email
+                      ? formik.errors.email
+                      : ''
+                  }
+                  error={!!(formik.touched.email && formik.errors.email)}
+                />
               </div>
               <div>
-                <StyledLink to={getPath(Pages.RecoveryPass)}>
-                  Forgot your password?
-                </StyledLink>
+                <label htmlFor="password">Password</label>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Your password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  variant={
+                    formError
+                      ? 'error'
+                      : formik.touched.password
+                        ? 'active'
+                        : 'default'
+                  }
+                  children={
+                    formik.touched.password && formik.errors.password
+                      ? formik.errors.password
+                      : ''
+                  }
+                  error={!!(formik.touched.password && formik.errors.password)}
+                />
               </div>
-            </AuthActions>
+              <AuthActions>
+                <RememberMe>
+                  <input type="checkbox" id="rememberMe" name="rememberMe" />
+                  <label htmlFor="rememberMe">Remember me</label>
+                </RememberMe>
+                <div>
+                  <Link to={getPath(Pages.RecoveryPass)}>
+                    Forgot your password?
+                  </Link>
+                </div>
+              </AuthActions>
+            </Form>
             <Button
               type="submit"
               variant={buttonVariant}
@@ -251,10 +258,10 @@ export const Login = () => {
             >
               Log in
             </Button>
-            {formError && <ErrorMessage>{formError}</ErrorMessage>}{' '}
+            {formError && <ErrorMessage>{formError}</ErrorMessage>}
             <ActionToReg>
-              <LaberForReg>Don’t have an account yet? </LaberForReg>
-              <StyledLink to={getPath(Pages.Reg)}>Sign up </StyledLink>
+              <div>Don’t have an account yet? </div>
+              <Link to={getPath(Pages.Reg)}>Sign up </Link>
             </ActionToReg>
             <Body1>or</Body1>
             <SocialIcons>

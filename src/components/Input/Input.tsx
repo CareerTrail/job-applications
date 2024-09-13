@@ -1,7 +1,7 @@
 import React, { useState, ComponentProps } from 'react';
+import Eye from 'assets/images/eye.svg';
+import EyeOff from 'assets/images/eyeOff.svg';
 import styles from './Input.module.css';
-import eye from 'assets/images/eye.svg';
-import eyeOff from 'assets/images/eyeOff.svg';
 
 interface InputProps extends ComponentProps<'input'> {
   variant?:
@@ -69,10 +69,7 @@ const Input: React.FC<InputProps> = ({
             className={styles.eyeIcon}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
-            <img
-              src={showPassword ? eye : eyeOff}
-              alt="Toggle password visibility"
-            />
+            {showPassword ? <Eye /> : <EyeOff />}
           </button>
         )}
       </span>

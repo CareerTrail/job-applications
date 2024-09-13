@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
-import { router } from './router/BrowserRouter';
 import { Provider } from 'react-redux';
 import { store } from 'store/store.js';
 import { AuthProvider } from 'shared/hooks/authHooks';
+import { router } from './router/BrowserRouter';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,5 +14,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router} />
       </AuthProvider>
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

@@ -7,6 +7,7 @@ export enum Pages {
   Applications = 'Applications',
   RecoveryPass = 'RecoveryPass',
   Board = 'Board',
+  Test = 'Test',
 }
 
 export const getPath = (page: Pages): string => `/${page.toLowerCase()}`;
@@ -38,6 +39,7 @@ export enum Colors {
   error_stroke = '#C13515',
   input_bg_disabled = '#F9F9F9',
   primary = '#363232',
+  bg_asside = '#FFE7D6',
 }
 
 export enum SocialLinks {

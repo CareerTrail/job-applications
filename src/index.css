@@ -1,7 +1,19 @@
 @font-face {
   font-family: 'onest';
   src: url('assets/fonts/Onest/OnestRegular.ttf') format('truetype');
+  font-weight: 400;
 }
+@font-face {
+  font-family: 'onest';
+  src: url('assets/fonts/Onest/OnestMedium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'onest';
+  src: url('assets/fonts/Onest/OnestBold.ttf') format('truetype');
+  font-weight: 700;
+}
+
 
 :root {
   --accent-color: #fe6e06;

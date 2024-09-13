@@ -6,37 +6,38 @@ import { useLoginUserMutation } from 'services/userApi';
 import { Pages, SocialLinks, getPath } from 'core/variables/constants';
 import { useAuth } from 'shared/hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
-import loginBg from 'assets/images/auth/login-bg.jpg';
 import GoogleIcon from 'assets/images/google.svg';
 import AppleIcon from 'assets/images/apple.svg';
-import left from 'assets/images/left.svg';
+import Left from 'assets/images/left.svg';
+import Right from 'assets/images/right.svg';
 import FacebookIcon from 'assets/images/facebook.svg';
 import mainGraph from 'assets/images/auth/mainGraph.png';
 import leftGraph from 'assets/images/auth/leftGraph.png';
 import rightGraph from 'assets/images/auth/rightGraph.png';
-import Input from 'components/Input/Input';
-import Button from 'components/Button/Button';
+import Input from 'components/Input';
+import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import {
   GlobalStyle,
   Wrapper,
   ImageContainer,
+  TitleImg,
+  ImageWithPadding,
   FormContainer,
-  AuthActions,
-  RememberMe,
   Header,
+  MainGraph,
+  LeftGraph,
+  RightGraph,
+  Slider,
   Title,
   SubTitle,
-  Form,
+  AuthActions,
+  RememberMe,
+  ErrorMessage,
   ActionToReg,
   Body1,
   SocialIcons,
   SocialIconWrapper,
-  ErrorMessage,
-  Slider,
-  TitleImg,
-  Title1Image,
-  Title2Image,
 } from './Login.styles';
 
 export const Login = () => {
@@ -92,94 +93,44 @@ export const Login = () => {
       <GlobalStyle />
       <Wrapper>
         <ImageContainer>
-          <img src={loginBg} alt="Background" />
-          <img
-            src={mainGraph}
-            alt="mainGraph"
-            style={{
-              position: 'absolute',
-              maxWidth: '50%',
-              height: 'auto',
-              top: '22vh',
-              left: '17vw',
-            }}
-          />
-          <img
-            src={leftGraph}
-            alt="leftGraph"
-            style={{
-              position: 'absolute',
-              width: '22%',
-              height: 'auto',
-              top: '15vh',
-              left: '7vw',
-            }}
-          />
-          <img
-            src={rightGraph}
-            alt="rightGraph"
-            style={{
-              position: 'absolute',
-              width: '22%',
-              height: 'auto',
-              top: '54vh',
-              left: '46vw',
-            }}
-          />
-          <TitleImg>
-            <Title1Image>Simplify Your Job Search with JobBox</Title1Image>
-            <Title2Image>
-              At JobBox, we make it easy to find job opportunities tailored to
-              your skills and preferences. Our platform offers a wealth of
-              resources to support you in landing your ideal position
-            </Title2Image>
-            <Slider>
-              <div>
-                <a href="#">
-                  <img
-                    src={left}
-                    alt="left"
-                    style={{
-                      width: '18px',
-                      height: '27px',
-                      position: 'absolute',
-                      top: '232px',
-                      right: '450px',
-                    }}
-                  />
-                </a>
-              </div>
-              <ul>
-                {[0, 1, 2, 3].map((index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className={index === activeIndex ? 'active' : ''}
-                      onClick={() => setActiveIndex(index)}
-                    >
-                      {index + 1}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div>
-                <a href="#">
-                  <img
-                    src={left}
-                    alt="right"
-                    style={{
-                      width: '18px',
-                      height: '27px',
-                      transform: 'rotate(180deg)',
-                      position: 'absolute',
-                      top: '232px',
-                      left: '445px',
-                    }}
-                  />
-                </a>
-              </div>
-            </Slider>
-          </TitleImg>
+          <ImageWithPadding>
+            <MainGraph src={mainGraph} alt="mainGraph" />
+            <LeftGraph src={leftGraph} alt="leftGraph" />
+            <RightGraph src={rightGraph} alt="rightGraph" />
+            <TitleImg>
+              <h1>Simplify Your Job Search with JobBox</h1>
+              <h2>
+                At JobBox, we make it easy to find job opportunities tailored to
+                your skills and preferences. Our platform offers a wealth of
+                resources to support you in landing your ideal position
+              </h2>
+              <Slider>
+                <div>
+                  <a href="#">
+                    <Left />
+                  </a>
+                </div>
+                <ul>
+                  {[0, 1, 2, 3].map((index) => (
+                    <li key={index}>
+                      <a
+                        href="#"
+                        className={index === activeIndex ? 'active' : ''}
+                        onClick={() => setActiveIndex(index)}
+                      >
+                        {index + 1}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div>
+                  <a href="#">
+                    <Right />
+                  </a>
+                </div>
+              </Slider>
+            </TitleImg>
+          </ImageWithPadding>
         </ImageContainer>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
@@ -189,68 +140,66 @@ export const Login = () => {
                 Log in to access the best job opportunities and career tools
               </SubTitle>
             </Header>
-            <Form>
+            <div>
+              <label htmlFor="email">Email</label>
+              <Input
+                id="email"
+                name="email"
+                placeholder="Your email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                variant={
+                  formError
+                    ? 'error'
+                    : formik.touched.email
+                      ? 'active'
+                      : 'default'
+                }
+                children={
+                  formik.touched.email && formik.errors.email
+                    ? formik.errors.email
+                    : ''
+                }
+                error={!!(formik.touched.email && formik.errors.email)}
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Your password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                variant={
+                  formError
+                    ? 'error'
+                    : formik.touched.password
+                      ? 'active'
+                      : 'default'
+                }
+                children={
+                  formik.touched.password && formik.errors.password
+                    ? formik.errors.password
+                    : ''
+                }
+                error={!!(formik.touched.password && formik.errors.password)}
+              />
+            </div>
+            <AuthActions>
+              <RememberMe>
+                <input type="checkbox" id="rememberMe" name="rememberMe" />
+                <label htmlFor="rememberMe">Remember me</label>
+              </RememberMe>
               <div>
-                <label htmlFor="email">Email</label>
-                <Input
-                  id="email"
-                  name="email"
-                  placeholder="Your email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  variant={
-                    formError
-                      ? 'error'
-                      : formik.touched.email
-                        ? 'active'
-                        : 'default'
-                  }
-                  children={
-                    formik.touched.email && formik.errors.email
-                      ? formik.errors.email
-                      : ''
-                  }
-                  error={!!(formik.touched.email && formik.errors.email)}
-                />
+                <Link to={getPath(Pages.RecoveryPass)}>
+                  Forgot your password?
+                </Link>
               </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Your password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  variant={
-                    formError
-                      ? 'error'
-                      : formik.touched.password
-                        ? 'active'
-                        : 'default'
-                  }
-                  children={
-                    formik.touched.password && formik.errors.password
-                      ? formik.errors.password
-                      : ''
-                  }
-                  error={!!(formik.touched.password && formik.errors.password)}
-                />
-              </div>
-              <AuthActions>
-                <RememberMe>
-                  <input type="checkbox" id="rememberMe" name="rememberMe" />
-                  <label htmlFor="rememberMe">Remember me</label>
-                </RememberMe>
-                <div>
-                  <Link to={getPath(Pages.RecoveryPass)}>
-                    Forgot your password?
-                  </Link>
-                </div>
-              </AuthActions>
-            </Form>
+            </AuthActions>
             <Button
               type="submit"
               variant={buttonVariant}
@@ -266,13 +215,13 @@ export const Login = () => {
             <Body1>or</Body1>
             <SocialIcons>
               <SocialIconWrapper href={SocialLinks.Google}>
-                <img src={GoogleIcon} alt="Google" />
+                <GoogleIcon />
               </SocialIconWrapper>
               <SocialIconWrapper href={SocialLinks.Apple}>
-                <img src={AppleIcon} alt="Apple" />
+                <AppleIcon />
               </SocialIconWrapper>
               <SocialIconWrapper href={SocialLinks.Facebook}>
-                <img src={FacebookIcon} alt="Facebook" />
+                <FacebookIcon />
               </SocialIconWrapper>
             </SocialIcons>
           </form>

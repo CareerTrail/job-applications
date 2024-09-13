@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './Button.module.css';
 import { ComponentProps } from 'react';
+import styles from './Button.module.css';
 
 type ButtonVariant = 'default' | 'hover' | 'active' | 'disabled';
 

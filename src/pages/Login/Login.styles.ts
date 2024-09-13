@@ -1,65 +1,80 @@
-import styled, { createGlobalStyle } from 'styled-components';
 import { Colors } from 'core/variables/constants';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`  
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'onest', sans-serif;
   }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  max-width: 1920px;
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-`;
-export const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  width: 70%;
-  height: 100vh;
-  box-sizing: border-box;
-  padding: 20px 0 20px 20px;
-  position: absolute;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 40px;
-    position: relative;
-  }
-  @media (max-width: 1920px) {
-    width: 70%;
-  }
 `;
 
+export const ImageContainer = styled.div`
+  flex-grow: 6;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`;
+
+export const ImageWithPadding = styled.div`
+  width: 100%;
+  height: calc(100vh - 20px);
+  background-image: url('src/assets/images/auth/login-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 10px 0 10px 10px;
+  border-radius: 40px;
+  position: relative;
+  z-index: 1;
+`;
+export const AbsoluteImage = styled.img`
+  position: absolute;
+  height: auto;
+  z-index: 2;
+`;
+
+export const MainGraph = styled(AbsoluteImage)`
+  top: 35%;
+  left: 33%;
+  width: 35%;
+`;
+
+export const LeftGraph = styled(AbsoluteImage)`
+  top: 25%;
+  left: 19%;
+  width: 22%;
+`;
+
+export const RightGraph = styled(AbsoluteImage)`
+  top: 53%;
+  left: 62%;
+  width: 22%;
+`;
 export const TitleImg = styled.div`
-  font-family: 'onest', sans-serif;
   position: absolute;
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 467px;
   height: 231px;
-`;
-
-export const Title1Image = styled.div`
-  color: #fff;
+  color: ${Colors.bg_white};
   text-align: center;
-  font-size: 36px;
-  font-weight: 500;
+  h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 0 1rem;
+  }
+  h2 {
+    padding-top: 12px;
+    font-size: 1rem;
+    font-weight: 400;
+  }
 `;
-export const Title2Image = styled.div`
-  padding-top: 12px;
-  color: #fff;
-  text-align: center;
-  font-size: 16px;
-`;
-
 export const Slider = styled.div`
   width: 467px;
   height: 27px;
@@ -72,6 +87,13 @@ export const Slider = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  svg path {
+    stroke: ${Colors.bg_white};
   }
 
   ul {
@@ -102,21 +124,25 @@ export const Slider = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  position: relative;
-  margin-left: 70%;
+  flex-grow: 1;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   form {
-    max-width: 400px;
-    max-height: 637px;
-  }
-  @media (max-width: 1920px) {
-    width: 30%;
+    width: 400px;
+    height: 637px;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    label {
+      color: ${Colors.primary};
+      font-size: 18px;
+      display: block;
+    }
   }
 `;
-
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -124,31 +150,20 @@ export const Header = styled.div`
 `;
 export const Title = styled.div`
   color: ${Colors.primary};
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
 `;
 
 export const SubTitle = styled.div`
   color: ${Colors.secondary};
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 400;
 `;
-
-export const Form = styled.div`
-  margin: 24px 0px;
-  label {
-    color: ${Colors.primary};
-    font-size: 18px;
-    display: block;
-  }
-`;
-
 export const AuthActions = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
-  height: 20px;
+  margin: 1rem 0;
   a {
     text-decoration: none;
     color: ${Colors.accent};
@@ -160,7 +175,7 @@ export const RememberMe = styled.div`
   display: flex;
   label {
     margin-left: 6px;
-    font-size: 16px;
+    font-size: 1rem;
     color: #4a4a4a;
   }
   input {
@@ -190,7 +205,6 @@ export const RememberMe = styled.div`
     }
   }
 `;
-
 export const ActionToReg = styled.div`
   display: flex;
   justify-content: center;
@@ -200,7 +214,7 @@ export const ActionToReg = styled.div`
   a {
     text-decoration: none;
     color: ${Colors.accent};
-    font-size: 16px;
+    font-size: 1rem;
   }
   div {
     color: ${Colors.primary};
@@ -209,12 +223,17 @@ export const ActionToReg = styled.div`
     padding-right: 5px;
   }
 `;
-
 export const Body1 = styled.div`
   color: ${Colors.primary};
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
-  padding: 48px;
+  padding: 3rem;
+`;
+export const ErrorMessage = styled.div`
+  color: ${Colors.error_stroke};
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: left;
 `;
 
 export const SocialIcons = styled.div`
@@ -242,15 +261,8 @@ export const SocialIconWrapper = styled.a`
     transform: scale(1.05);
   }
 
-  img {
-    width: 32px;
-    height: 32px;
+  svg {
+    width: 2rem;
+    height: 2rem;
   }
-`;
-
-export const ErrorMessage = styled.div`
-  color: ${Colors.error_stroke};
-  font-size: 14px;
-  margin-top: 4px;
-  text-align: left;
 `;

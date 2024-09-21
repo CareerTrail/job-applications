@@ -1,34 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'shared/hooks/authHooks';
 import { useLoginUserMutation } from 'services/userApi';
 import { useRegisterUserMutation } from 'services/userApi';
-import { Pages, SocialLinks, getPath } from 'core/variables/constants';
+import { Pages, getPath } from 'core/variables/constants';
 import { IServerError } from 'core/interfaces/dataModels';
-import GoogleIcon from 'assets/images/google.svg';
-import AppleIcon from 'assets/images/apple.svg';
-import FacebookIcon from 'assets/images/facebook.svg';
-import Input from 'components/Input/Input';
+import SocialIcons from 'components/SocialIcons';
 import ImageWrapper from 'components/ImageWrapper';
+import FormField from 'components/FormField';
 import Button from 'components/Button/Button';
+import { FormBody, ErrorMessage, FormFields } from 'assets/styles/CommonStyles';
+import { REGISTER_TEXTS } from 'core/variables/locales';
+import FormHeader from 'components/FormHeader';
+import FormAction from 'components/FormAction';
 import {
-  GlobalStyle,
   Wrapper,
   ImageContainer,
   FormContainer,
-  StyledLink,
-  Title1,
-  Title2,
-  LaberForEmail,
-  ActionToReg,
-  LaberForReg,
-  Body1,
-  SocialIcons,
-  SocialIconWrapper,
-  ErrorMessage,
   FIO,
+  Text,
 } from './Registration.styles';
 
 interface IRegistrationProps {
@@ -40,6 +32,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
   onSuccess,
   onError,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [addNewUser] = useRegisterUserMutation();
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -71,6 +64,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
     },
     validationSchema: AddUserSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      setIsLoading(true);
       try {
         await addNewUser({
           firstName: values.firstName,
@@ -94,6 +88,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
         onError?.(err);
       } finally {
         setSubmitting(false);
+        setIsLoading(false);
       }
     },
   });
@@ -107,142 +102,124 @@ export const Registration: React.FC<IRegistrationProps> = ({
   const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
   const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
 
+  const inputFiledFirstName =
+    formik.touched.firstName && formik.errors.firstName ? 'error' : 'default';
+
+  const inputFiledlastName =
+    formik.touched.lastName && formik.errors.lastName ? 'error' : 'default';
+
+  const inputFiledEmail =
+    formik.touched.email && formik.errors.email ? 'error' : 'default';
+
+  const inputFiledPass =
+    formik.touched.password && formik.errors.password ? 'error' : 'default';
+
   return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <ImageContainer>
-          <ImageWrapper />
-        </ImageContainer>
-        <FormContainer>
-          <form onSubmit={formik.handleSubmit}>
-            <Title1>Sign Up</Title1>
-            <Title2>
-              Sign up now to access top job opportunities and career tools
-            </Title2>
-            <FIO>
-              <div>
-                <LaberForEmail htmlFor="firstName">First Name</LaberForEmail>
-                <Input
-                  type="text"
+    <Wrapper>
+      <ImageContainer>
+        <ImageWrapper />
+      </ImageContainer>
+      <FormContainer>
+        <form onSubmit={formik.handleSubmit}>
+          <div>
+            <FormHeader
+              title={REGISTER_TEXTS.title}
+              subtitle={REGISTER_TEXTS.subtitle}
+            />
+            <FormFields>
+              <FIO>
+                <FormField
+                  label={REGISTER_TEXTS.firstNameLabel}
                   id="firstName"
                   name="firstName"
-                  placeholder="Your first name"
+                  placeholder={REGISTER_TEXTS.firstNamePlaceholder}
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
                     !!(formik.touched.firstName && formik.errors.firstName)
                   }
-                  variant={
-                    formik.touched.firstName && formik.errors.firstName
-                      ? 'error'
-                      : 'default'
-                  }
+                  variant={inputFiledFirstName}
                   children={
                     formik.touched.firstName && formik.errors.firstName
                       ? formik.errors.firstName
                       : ''
                   }
-                  style={{ width: '100%' }}
                 />
-              </div>
-              <div>
-                <LaberForEmail htmlFor="lastName">Last Name</LaberForEmail>
-                <Input
-                  type="text"
+                <FormField
+                  label={REGISTER_TEXTS.lastNameLabel}
                   id="lastName"
                   name="lastName"
-                  placeholder="Your last name"
+                  placeholder={REGISTER_TEXTS.lastNamePlaceholder}
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={!!(formik.touched.lastName && formik.errors.lastName)}
-                  variant={
-                    formik.touched.lastName && formik.errors.lastName
-                      ? 'error'
-                      : 'default'
-                  }
+                  variant={inputFiledlastName}
                   children={
                     formik.touched.lastName && formik.errors.lastName
                       ? formik.errors.lastName
                       : ''
                   }
-                  style={{ width: '100%' }}
                 />
-              </div>
-            </FIO>
-            <LaberForEmail htmlFor="email">Email</LaberForEmail>
-            <Input
-              id="email"
-              name="email"
-              placeholder="Your email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={!!(formik.touched.email && formik.errors.email)}
-              variant={
-                formik.touched.email && formik.errors.email
-                  ? 'error'
-                  : 'default'
-              }
-              children={
-                formik.touched.email && formik.errors.email
-                  ? formik.errors.email
-                  : ''
-              }
-              style={{ width: '100%' }}
-            />
-            <LaberForEmail htmlFor="password">Password</LaberForEmail>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Your password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={!!(formik.touched.password && formik.errors.password)}
-              variant={
-                formik.touched.password && formik.errors.password
-                  ? 'error'
-                  : 'default'
-              }
-              children={
-                formik.touched.password && formik.errors.password
-                  ? formik.errors.password
-                  : ''
-              }
-              style={{ width: '100%' }}
-            />
-            <div>By continuing, you agree to our Terms and Privacy Policy</div>
+              </FIO>
+              <FormField
+                label={REGISTER_TEXTS.emailLabel}
+                id="email"
+                name="email"
+                placeholder={REGISTER_TEXTS.emailPlaceholder}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={!!(formik.touched.email && formik.errors.email)}
+                variant={inputFiledEmail}
+                children={
+                  formik.touched.email && formik.errors.email
+                    ? formik.errors.email
+                    : ''
+                }
+              />
+
+              <FormField
+                label={REGISTER_TEXTS.passwordLabel}
+                id="password"
+                name="password"
+                type="password"
+                placeholder={REGISTER_TEXTS.passwordPlaceholder}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                variant={inputFiledPass}
+                error={!!(formik.touched.password && formik.errors.password)}
+                children={
+                  formik.touched.password && formik.errors.password
+                    ? formik.errors.password
+                    : ''
+                }
+              />
+              <Text>
+                By continuing, you agree to our <Link to="#">Terms</Link> and
+                <Link to="#"> Privacy Policy</Link>
+              </Text>
+            </FormFields>
             <Button
               type="submit"
               variant={buttonVariant}
               disabled={isButtonDisabled}
             >
-              Sign Up
+              {isLoading ? 'Registering...' : REGISTER_TEXTS.signUpButton}
             </Button>
             {formError && <ErrorMessage>{formError}</ErrorMessage>}
-            <ActionToReg>
-              <LaberForReg>Already have an account?</LaberForReg>
-              <StyledLink to={getPath(Pages.Auth)}>Log in</StyledLink>
-            </ActionToReg>
-            <Body1>or</Body1>
-            <SocialIcons>
-              <SocialIconWrapper href={SocialLinks.Google}>
-                <GoogleIcon />
-              </SocialIconWrapper>
-              <SocialIconWrapper href={SocialLinks.Apple}>
-                <AppleIcon />
-              </SocialIconWrapper>
-              <SocialIconWrapper href={SocialLinks.Facebook}>
-                <FacebookIcon />
-              </SocialIconWrapper>
-            </SocialIcons>
-          </form>
-        </FormContainer>
-      </Wrapper>
-    </>
+            <FormAction
+              helpText={REGISTER_TEXTS.alreadyHaveAccountText}
+              clickText={REGISTER_TEXTS.loginLinkText}
+              redirectPath={getPath(Pages.Auth)}
+            />
+          </div>
+          <FormBody>{REGISTER_TEXTS.orText}</FormBody>
+          <SocialIcons />
+        </form>
+      </FormContainer>
+    </Wrapper>
   );
 };

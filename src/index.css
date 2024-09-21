@@ -1,3 +1,6 @@
+@import 'assets/styles/reset.css';
+@import 'assets/styles/variables.css';
+
 @font-face {
   font-family: 'onest';
   src: url('assets/fonts/Onest/OnestRegular.ttf') format('truetype');
@@ -15,32 +18,3 @@
 }
 
 
-:root {
-  --accent-color: #fe6e06;
-  --button_bg_hover-color: #ea690c;
-  --button_bg_active-color: #dc6109;
-  --tertiary_stroke-color: #dedede;
-  --bg_white-color: #ffffff;
-  --secondary-color: #929292;
-  --error_bg-color: #fff5f5;
-  --error_stroke-color: #c13515;
-  --input_bg_disabled-color: #f9f9f9;
-  --primary-color: #363232;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #fff;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}

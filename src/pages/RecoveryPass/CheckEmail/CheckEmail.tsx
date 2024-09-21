@@ -2,15 +2,9 @@ import { useLocation } from 'react-router-dom';
 import { useSendResetPasswordEmailMutation } from 'services/userApi';
 import Button from 'components/Button';
 import ImageWrapper from 'components/ImageWrapper';
-import {
-  GlobalStyle,
-  Wrapper,
-  ImageContainer,
-  FormContainer,
-  Header,
-  Title,
-  SubTitle,
-} from './CheckEmail.styles';
+import FormHeader from 'components/FormHeader';
+import { CHECK_EMAIL } from 'core/variables/locales';
+import { Wrapper, ImageContainer, FormContainer } from './CheckEmail.styles';
 
 export const CheckEmail = () => {
   const location = useLocation();
@@ -26,28 +20,23 @@ export const CheckEmail = () => {
   };
 
   return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <ImageContainer>
-          <ImageWrapper />
-        </ImageContainer>
-        <FormContainer>
-          <form>
-            <Header>
-              <Title>Check your email</Title>
-              <SubTitle>
-                We have sent password reset instructions to the following email
-                address: {email}. Please make sure you received the email.
-              </SubTitle>
-            </Header>
+    <Wrapper>
+      <ImageContainer>
+        <ImageWrapper />
+      </ImageContainer>
+      <FormContainer>
+        <form>
+          <FormHeader
+            title={CHECK_EMAIL.title}
+            subtitle={`We have sent password reset instructions to the following email address:`}
+            email={email}
+          />
 
-            <Button type="button" onClick={handleResendEmail}>
-              Resend Email
-            </Button>
-          </form>
-        </FormContainer>
-      </Wrapper>
-    </>
+          <Button type="button" onClick={handleResendEmail}>
+            Resend Email
+          </Button>
+        </form>
+      </FormContainer>
+    </Wrapper>
   );
 };

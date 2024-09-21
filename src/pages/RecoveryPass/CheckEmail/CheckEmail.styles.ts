@@ -1,14 +1,5 @@
 import { Colors } from 'core/variables/constants';
-import styled, { createGlobalStyle } from 'styled-components';
-
-export const GlobalStyle = createGlobalStyle`  
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'onest', sans-serif;
-  }
-`;
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -41,22 +32,6 @@ export const FormContainer = styled.div`
       margin-top: 24px;
     }
   }
-`;
-export const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`;
-export const Title = styled.div`
-  color: ${Colors.primary};
-  font-size: 2rem;
-  font-weight: 700;
-`;
-
-export const SubTitle = styled.div`
-  color: ${Colors.secondary};
-  font-size: 1rem;
-  font-weight: 400;
 `;
 
 export const ActionToReg = styled.div`

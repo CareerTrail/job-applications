@@ -15,6 +15,10 @@ interface ILoginUser {
 interface IResetPassword {
   email: string;
 }
+interface IResetPasswordData {
+  code: string;
+  password: string;
+}
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -35,7 +39,14 @@ export const userApi = api.injectEndpoints({
     }),
     sendResetPasswordEmail: builder.mutation<void, IResetPassword>({
       query: (data) => ({
-        url: 'auth/reset-password',
+        url: 'users/reset-password-request',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation<void, IResetPasswordData>({
+      query: (data) => ({
+        url: 'users/reset-password',
         method: 'POST',
         body: data,
       }),
@@ -53,5 +64,6 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useSendResetPasswordEmailMutation,
+  useResetPasswordMutation,
   useLazyGetUserQuery,
 } = userApi;

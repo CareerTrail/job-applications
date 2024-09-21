@@ -1,89 +1,114 @@
+import { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { Pages, getPath } from 'core/variables/constants';
+import Input from 'components/Input';
+import Button from 'components/Button';
+import { Link } from 'react-router-dom';
+import ImageWrapper from 'components/ImageWrapper';
+import { useSendResetPasswordEmailMutation } from 'services/userApi';
 import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-  Alert,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useSendResetPasswordEmailMutation } from "services/userApi";
+  GlobalStyle,
+  Wrapper,
+  ImageContainer,
+  FormContainer,
+  Header,
+  Title,
+  SubTitle,
+  ErrorMessage,
+  ActionToReg,
+} from './RecoveryPass.styles';
 
 export const RecoveryPass = () => {
-  const [sendResetPasswordEmail, { isLoading, isError, isSuccess }] =
-    useSendResetPasswordEmailMutation();
+  const [sendResetPasswordEmail] = useSendResetPasswordEmailMutation();
+  const navigate = useNavigate();
+  const [formError, setFormError] = useState<string | null>(null);
+  const [isTouched, setIsTouched] = useState(false);
+
+  const ResetPasswordSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+  });
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: '',
     },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-    }),
-    onSubmit: async (values) => {
+    validationSchema: ResetPasswordSchema,
+    onSubmit: async (values, { setSubmitting }) => {
       try {
-        await sendResetPasswordEmail({ email: values.email }).unwrap();
+        await sendResetPasswordEmail({ email: values.email });
+        navigate(getPath(Pages.CheckEmail), { state: { email: values.email } });
       } catch (err) {
-        console.error("Failed to send reset email:", err);
+        setFormError('Error sending reset password email');
+        setSubmitting(false);
       }
     },
   });
 
+  useEffect(() => {
+    if (formik.touched.email) {
+      setIsTouched(true);
+    }
+  }, [formik.touched]);
+
+  const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
+
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Reset Password
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={formik.isSubmitting || isLoading}
-          >
-            {formik.isSubmitting || isLoading
-              ? "Sending..."
-              : "Send Reset Link"}
-          </Button>
-          {isError && (
-            <Alert severity="error">
-              Failed to send reset link. Please try again.
-            </Alert>
-          )}
-          {isSuccess && (
-            <Alert severity="success">
-              Reset link sent! Please check your email.
-            </Alert>
-          )}
-        </Box>
-      </Box>
-    </Container>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <ImageContainer>
+          <ImageWrapper />
+        </ImageContainer>
+        <FormContainer>
+          <form onSubmit={formik.handleSubmit}>
+            <Header>
+              <Title>Reset Password</Title>
+              <SubTitle>
+                Forgot your password? No problem, a reset link will be sent to
+                your email.
+              </SubTitle>
+            </Header>
+            <div>
+              <label htmlFor="email">Email</label>
+              <Input
+                id="email"
+                name="email"
+                placeholder="Your email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                variant={
+                  formError
+                    ? 'error'
+                    : formik.touched.email
+                      ? 'active'
+                      : 'default'
+                }
+                children={
+                  formik.touched.email && formik.errors.email
+                    ? formik.errors.email
+                    : ''
+                }
+                error={!!(formik.touched.email && formik.errors.email)}
+              />
+            </div>
+            <Button
+              type="submit"
+              variant={isButtonDisabled ? 'disabled' : 'default'}
+              disabled={isButtonDisabled}
+            >
+              Send Reset Link
+            </Button>
+            {formError && <ErrorMessage>{formError}</ErrorMessage>}
+            <ActionToReg>
+              <div>Go back to</div>
+              <Link to={getPath(Pages.Auth)}>Log in</Link>
+            </ActionToReg>
+          </form>
+        </FormContainer>
+      </Wrapper>
+    </>
   );
 };

@@ -8,27 +8,17 @@ import { useAuth } from 'shared/hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
 import GoogleIcon from 'assets/images/google.svg';
 import AppleIcon from 'assets/images/apple.svg';
-import Left from 'assets/images/left.svg';
-import Right from 'assets/images/right.svg';
 import FacebookIcon from 'assets/images/facebook.svg';
-import mainGraph from 'assets/images/auth/mainGraph.png';
-import leftGraph from 'assets/images/auth/leftGraph.png';
-import rightGraph from 'assets/images/auth/rightGraph.png';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import { Link } from 'react-router-dom';
+import ImageWrapper from 'components/ImageWrapper';
 import {
   GlobalStyle,
   Wrapper,
   ImageContainer,
-  TitleImg,
-  ImageWithPadding,
   FormContainer,
   Header,
-  MainGraph,
-  LeftGraph,
-  RightGraph,
-  Slider,
   Title,
   SubTitle,
   AuthActions,
@@ -44,7 +34,6 @@ export const Login = () => {
   const [loginUser] = useLoginUserMutation();
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [activeIndex, setActiveIndex] = useState(2);
 
   const [isTouched, setIsTouched] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -93,44 +82,7 @@ export const Login = () => {
       <GlobalStyle />
       <Wrapper>
         <ImageContainer>
-          <ImageWithPadding>
-            <MainGraph src={mainGraph} alt="mainGraph" />
-            <LeftGraph src={leftGraph} alt="leftGraph" />
-            <RightGraph src={rightGraph} alt="rightGraph" />
-            <TitleImg>
-              <h1>Simplify Your Job Search with JobBox</h1>
-              <h2>
-                At JobBox, we make it easy to find job opportunities tailored to
-                your skills and preferences. Our platform offers a wealth of
-                resources to support you in landing your ideal position
-              </h2>
-              <Slider>
-                <div>
-                  <a href="#">
-                    <Left />
-                  </a>
-                </div>
-                <ul>
-                  {[0, 1, 2, 3].map((index) => (
-                    <li key={index}>
-                      <a
-                        href="#"
-                        className={index === activeIndex ? 'active' : ''}
-                        onClick={() => setActiveIndex(index)}
-                      >
-                        {index + 1}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <div>
-                  <a href="#">
-                    <Right />
-                  </a>
-                </div>
-              </Slider>
-            </TitleImg>
-          </ImageWithPadding>
+          <ImageWrapper />
         </ImageContainer>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>

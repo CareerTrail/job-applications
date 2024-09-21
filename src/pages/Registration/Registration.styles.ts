@@ -26,37 +26,32 @@ export const Wrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  position: absolute;
-  width: 1334px;
-  height: 1040px;
-  top: 20px;
-  left: 20px;
-  border-radius: 40px 0px 0px 0px;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  flex-grow: 6;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 `;
 
 export const FormContainer = styled.div`
-  position: absolute;
-  width: 400px;
-  height: 736px;
-  top: 222px;
-  left: calc(20px + 1334px + 48px + 20px);
-  bottom: 20px;
-  background: #fff;
-  border-radius: 12px;
+  flex-grow: 1;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  form {
+    width: 400px;
+    height: 637px;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    label {
+      color: ${Colors.primary};
+      font-size: 18px;
+      display: block;
+    }
+  }
 `;
-
 export const Title1 = styled.div`
   color: ${Colors.primary};
   font-size: 32px;

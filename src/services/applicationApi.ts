@@ -1,5 +1,5 @@
-import { api } from './api.ts';
 import { PaginatedResponse } from '../common/res/paginated.response.ts';
+import { api } from './api.ts';
 
 export enum ApplicationSources {
   LINKEDIN = 'LINKEDIN',

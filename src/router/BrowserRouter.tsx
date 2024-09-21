@@ -14,6 +14,9 @@ import { Pages, getPath } from 'core/variables/constants.ts';
 import RequireAuth from 'shared/hooks/RequireAuth.tsx';
 import RequireGuest from 'shared/hooks/RequireGuest.tsx';
 import Board from 'pages/Board';
+import CheckEmail from 'pages/RecoveryPass/CheckEmail';
+import NewPass from 'pages/RecoveryPass/NewPass';
+import PassChanged from 'pages/RecoveryPass/PassChanged';
 import { ErrorPage } from './ErrorPage.tsx';
 
 export const router = createBrowserRouter([
@@ -60,9 +63,34 @@ export const router = createBrowserRouter([
     path: getPath(Pages.RecoveryPass),
     element: (
       <RequireGuest>
-        <DashboardWrapper>
-          <RecoveryPass />
-        </DashboardWrapper>
+        <RecoveryPass />
+      </RequireGuest>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.CheckEmail),
+    element: (
+      <RequireGuest>
+        <CheckEmail />
+      </RequireGuest>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.NewPassword),
+    element: (
+      <RequireGuest>
+        <NewPass />
+      </RequireGuest>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.PasswordChanged),
+    element: (
+      <RequireGuest>
+        <PassChanged />
       </RequireGuest>
     ),
     errorElement: <ErrorPage />,

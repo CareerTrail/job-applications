@@ -8,6 +8,9 @@ export enum Pages {
   RecoveryPass = 'RecoveryPass',
   Board = 'Board',
   Test = 'Test',
+  CheckEmail = 'CheckEmail',
+  NewPassword = 'NewPassword',
+  PasswordChanged = 'PasswordChanged',
 }
 
 export const getPath = (page: Pages): string => `/${page.toLowerCase()}`;

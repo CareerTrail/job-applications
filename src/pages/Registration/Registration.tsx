@@ -7,11 +7,11 @@ import { useLoginUserMutation } from 'services/userApi';
 import { useRegisterUserMutation } from 'services/userApi';
 import { Pages, SocialLinks, getPath } from 'core/variables/constants';
 import { IServerError } from 'core/interfaces/dataModels';
-import loginBg from 'assets/images/auth/login-bg.jpg';
 import GoogleIcon from 'assets/images/google.svg';
 import AppleIcon from 'assets/images/apple.svg';
 import FacebookIcon from 'assets/images/facebook.svg';
 import Input from 'components/Input/Input';
+import ImageWrapper from 'components/ImageWrapper';
 import Button from 'components/Button/Button';
 import {
   GlobalStyle,
@@ -112,7 +112,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
       <GlobalStyle />
       <Wrapper>
         <ImageContainer>
-          <img src={loginBg} alt="Background" />
+          <ImageWrapper />
         </ImageContainer>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
@@ -174,7 +174,6 @@ export const Registration: React.FC<IRegistrationProps> = ({
             </FIO>
             <LaberForEmail htmlFor="email">Email</LaberForEmail>
             <Input
-              type="text"
               id="email"
               name="email"
               placeholder="Your email"
@@ -232,13 +231,13 @@ export const Registration: React.FC<IRegistrationProps> = ({
             <Body1>or</Body1>
             <SocialIcons>
               <SocialIconWrapper href={SocialLinks.Google}>
-                <img src={GoogleIcon} alt="Google" />
+                <GoogleIcon />
               </SocialIconWrapper>
               <SocialIconWrapper href={SocialLinks.Apple}>
-                <img src={AppleIcon} alt="Apple" />
+                <AppleIcon />
               </SocialIconWrapper>
               <SocialIconWrapper href={SocialLinks.Facebook}>
-                <img src={FacebookIcon} alt="Facebook" />
+                <FacebookIcon />
               </SocialIconWrapper>
             </SocialIcons>
           </form>

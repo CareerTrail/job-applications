@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Pages, getPath } from 'core/variables/constants';
-import { useAuth } from './authHooks';
 import { useLazyGetUserQuery } from 'services/userApi';
+import { useAuth } from './authHooks';
 
 interface IRequireAuthProps {
   children: ReactNode;

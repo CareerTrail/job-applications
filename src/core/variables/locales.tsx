@@ -33,3 +33,26 @@ export const CHECK_EMAIL = {
   subtitle:
     'We have sent password reset instructions to the following email address: email. Please make sure you received the email.',
 };
+
+export const RECOVERY_PASS = {
+  title: 'Reset Password',
+  subTitle:
+    'Forgot your password? No problem, a reset link will be sent to your email.',
+  emailPlaceholder: 'Your email',
+  sendLinkButton: 'Send Reset Link',
+  goBackText: 'Go back to',
+  loginLinkText: 'Log in',
+  errorSendingEmail: 'Error sending reset password email',
+};
+
+export const NEW_PASS = {
+  title: 'Reset Password',
+  passwordLabel: 'New Password',
+  passwordPlaceholder: 'Your new password',
+  confirmPasswordLabel: 'Confirm New Password',
+  confirmPasswordPlaceholder: 'Confirm your new password',
+  sendButton: 'Reset your password',
+  missingTokenError:
+    'Token is missing. Please use the reset link from your email.',
+  defaultError: 'Failed to reset password.',
+};

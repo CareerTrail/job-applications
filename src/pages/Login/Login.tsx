@@ -15,13 +15,14 @@ import ImageWrapper from 'components/ImageWrapper';
 import SocialIcons from 'components/SocialIcons';
 import FormHeader from 'components/FormHeader';
 import FormAction from 'components/FormAction';
-import { FormBody, FormFields, ErrorMessage } from 'assets/styles/CommonStyles';
 import {
   Wrapper,
   ImageContainer,
-  FormContainer,
-  AuthActions,
-} from './Login.styles';
+  FormBody,
+  FormFields,
+  ErrorMessage,
+} from 'assets/styles/CommonStyles';
+import { FormContainer, AuthActions } from './Login.styles';
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +74,11 @@ export const Login = () => {
   }, [formik.touched]);
 
   const isButtonDisabled =
-    !formik.isValid || formik.isSubmitting || !isTouched || !!formError;
+    !formik.isValid ||
+    formik.isSubmitting ||
+    !isTouched ||
+    !!formError ||
+    (!!formError && !isTouched);
   const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

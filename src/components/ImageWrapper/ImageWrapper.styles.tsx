@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const ImageWithPadding = styled.div`
   width: 100%;
   height: calc(100vh - 20px);
-  background-image: url('src/assets/images/auth/login-bg.jpg');
+  background-image: url('src/assets/images/auth/login-bg.png');
   background-size: cover;
   background-position: center;
   margin: 10px 0 10px 10px;
@@ -12,29 +12,7 @@ export const ImageWithPadding = styled.div`
   position: relative;
   z-index: 1;
 `;
-export const AbsoluteImage = styled.img`
-  position: absolute;
-  height: auto;
-  z-index: 2;
-`;
 
-export const MainGraph = styled(AbsoluteImage)`
-  top: 35%;
-  left: 33%;
-  width: 35%;
-`;
-
-export const LeftGraph = styled(AbsoluteImage)`
-  top: 25%;
-  left: 19%;
-  width: 22%;
-`;
-
-export const RightGraph = styled(AbsoluteImage)`
-  top: 53%;
-  left: 62%;
-  width: 22%;
-`;
 export const TitleImg = styled.div`
   position: absolute;
   top: 80%;

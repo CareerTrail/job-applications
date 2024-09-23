@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Dashboard from 'pages/Dashboard';
 import DashboardWrapper from 'components/DashboardWrapper';
-import Main from 'pages/Main';
 import Login from 'pages/Login';
 import Registration from 'pages/Registration';
 import Profile from 'pages/Profile';
@@ -17,18 +16,10 @@ import Board from 'pages/Board';
 import CheckEmail from 'pages/RecoveryPass/CheckEmail';
 import NewPass from 'pages/RecoveryPass/NewPass';
 import PassChanged from 'pages/RecoveryPass/PassChanged';
+import AuthRedirect from 'shared/hooks/authRedirect.tsx';
 import { ErrorPage } from './ErrorPage.tsx';
 
 export const router = createBrowserRouter([
-  {
-    path: getPath(Pages.Main),
-    element: (
-      <DashboardWrapper>
-        <Main />
-      </DashboardWrapper>
-    ),
-    errorElement: <ErrorPage />,
-  },
   {
     path: getPath(Pages.Reg),
     element: (
@@ -39,7 +30,16 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.Auth),
+    path: getPath(Pages.Main),
+    element: (
+      <AuthRedirect>
+        <Login />
+      </AuthRedirect>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: getPath(Pages.Login),
     element: (
       <RequireGuest>
         <Login />

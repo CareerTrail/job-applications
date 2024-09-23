@@ -1,15 +1,15 @@
 export enum Pages {
   Main = '',
-  Auth = 'Auth',
+  Login = 'Login',
   Reg = 'Sign-up',
   Profile = 'Profile',
   Dashboard = 'Dashboard',
   Applications = 'Applications',
-  RecoveryPass = 'RecoveryPass',
+  RecoveryPass = 'Reset-password-requests',
   Board = 'Board',
   Test = 'Test',
   CheckEmail = 'CheckEmail',
-  NewPassword = 'NewPassword',
+  NewPassword = 'Reset-password',
   PasswordChanged = 'PasswordChanged',
 }
 

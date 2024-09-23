@@ -5,19 +5,18 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useResetPasswordMutation } from 'services/userApi';
 import { Pages, getPath } from 'core/variables/constants';
 import { IServerError } from 'core/interfaces/dataModels';
-import Input from 'components/Input';
 import Button from 'components/Button';
+import FormHeader from 'components/FormHeader';
+import FormField from 'components/FormField';
 import ImageWrapper from 'components/ImageWrapper';
+import { NEW_PASS } from 'core/variables/locales';
 import {
-  GlobalStyle,
   Wrapper,
   ImageContainer,
-  FormContainer,
-  Header,
-  Title,
   ErrorMessage,
-  LaberForEmail,
-} from './NewPass.styles';
+  FormFields,
+} from 'assets/styles/CommonStyles';
+import { FormContainer } from './NewPass.styles';
 
 export const NewPass = () => {
   const [resetPassword] = useResetPasswordMutation();
@@ -57,7 +56,7 @@ export const NewPass = () => {
           code: token,
           password: values.password,
         }).unwrap();
-        navigate(getPath(Pages.Auth));
+        navigate(getPath(Pages.PasswordChanged));
       } catch (err) {
         const serverError = err as IServerError;
         const errorResponse =
@@ -77,76 +76,70 @@ export const NewPass = () => {
   const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
   const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
 
-  return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <ImageContainer>
-          <ImageWrapper />
-        </ImageContainer>
-        <FormContainer>
-          <form onSubmit={formik.handleSubmit}>
-            <Header>
-              <Title>Reset Password</Title>
-            </Header>
+  const inputFieldPass =
+    formik.touched.password && formik.errors.password ? 'error' : 'default';
 
-            <LaberForEmail htmlFor="password">New Password</LaberForEmail>
-            <Input
-              type="password"
+  const inputFieldPassConfirm =
+    formik.touched.confirmPassword && formik.errors.confirmPassword
+      ? 'error'
+      : 'default';
+
+  return (
+    <Wrapper>
+      <ImageContainer>
+        <ImageWrapper />
+      </ImageContainer>
+      <FormContainer>
+        <form onSubmit={formik.handleSubmit}>
+          <FormHeader title={NEW_PASS.title} />
+          <FormFields>
+            <FormField
+              label={NEW_PASS.passwordLabel}
               id="password"
               name="password"
-              placeholder="Your new password"
+              type="password"
+              placeholder={NEW_PASS.passwordPlaceholder}
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              variant={
-                formik.touched.password && formik.errors.password
-                  ? 'error'
-                  : 'default'
-              }
-              children={formik.touched.password && formik.errors.password}
+              variant={inputFieldPass}
               error={!!(formik.touched.password && formik.errors.password)}
+              children={formik.touched.password && formik.errors.password}
             />
-
-            <LaberForEmail htmlFor="confirmPassword">
-              Confirm New Password
-            </LaberForEmail>
-            <Input
-              type="password"
+            <FormField
+              label={NEW_PASS.confirmPasswordLabel}
               id="confirmPassword"
               name="confirmPassword"
-              placeholder="Confirm your new password"
+              type="password"
+              placeholder={NEW_PASS.confirmPasswordPlaceholder}
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              variant={
-                formik.touched.confirmPassword && formik.errors.confirmPassword
-                  ? 'error'
-                  : 'default'
-              }
-              children={
-                formik.touched.confirmPassword && formik.errors.confirmPassword
-              }
+              variant={inputFieldPassConfirm}
               error={
                 !!(
                   formik.touched.confirmPassword &&
                   formik.errors.confirmPassword
                 )
               }
+              children={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
             />
+          </FormFields>
+          <Button
+            type="submit"
+            variant={buttonVariant}
+            disabled={isButtonDisabled}
+          >
+            {NEW_PASS.sendButton}
+          </Button>
 
-            <Button
-              type="submit"
-              variant={buttonVariant}
-              disabled={isButtonDisabled}
-            >
-              Reset your password
-            </Button>
-
-            {formError && <ErrorMessage>{formError}</ErrorMessage>}
-          </form>
-        </FormContainer>
-      </Wrapper>
-    </>
+          {formError && (
+            <ErrorMessage>{formError || NEW_PASS.defaultError}</ErrorMessage>
+          )}
+        </form>
+      </FormContainer>
+    </Wrapper>
   );
 };

@@ -1,6 +1,15 @@
 import { Colors } from 'core/variables/constants';
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+`;
+export const ImageContainer = styled.div`
+  flex-grow: 6;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`;
 export const FormFields = styled.div`
   display: flex;
   flex-direction: column;

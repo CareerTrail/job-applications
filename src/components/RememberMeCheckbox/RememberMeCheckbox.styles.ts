@@ -17,7 +17,7 @@ export const RememberMe = styled.div`
     height: 15px;
     display: inline-block;
     position: relative;
-    margin-top: 4px;
+    margin-top: 2px;
     cursor: pointer;
     &:checked {
       background-color: ${Colors.bg_white};

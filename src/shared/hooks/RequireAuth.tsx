@@ -37,7 +37,7 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
 
   if (!isAuthenticated || isError) {
     return (
-      <Navigate to={getPath(Pages.Auth)} state={{ from: location }} replace />
+      <Navigate to={getPath(Pages.Login)} state={{ from: location }} replace />
     );
   }
 

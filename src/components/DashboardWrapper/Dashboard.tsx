@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import AppBarComponent from "../AppBarComponent";
-import AppBarLocal from "components/AppBarLocal";
+import { ReactNode } from 'react';
+import AppBarLocal from 'components/AppBarLocal';
+import AppBarComponent from '../AppBarComponent';
 
 export const DashboardWrapper = ({ children }: { children: ReactNode }) => {
   return (

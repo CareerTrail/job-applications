@@ -12,10 +12,10 @@ import {
   Button,
   IconButton,
 } from '@mui/material';
-import AppMenu from '../Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Pages, getPath } from 'core/variables/constants';
 import { useAuth } from 'shared/hooks/authHooks';
+import AppMenu from '../Menu';
 
 /**
  * AppBarComponent for rendering the application's top app bar.
@@ -87,7 +87,7 @@ export const AppBarComponent = (): ReactElement => {
   const handleLogout = () => {
     logout();
     handleUserMenuClose();
-    navigate(getPath(Pages.Auth));
+    navigate(getPath(Pages.Login));
   };
 
   const showProfile = () => {
@@ -139,7 +139,7 @@ export const AppBarComponent = (): ReactElement => {
               <Button color="inherit" href={getPath(Pages.Reg)}>
                 Sign up
               </Button>
-              <Button color="inherit" href={getPath(Pages.Auth)}>
+              <Button color="inherit" href={getPath(Pages.Login)}>
                 Sign in
               </Button>
             </>

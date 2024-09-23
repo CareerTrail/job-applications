@@ -4,7 +4,7 @@ import {
   useState,
   useEffect,
   ReactNode,
-} from "react";
+} from 'react';
 
 export interface User {
   accessToken: string;
@@ -17,7 +17,7 @@ export interface AuthContextType {
 }
 
 enum LocalStorageKeys {
-  AccessToken = "accessToken",
+  AccessToken = 'accessToken',
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

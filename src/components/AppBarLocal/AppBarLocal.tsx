@@ -1,3 +1,4 @@
+import { ReactElement, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -10,7 +11,6 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
-import { ReactElement, useState } from 'react';
 import { useAuth } from 'shared/hooks/authHooks';
 import { LocalMenu, Pages, getPath } from 'core/variables/constants';
 import AssignmentIcon from '@mui/icons-material/Assignment';

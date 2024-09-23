@@ -1,24 +1,5 @@
-import { Colors } from 'core/variables/constants';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`  
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'onest', sans-serif;
-  }
-`;
-
-export const Wrapper = styled.div`
-  display: flex;
-`;
-export const ImageContainer = styled.div`
-  flex-grow: 6;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-`;
 export const FormContainer = styled.div`
   flex-grow: 1;
   height: 100vh;
@@ -32,36 +13,8 @@ export const FormContainer = styled.div`
     max-height: 100%;
     margin: auto;
     box-sizing: border-box;
-    label {
-      color: ${Colors.primary};
-      font-size: 18px;
-      display: block;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
-  button {
-    margin-top: 24px;
-  }
-`;
-export const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`;
-export const Title = styled.div`
-  color: ${Colors.primary};
-  font-size: 2rem;
-  font-weight: 700;
-`;
-
-export const ErrorMessage = styled.div`
-  color: ${Colors.error_stroke};
-  font-size: 14px;
-  margin-top: 4px;
-  text-align: left;
-`;
-export const LaberForEmail = styled.label`
-  color: ${Colors.primary};
-  font-size: 18px;
-  margin-top: 16px;
-  display: block;
 `;

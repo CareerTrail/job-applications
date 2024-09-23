@@ -10,13 +10,6 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const ImageContainer = styled.div`
-  flex-grow: 6;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-`;
-
 export const FormContainer = styled.div`
   flex-grow: 1;
   height: 100vh;

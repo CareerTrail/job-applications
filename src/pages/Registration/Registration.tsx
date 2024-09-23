@@ -11,17 +11,16 @@ import SocialIcons from 'components/SocialIcons';
 import ImageWrapper from 'components/ImageWrapper';
 import FormField from 'components/FormField';
 import Button from 'components/Button/Button';
-import { FormBody, ErrorMessage, FormFields } from 'assets/styles/CommonStyles';
+import {
+  ImageContainer,
+  FormBody,
+  ErrorMessage,
+  FormFields,
+} from 'assets/styles/CommonStyles';
 import { REGISTER_TEXTS } from 'core/variables/locales';
 import FormHeader from 'components/FormHeader';
 import FormAction from 'components/FormAction';
-import {
-  Wrapper,
-  ImageContainer,
-  FormContainer,
-  FIO,
-  Text,
-} from './Registration.styles';
+import { Wrapper, FormContainer, FIO, Text } from './Registration.styles';
 
 interface IRegistrationProps {
   onSuccess?: () => void;
@@ -99,7 +98,11 @@ export const Registration: React.FC<IRegistrationProps> = ({
     }
   }, [formik.touched]);
 
-  const isButtonDisabled = !formik.isValid || formik.isSubmitting || !isTouched;
+  const isButtonDisabled =
+    !formik.isValid ||
+    formik.isSubmitting ||
+    !isTouched ||
+    (!!formError && !isTouched);
   const buttonVariant = isButtonDisabled ? 'disabled' : 'default';
 
   const inputFiledFirstName =
@@ -213,7 +216,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
             <FormAction
               helpText={REGISTER_TEXTS.alreadyHaveAccountText}
               clickText={REGISTER_TEXTS.loginLinkText}
-              redirectPath={getPath(Pages.Auth)}
+              redirectPath={getPath(Pages.Login)}
             />
           </div>
           <FormBody>{REGISTER_TEXTS.orText}</FormBody>

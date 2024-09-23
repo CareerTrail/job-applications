@@ -1,43 +1,36 @@
 import { useNavigate } from 'react-router-dom';
 import { Pages, getPath } from 'core/variables/constants';
 import Button from 'components/Button';
-
 import ImageWrapper from 'components/ImageWrapper';
-import {
-  GlobalStyle,
-  Wrapper,
-  ImageContainer,
-  FormContainer,
-  Header,
-  Title,
-  SubTitle,
-} from './PassChanged.styles';
+import FormHeader from 'components/FormHeader';
+import PassChange from 'assets/images/auth/passChanged.svg';
+import { Wrapper, ImageContainer } from 'assets/styles/CommonStyles';
+import { FormContainer } from './PassChanged.styles';
 
 export const PassChanged = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(getPath(Pages.Auth));
+    navigate(getPath(Pages.Login));
   };
 
   return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <ImageContainer>
-          <ImageWrapper />
-        </ImageContainer>
-        <FormContainer>
-          <form>
-            <Header>
-              <Title>Password changed</Title>
-              <SubTitle>Your password have been changed succesfully</SubTitle>
-            </Header>
-
-            <Button onClick={handleNavigate}>Back to login</Button>
-          </form>
-        </FormContainer>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <ImageContainer>
+        <ImageWrapper />
+      </ImageContainer>
+      <FormContainer>
+        <form>
+          <div>
+            <PassChange />
+          </div>
+          <FormHeader
+            title="Password changed"
+            subtitle="Your password have been changed succesfully"
+          />
+          <Button onClick={handleNavigate}>Back to login</Button>
+        </form>
+      </FormContainer>
+    </Wrapper>
   );
 };

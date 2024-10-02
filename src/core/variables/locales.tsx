@@ -56,3 +56,33 @@ export const NEW_PASS = {
     'Token is missing. Please use the reset link from your email.',
   defaultError: 'Failed to reset password.',
 };
+
+const VARIANT_OPTIONS = ['default', 'hover', 'active', 'disabled'] as const;
+
+export const BOARD_TEXTS = {
+  JOB_SEARCH_TITLE: 'Job Search August',
+  BOARD: 'Board',
+  CALENDAR: 'Calendar',
+  FILTER: 'Filter',
+  VARIANT: VARIANT_OPTIONS[0],
+  DISABLED: false,
+  EVENT: 'Add event',
+};
+
+export const ASIDEBAR_TEXTS = {
+  HOME: 'Home',
+  RESUME_BUILDER: 'Resume Builder',
+  AI_LETTERS: 'AI Cover Letters & More',
+  AUTOFILL_APPS: 'Autofill Applications',
+  CHROME_EXT: 'Chrome Extension',
+  PROFILE: 'Profile',
+  METRICS: 'Metrics',
+  MY_TRACKERS: 'My Job Trackers',
+  LOG_OUT: 'Log Out',
+  SETTINGS: 'Settings',
+};
+
+export const SWITCH_VALUES = {
+  BOARD: 'board',
+  CALENDAR: 'calendar',
+} as const;

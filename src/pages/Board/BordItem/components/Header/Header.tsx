@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { setActiveSwitch } from 'features/board/boardSlice';
 import { BOARD_TEXTS, SWITCH_VALUES } from 'core/variables/locales';
 import styled from 'styled-components';
 import { Colors } from 'core/variables/constants';
@@ -45,19 +47,17 @@ const SwitchWrapper = styled.div`
   gap: 2px;
 `;
 
-interface HeaderProps {
-  title: string;
-}
-
-const Header: React.FC<HeaderProps> = ({ title }) => {
-  const [activeSwitch, setActiveSwitch] = useState<
-    (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES]
-  >(SWITCH_VALUES.BOARD);
+const Header = () => {
+  const dispatch = useDispatch();
+  const activeSwitch = useSelector(
+    (state: RootState) => state.board.activeSwitch
+  );
+  const title = useSelector((state: RootState) => state.board.title);
 
   const handleSwitchChange = (
     value: (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES]
   ) => {
-    setActiveSwitch(value);
+    dispatch(setActiveSwitch(value));
   };
 
   return (
@@ -67,7 +67,6 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <Switches
           leftLabel={BOARD_TEXTS.BOARD}
           rightLabel={BOARD_TEXTS.CALENDAR}
-          onSwitchChange={handleSwitchChange}
         />
       </div>
       <HeaderFilter>
@@ -88,10 +87,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
               <Search />
             </SearchWrapper>
             <AddEvent children={BOARD_TEXTS.EVENT} />
-            <SwitchesMini
-              onSwitchChange={handleSwitchChange}
-              activeValue={activeSwitch}
-            />
+            <SwitchesMini onSwitchChange={handleSwitchChange} />
           </SwitchWrapper>
         )}
       </HeaderFilter>

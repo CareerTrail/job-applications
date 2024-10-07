@@ -1,0 +1,116 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 100%;
+  height: 48px;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+svg {
+  margin-top: 5px;
+}
+
+
+/* Кнопка 1 (фиолетовая) */
+.purple-default {
+  background-color: var(--purple-050);
+  border: 1px solid  var(--purple-500);
+  svg path {
+    stroke: var(--purple-500);
+  }
+}
+
+.purple-hover {
+  background-color: var(--purple-050);
+  border: 2px solid  var(--purple-500);
+  svg path {
+    stroke: var(--purple-500);
+  }
+}
+
+.purple-active {
+  background-color: var(--purple-200);
+  border: 2px solid  var(--purple-500);
+  svg path {
+    stroke: var(--purple-500);
+  }
+}
+
+/* Кнопка 2 (синяя) */
+.blue-default {
+  background-color: var(--blue-050);
+  border: 1px solid  var(--blue-500);
+  svg path {
+    stroke: var(--blue-500);
+  }
+}
+
+.blue-hover {
+  background-color: var(--blue-050);
+  border: 2px solid  var(--blue-500);
+  svg path {
+    stroke: var(--blue-500);
+  }
+}
+
+.blue-active {
+  background-color: var(--blue-200);
+  border: 2px solid  var(--blue-500);
+  svg path {
+    stroke: var(--blue-500);
+  }
+}
+
+/* Кнопка 3 (зеленая) */
+.green-default {
+  background-color: var(--green-050);
+  border: 1px solid  var(--green-500);
+  svg path {
+    stroke: var(--green-500);
+  }
+}
+
+.green-hover {
+  background-color: var(--green-050);
+  border: 2px solid  var(--green-500);
+  svg path {
+    stroke: var(--green-500);
+  }
+}
+
+.green-active {
+  background-color: var(--green-200);
+  border: 2px solid  var(--green-500);
+  svg path {
+    stroke: var(--green-500);
+  }
+}
+
+/* Кнопка 4 (желтая) */
+.yellow-default {
+  background-color: var(--yellow-050);
+  border: 1px solid  var(--yellow-500);
+  svg path {
+    stroke: var(--yellow-500);
+  }
+}
+
+.yellow-hover {
+  background-color: var(--yellow-050);
+  border: 2px solid  var(--yellow-500);
+  svg path {
+    stroke: var(--yellow-500);
+  }
+}
+
+.yellow-active {
+  background-color: var(--yellow-200);
+  border: 2px solid  var(--yellow-500);
+  svg path {
+    stroke: var(--yellow-500);
+  }
+}

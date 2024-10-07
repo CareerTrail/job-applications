@@ -12,6 +12,8 @@ import Exit from 'assets/images/sidebar/Exit.svg';
 import Logo from 'components/Logo';
 import styled from 'styled-components';
 import { Colors } from 'core/variables/constants';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
 const Wrapper = styled.div`
   border-radius: 24px;
@@ -90,11 +92,8 @@ const Trackers = styled.div`
   }
 `;
 
-interface SideBarProps {
-  title: string;
-}
-
-const SideBar: React.FC<SideBarProps> = ({ title }) => {
+const SideBar = () => {
+  const title = useSelector((state: RootState) => state.board.title);
   return (
     <Wrapper>
       <Logo />

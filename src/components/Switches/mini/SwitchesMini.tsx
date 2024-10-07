@@ -1,4 +1,7 @@
-import { useState, ComponentProps } from 'react';
+import { ComponentProps } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { setActiveSwitch } from 'features/board/boardSlice';
 import BoardIcon from 'assets/images/components/board.svg';
 import CalendarIcon from 'assets/images/components/calendar.svg';
 import { SWITCH_VALUES } from 'core/variables/locales';
@@ -16,18 +19,16 @@ interface SwitchesMiniProps extends ComponentProps<'button'> {
   activeValue?: (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES];
 }
 
-const SwitchesMini: React.FC<SwitchesMiniProps> = ({
-  onSwitchChange,
-  activeValue,
-}) => {
-  const [activeButton, setActiveButton] = useState<
-    (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES]
-  >(activeValue || SWITCH_VALUES.BOARD);
+const SwitchesMini: React.FC<SwitchesMiniProps> = ({ onSwitchChange }) => {
+  const dispatch = useDispatch();
+  const activeButton = useSelector(
+    (state: RootState) => state.board.activeSwitch
+  );
 
   const handleSwitchChange = (
     value: (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES]
   ) => {
-    setActiveButton(value);
+    dispatch(setActiveSwitch(value));
     if (onSwitchChange) {
       onSwitchChange(value);
     }

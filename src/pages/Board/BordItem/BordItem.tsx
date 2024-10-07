@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from 'core/variables/constants';
 import Header from './components/Header';
+import Sections from './components/Sections';
 
 const Wrapper = styled.div`
   border-radius: 24px;
@@ -12,14 +13,11 @@ const Wrapper = styled.div`
   height: calc(100vh - 40px);
 `;
 
-interface BoardItemProps {
-  title: string;
-}
-
-const BoardItem: React.FC<BoardItemProps> = ({ title }) => {
+const BoardItem = () => {
   return (
     <Wrapper>
-      <Header title={title} />
+      <Header />
+      <Sections />
     </Wrapper>
   );
 };

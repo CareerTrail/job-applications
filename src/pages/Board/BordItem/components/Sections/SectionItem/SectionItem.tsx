@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import EditIcon from 'assets/images/components/edit.svg';
 import { Colors } from 'core/variables/constants';
 import AddPlus from 'components/Button/AddPlus';
 import { ButtonColor } from 'components/Button/AddPlus/AddPlus';
+import Vacancy from 'pages/Board/BordItem/components/Vacancy';
+import AddJobModal from 'components/AddVacancyModal';
 
 interface SectionItemProps {
   title: string;
@@ -36,11 +38,29 @@ const EditIconWrapper = styled.a`
     height: 20px;
   }
 `;
+
 const Btn = styled.div`
   margin-top: 20px;
 `;
 
+const VacancyWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 const SectionItem: React.FC<SectionItemProps> = ({ title, color }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <Wrapper>
       <div>
@@ -51,8 +71,13 @@ const SectionItem: React.FC<SectionItemProps> = ({ title, color }) => {
         <SubTitle>item</SubTitle>
       </div>
       <Btn>
-        <AddPlus color={color} />
+        <AddPlus color={color} onClick={handleOpenModal} />
       </Btn>
+      <VacancyWrapper>
+        <Vacancy color={color} />
+      </VacancyWrapper>
+
+      <AddJobModal isVisible={isModalVisible} onClose={handleCloseModal} />
     </Wrapper>
   );
 };

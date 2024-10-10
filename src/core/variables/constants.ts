@@ -46,6 +46,9 @@ export enum Colors {
   primary = '#363232',
   bg_asside = '#FFE7D6',
   purple = '#9747FF',
+  blue = '#477BFF',
+  green = '#59A40F',
+  yellow = '#FEAA06',
 }
 
 export enum SocialLinks {

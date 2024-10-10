@@ -86,3 +86,12 @@ export const SWITCH_VALUES = {
   BOARD: 'board',
   CALENDAR: 'calendar',
 } as const;
+
+export const MODAL_VALUES = {
+  ADD_JOB: 'Add Job',
+  COMPANY: 'Company',
+  JOB_TITLE: 'Job Title',
+  CANCEL: 'Cancel',
+  SAVE: 'Save',
+  DESCRIPTION: 'Description',
+};

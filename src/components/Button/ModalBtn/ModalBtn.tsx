@@ -1,34 +1,40 @@
 import React, { useState } from 'react';
 import { ComponentProps } from 'react';
-import Add from 'assets/images/add.svg';
-import styles from './AddPlus.module.css';
+import styles from './ModalBtn.module.css';
 
-type ButtonVariant = 'default' | 'hover' | 'active';
-export type ButtonColor = 'purple' | 'blue' | 'green' | 'yellow';
+type ButtonVariant =
+  | 'default'
+  | 'hover'
+  | 'active'
+  | 'disabled'
+  | 'white'
+  | 'whitehov';
 
 interface ButtonProps extends ComponentProps<'button'> {
   variant?: ButtonVariant;
-  color: ButtonColor;
-  onClick?: () => void;
 }
 
-const AddPlus: React.FC<ButtonProps> = ({
+const ModalBtn: React.FC<ButtonProps> = ({
   variant = 'default',
-  color,
-  onClick,
+  children,
   ...props
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
   let appliedVariant = variant;
-  if (isActive) {
+
+  if (props.disabled) {
+    appliedVariant = 'disabled';
+  } else if (isActive) {
     appliedVariant = 'active';
+  } else if (isHovered && variant === 'white') {
+    appliedVariant = 'whitehov';
   } else if (isHovered) {
     appliedVariant = 'hover';
   }
 
-  const buttonClass = `${styles.button} ${styles[`${color}-${appliedVariant}`]}`;
+  const buttonClass = `${styles.button} ${styles[appliedVariant]}`;
 
   return (
     <button
@@ -38,13 +44,10 @@ const AddPlus: React.FC<ButtonProps> = ({
       onMouseLeave={() => setIsHovered(false)}
       onMouseDown={() => setIsActive(true)}
       onMouseUp={() => setIsActive(false)}
-      onClick={onClick}
     >
-      <div>
-        <Add />
-      </div>
+      {children}
     </button>
   );
 };
 
-export default AddPlus;
+export default ModalBtn;

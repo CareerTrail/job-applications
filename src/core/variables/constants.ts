@@ -1,3 +1,5 @@
+import { ButtonColor } from 'components/Button/AddPlus/AddPlus';
+
 export enum Pages {
   Main = '',
   Login = 'Login',
@@ -43,6 +45,10 @@ export enum Colors {
   input_bg_disabled = '#F9F9F9',
   primary = '#363232',
   bg_asside = '#FFE7D6',
+  purple = '#9747FF',
+  blue = '#477BFF',
+  green = '#59A40F',
+  yellow = '#FEAA06',
 }
 
 export enum SocialLinks {
@@ -50,3 +56,10 @@ export enum SocialLinks {
   Apple = 'https://apple.com',
   Facebook = 'https://facebook.com',
 }
+
+export const sectionData = [
+  { id: 1, title: 'Wishlist', color: 'purple' as ButtonColor },
+  { id: 2, title: 'Applied', color: 'blue' as ButtonColor },
+  { id: 3, title: 'Interview', color: 'yellow' as ButtonColor },
+  { id: 4, title: 'Offer', color: 'green' as ButtonColor },
+];

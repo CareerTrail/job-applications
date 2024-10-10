@@ -1,14 +1,14 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface MenuSlice {
   currentValue: string;
 }
 
 const initialState: MenuSlice = {
-  currentValue: "",
+  currentValue: '',
 };
 
 export const menuSlice = createSlice({
-  name: "menu",
+  name: 'menu',
   initialState,
   reducers: {
     setNewMenuValue: (state, action: PayloadAction<string>) => {

@@ -8,7 +8,7 @@
     background-color 0.3s,
     color 0.3s;
   white-space: nowrap;
-  width: 400px;
+  width: 148px;
   height: 52px;
   padding: 1rem;
   border-radius: 12px;
@@ -37,3 +37,13 @@
   color: var(--secondary-color);
   cursor: not-allowed !important;
 }
+.button.white {
+    background-color: var(--bg_white-color);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+  }
+  .button.whitehov {
+    background-color: var(--bg_white-color);
+    color: var(--accent-color);
+    border: 3px solid var(--accent-color);
+  }

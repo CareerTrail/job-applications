@@ -1,12 +1,26 @@
-:root {
-  --accent-color: #fe6e06;
+:root { 
+  --accent-color: #fe6e06; /*accent*/
   --button_bg_hover-color: #ea690c;
   --button_bg_active-color: #dc6109;
   --tertiary_stroke-color: #dedede;
-  --bg_white-color: #ffffff;
+  --bg_white-color: #ffffff; /*bg_white*/
   --secondary-color: #929292;
   --error_bg-color: #fff5f5;
   --error_stroke-color: #c13515;
   --input_bg_disabled-color: #f9f9f9;
-  --primary-color: #363232;
+  --primary-color: #363232; /* primary */
+  --orange-primary-200:#FFE7D6;  
+  --purple-500:#9747FF;
+  --purple-050:#FBF7FF;
+  --purple-200:#EEE2FF;
+  --blue-050:#F7F9FF;
+  --blue-200:#DBE4FF;
+  --blue-500:#477BFF;
+  --green-050:#FBFFF7;
+  --green-200:#F3FFE7;
+  --green-500:#59A40F;
+  --yellow-050:#FFFCF6;
+  --yellow-200:#FFF3DB;
+  --yellow-500:#FEAA06;
+
 }

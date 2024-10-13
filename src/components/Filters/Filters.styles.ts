@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Colors } from 'core/variables/constants';
 
 interface ButtonProps {
-  variant: 'default' | 'hover' | 'active' | 'disabled';
+  $variant: 'default' | 'hover' | 'active' | 'disabled';
   disabled?: boolean;
 }
 
@@ -24,19 +24,19 @@ export const Button = styled.button<ButtonProps>`
     color 0.3s;
 
   //variants
-  background-color: ${({ variant }) =>
-    variant === 'disabled' ? Colors.tertiary_stroke : Colors.bg_white};
+  background-color: ${({ $variant }) =>
+    $variant === 'disabled' ? Colors.tertiary_stroke : Colors.bg_white};
 
-  color: ${({ variant }) =>
-    variant === 'disabled' ? Colors.secondary : Colors.primary};
+  color: ${({ $variant }) =>
+    $variant === 'disabled' ? Colors.secondary : Colors.primary};
 
-  border: ${({ variant }) =>
-    variant === 'hover'
+  border: ${({ $variant }) =>
+    $variant === 'hover'
       ? `2px solid ${Colors.tertiary_stroke}`
       : '1px solid red'};
 
-  border: ${({ variant }) => {
-    switch (variant) {
+  border: ${({ $variant }) => {
+    switch ($variant) {
       case 'hover':
         return `2px solid ${Colors.tertiary_stroke}`;
       case 'active':

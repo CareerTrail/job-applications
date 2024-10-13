@@ -63,3 +63,15 @@ export const sectionData = [
   { id: 3, title: 'Interview', color: 'yellow' as ButtonColor },
   { id: 4, title: 'Offer', color: 'green' as ButtonColor },
 ];
+
+export const vacanciesData = [
+  {
+    id: 1,
+    sectionId: 1,
+    company: 'epam',
+    jobTitle: 'designer',
+    description: 'sss',
+    like: false,
+    createdDate: new Date().toISOString(),
+  },
+];

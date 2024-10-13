@@ -7,9 +7,11 @@ import { Colors } from 'core/variables/constants';
 import { MODAL_VALUES } from 'core/variables/locales';
 import FormFieldTextAreaModal from 'components/FormField/FormFieldTextAreaModal';
 import FormField from 'components/FormField';
+import { useDispatch } from 'react-redux';
+import { addVacancy } from 'features/board/vacancy/vacancySlice';
 
-const ModalWrapper = styled.div<{ isVisible: boolean }>`
-  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+const ModalWrapper = styled.div<{ $isVisible: boolean }>`
+  display: ${({ $isVisible }) => ($isVisible ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
@@ -57,15 +59,27 @@ const Buttons = styled.div`
   justify-content: flex-end;
 `;
 
+const ErrorText = styled.div`
+  color: ${Colors.error_stroke};
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+`;
+
 interface AddJobModalProps {
   isVisible: boolean;
   onClose: () => void;
+  sectionId: number;
 }
 
 const AddVacancyModal: React.FC<AddJobModalProps> = ({
   isVisible,
   onClose,
+  sectionId,
 }) => {
+  const dispatch = useDispatch();
+
   const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -73,8 +87,8 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
   };
 
   const VacancyUserSchema = Yup.object().shape({
-    company: Yup.string().required('Company is Required.'),
-    jobTitle: Yup.string().required('Job Title is Required.'),
+    company: Yup.string().required('Company is required.'),
+    jobTitle: Yup.string().required('Job Title is required.'),
     description: Yup.string(),
   });
 
@@ -83,17 +97,22 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
       company: '',
       jobTitle: '',
       description: '',
+      sectionId,
     },
     validationSchema: VacancyUserSchema,
     onSubmit: (values) => {
-      console.log(values);
-      // Заносим значения в store!!
+      const newVacancy = {
+        ...values,
+        like: false,
+        createdDate: new Date().toISOString(),
+      };
+      dispatch(addVacancy(newVacancy));
       onClose();
     },
   });
 
   return (
-    <ModalWrapper isVisible={isVisible} onClick={handleBackgroundClick}>
+    <ModalWrapper $isVisible={isVisible} onClick={handleBackgroundClick}>
       <ModalContent>
         <h2>{MODAL_VALUES.ADD_JOB}</h2>
         <Form onSubmit={formik.handleSubmit}>
@@ -108,6 +127,9 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
               error={!!(formik.touched.company && formik.errors.company)}
               required
             />
+            {formik.touched.company && formik.errors.company ? (
+              <ErrorText>{formik.errors.company}</ErrorText>
+            ) : null}
           </div>
           <div>
             <FormField
@@ -120,6 +142,9 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
               error={!!(formik.touched.jobTitle && formik.errors.jobTitle)}
               required
             />
+            {formik.touched.jobTitle && formik.errors.jobTitle ? (
+              <ErrorText>{formik.errors.jobTitle}</ErrorText>
+            ) : null}
           </div>
           <div>
             <FormFieldTextAreaModal
@@ -132,7 +157,7 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
           <Buttons>
             <ModalBtn
               children={MODAL_VALUES.CANCEL}
-              variant={'white'}
+              $variant={'white'}
               onClick={onClose}
               type="button"
             />

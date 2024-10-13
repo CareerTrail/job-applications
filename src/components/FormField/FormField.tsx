@@ -11,10 +11,11 @@ interface FormFieldProps {
   placeholder?: string;
   value?: string;
   required?: boolean;
-  variant?: 'default' | 'active' | 'error';
+  $variant?: 'default' | 'active' | 'error';
   error?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  children?: React.ReactNode;
 }
 
 const InputField = styled.div`
@@ -48,6 +49,7 @@ const FormField: React.FC<FormFieldProps> = ({
   label,
   id,
   required,
+  children,
   ...inputProps
 }) => (
   <InputField>
@@ -59,7 +61,9 @@ const FormField: React.FC<FormFieldProps> = ({
     ) : (
       <label htmlFor={id}>{label}</label>
     )}
-    <Input id={id} {...inputProps} />
+    <Input id={id} {...inputProps}>
+      {children}
+    </Input>
   </InputField>
 );
 

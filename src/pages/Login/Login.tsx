@@ -118,7 +118,7 @@ export const Login = () => {
                 value={formik.values.email}
                 onChange={handleInputChange}
                 onBlur={formik.handleBlur}
-                variant={inputFieldEmail}
+                $variant={inputFieldEmail}
                 error={!!(formik.touched.email && formik.errors.email)}
                 children={formik.touched.email && formik.errors.email}
               />
@@ -131,7 +131,7 @@ export const Login = () => {
                 value={formik.values.password}
                 onChange={handleInputChange}
                 onBlur={formik.handleBlur}
-                variant={inputFieldPass}
+                $variant={inputFieldPass}
                 error={!!(formik.touched.password && formik.errors.password)}
                 children={formik.touched.password && formik.errors.password}
               />
@@ -149,7 +149,7 @@ export const Login = () => {
             </FormFields>
             <Button
               type="submit"
-              variant={buttonVariant}
+              $variant={buttonVariant}
               disabled={isButtonDisabled || isLoading}
             >
               {isLoading ? 'Logging in...' : LOGIN_TEXTS.title}

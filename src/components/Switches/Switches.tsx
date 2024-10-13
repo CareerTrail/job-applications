@@ -15,19 +15,19 @@ interface SwitchesProps {
 const Switches: React.FC<SwitchesProps> = ({ leftLabel, rightLabel }) => {
   const dispatch = useDispatch();
   const activeButton = useSelector(
-    (state: RootState) => state.board.activeSwitch // Получаем текущее активное значение из состояния Redux
+    (state: RootState) => state.board.activeSwitch
   );
 
   const handleSwitchChange = (
     value: (typeof SWITCH_VALUES)[keyof typeof SWITCH_VALUES]
   ) => {
-    dispatch(setActiveSwitch(value)); // Отправляем экшен для обновления состояния
+    dispatch(setActiveSwitch(value));
   };
 
   return (
     <Wrapper>
       <LeftButton
-        isActive={activeButton === SWITCH_VALUES.BOARD}
+        $isActive={activeButton === SWITCH_VALUES.BOARD}
         onClick={() => handleSwitchChange(SWITCH_VALUES.BOARD)}
       >
         <div>
@@ -36,7 +36,7 @@ const Switches: React.FC<SwitchesProps> = ({ leftLabel, rightLabel }) => {
         {leftLabel}
       </LeftButton>
       <RightButton
-        isActive={activeButton === SWITCH_VALUES.CALENDAR}
+        $isActive={activeButton === SWITCH_VALUES.CALENDAR}
         onClick={() => handleSwitchChange(SWITCH_VALUES.CALENDAR)}
       >
         <div>

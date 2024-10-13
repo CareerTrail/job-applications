@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { Colors } from 'core/variables/constants';
 
-// Интерфейс для пропсов активной кнопки
 interface ButtonProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -19,14 +18,15 @@ export const LeftButton = styled.button<ButtonProps>`
   align-items: center;
   gap: 8px;
   border: 1px solid
-    ${({ isActive }) => (isActive ? Colors.bg_asside : Colors.tertiary_stroke)};
+    ${({ $isActive }) =>
+      $isActive ? Colors.bg_asside : Colors.tertiary_stroke};
   width: 101px;
   height: 48px;
   border-radius: 1rem;
   padding: 14px;
-  background-color: ${({ isActive }) =>
-    isActive ? Colors.bg_asside : Colors.bg_white};
-  color: ${({ isActive }) => (isActive ? Colors.accent : Colors.primary)};
+  background-color: ${({ $isActive }) =>
+    $isActive ? Colors.bg_asside : Colors.bg_white};
+  color: ${({ $isActive }) => ($isActive ? Colors.accent : Colors.primary)};
   font-weight: 500;
   box-sizing: border-box;
   cursor: pointer;
@@ -36,7 +36,8 @@ export const LeftButton = styled.button<ButtonProps>`
     height: 18px;
     margin-top: 5px;
     path {
-      stroke: ${({ isActive }) => (isActive ? Colors.accent : Colors.primary)};
+      stroke: ${({ $isActive }) =>
+        $isActive ? Colors.accent : Colors.primary};
     }
   }
 `;
@@ -47,14 +48,15 @@ export const RightButton = styled.button<ButtonProps>`
   align-items: center;
   gap: 8px;
   border: 1px solid
-    ${({ isActive }) => (isActive ? Colors.bg_asside : Colors.tertiary_stroke)};
+    ${({ $isActive }) =>
+      $isActive ? Colors.bg_asside : Colors.tertiary_stroke};
   width: 123px;
   height: 48px;
   border-radius: 1rem;
   padding: 14px;
-  background-color: ${({ isActive }) =>
-    isActive ? Colors.bg_asside : Colors.bg_white};
-  color: ${({ isActive }) => (isActive ? Colors.accent : Colors.primary)};
+  background-color: ${({ $isActive }) =>
+    $isActive ? Colors.bg_asside : Colors.bg_white};
+  color: ${({ $isActive }) => ($isActive ? Colors.accent : Colors.primary)};
   font-weight: 500;
   box-sizing: border-box;
   cursor: pointer;
@@ -64,7 +66,8 @@ export const RightButton = styled.button<ButtonProps>`
     height: 18px;
     margin-top: 5px;
     path {
-      stroke: ${({ isActive }) => (isActive ? Colors.accent : Colors.primary)};
+      stroke: ${({ $isActive }) =>
+        $isActive ? Colors.accent : Colors.primary};
     }
   }
 `;

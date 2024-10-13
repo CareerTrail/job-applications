@@ -4,7 +4,7 @@ import EyeOff from 'assets/images/eyeOff.svg';
 import styles from './Input.module.css';
 
 interface InputProps extends ComponentProps<'input'> {
-  variant?:
+  $variant?:
     | 'default'
     | 'defaultPasswordEyeOn'
     | 'active'
@@ -17,7 +17,7 @@ interface InputProps extends ComponentProps<'input'> {
 }
 
 const Input: React.FC<InputProps> = ({
-  variant = 'default',
+  $variant = 'default',
   type = 'text',
   error = false,
   value = '',
@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
     setIsFocused(false);
   };
 
-  let currentVariant = variant;
+  let currentVariant = $variant;
   if (error && children) {
     currentVariant = 'error';
   } else if (isFocused && type === 'password') {

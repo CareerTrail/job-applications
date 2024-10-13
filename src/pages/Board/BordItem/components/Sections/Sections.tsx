@@ -33,7 +33,11 @@ const Sections = () => {
       {sectionData.map((section, index) => (
         <React.Fragment key={section.id}>
           <Column>
-            <SectionItem title={section.title} color={section.color} />
+            <SectionItem
+              title={section.title}
+              id={section.id}
+              color={section.color}
+            />
           </Column>
           {index < sectionData.length - 1 && <Divider />}
         </React.Fragment>

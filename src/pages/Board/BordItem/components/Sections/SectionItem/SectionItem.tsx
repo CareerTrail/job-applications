@@ -8,6 +8,7 @@ import Vacancy from 'pages/Board/BordItem/components/Vacancy';
 import AddJobModal from 'components/AddVacancyModal';
 
 interface SectionItemProps {
+  id: number;
   title: string;
   color: ButtonColor;
 }
@@ -50,10 +51,12 @@ const VacancyWrapper = styled.div`
   gap: 1rem;
 `;
 
-const SectionItem: React.FC<SectionItemProps> = ({ title, color }) => {
+const SectionItem: React.FC<SectionItemProps> = ({ id, title, color }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentId, setCurrentId] = useState<number>(id);
 
   const handleOpenModal = () => {
+    setCurrentId(id);
     setIsModalVisible(true);
   };
 
@@ -74,10 +77,16 @@ const SectionItem: React.FC<SectionItemProps> = ({ title, color }) => {
         <AddPlus color={color} onClick={handleOpenModal} />
       </Btn>
       <VacancyWrapper>
-        <Vacancy color={color} />
+        <Vacancy color={color} sectionId={id} />
       </VacancyWrapper>
 
-      <AddJobModal isVisible={isModalVisible} onClose={handleCloseModal} />
+      {isModalVisible && (
+        <AddJobModal
+          isVisible={isModalVisible}
+          onClose={handleCloseModal}
+          sectionId={currentId}
+        />
+      )}
     </Wrapper>
   );
 };

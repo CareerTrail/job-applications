@@ -7,13 +7,13 @@ type ButtonVariant = 'default' | 'hover' | 'active';
 export type ButtonColor = 'purple' | 'blue' | 'green' | 'yellow';
 
 interface ButtonProps extends ComponentProps<'button'> {
-  variant?: ButtonVariant;
+  $variant?: ButtonVariant;
   color: ButtonColor;
   onClick?: () => void;
 }
 
 const AddPlus: React.FC<ButtonProps> = ({
-  variant = 'default',
+  $variant = 'default',
   color,
   onClick,
   ...props
@@ -21,7 +21,7 @@ const AddPlus: React.FC<ButtonProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  let appliedVariant = variant;
+  let appliedVariant = $variant;
   if (isActive) {
     appliedVariant = 'active';
   } else if (isHovered) {

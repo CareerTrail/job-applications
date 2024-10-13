@@ -11,24 +11,24 @@ type ButtonVariant =
   | 'whitehov';
 
 interface ButtonProps extends ComponentProps<'button'> {
-  variant?: ButtonVariant;
+  $variant?: ButtonVariant;
 }
 
 const ModalBtn: React.FC<ButtonProps> = ({
-  variant = 'default',
+  $variant = 'default',
   children,
   ...props
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  let appliedVariant = variant;
+  let appliedVariant = $variant;
 
   if (props.disabled) {
     appliedVariant = 'disabled';
   } else if (isActive) {
     appliedVariant = 'active';
-  } else if (isHovered && variant === 'white') {
+  } else if (isHovered && $variant === 'white') {
     appliedVariant = 'whitehov';
   } else if (isHovered) {
     appliedVariant = 'hover';

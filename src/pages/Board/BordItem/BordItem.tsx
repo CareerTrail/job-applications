@@ -13,11 +13,15 @@ const Wrapper = styled.div`
   height: calc(100vh - 40px);
 `;
 
-const BoardItem = () => {
+type BoardItemProps = {
+  isCollapsed: boolean;
+};
+
+const BoardItem: React.FC<BoardItemProps> = ({ isCollapsed }) => {
   return (
     <Wrapper>
       <Header />
-      <Sections />
+      <Sections isCollapsed={isCollapsed} />
     </Wrapper>
   );
 };

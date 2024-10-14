@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import SideBar from 'components/SideBar';
 import BoardItem from 'pages/Board/BordItem';
 import styled from 'styled-components';
@@ -9,10 +10,11 @@ const Wrapper = styled.div`
 `;
 
 export const Board = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <Wrapper>
-      <SideBar />
-      <BoardItem />
+      <SideBar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <BoardItem isCollapsed={isCollapsed} />
     </Wrapper>
   );
 };

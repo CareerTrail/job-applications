@@ -25,7 +25,24 @@ const Divider = styled.div`
   height: 100%;
 `;
 
-const Sections = () => {
+const AddButton = styled.button<{ $isCollapsed: boolean }>`
+  flex: 1;
+  color: ${Colors.primary};
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  font-size: 20px;
+  top: 10vh;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+type SectionProps = {
+  isCollapsed: boolean;
+};
+
+const Sections: React.FC<SectionProps> = ({ isCollapsed }) => {
   const sectionData = useSelector(
     (state: RootState) => state.sections.sectionData
   );
@@ -46,7 +63,7 @@ const Sections = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
-        {sectionData.map((section, index) => (
+        {sectionData.map((section) => (
           <React.Fragment key={section.id}>
             <Column>
               <SectionItem
@@ -55,9 +72,14 @@ const Sections = () => {
                 color={section.color}
               />
             </Column>
-            {index < sectionData.length - 1 && <Divider />}
+            <Divider />
           </React.Fragment>
         ))}
+        {isCollapsed && (
+          <Column>
+            <AddButton $isCollapsed={isCollapsed}>+ Add List</AddButton>
+          </Column>
+        )}
       </Wrapper>
     </DragDropContext>
   );

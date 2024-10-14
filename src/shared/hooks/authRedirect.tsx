@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'shared/hooks/authHooks';
-import { getPath, Pages } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 
 const AuthRedirect: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -11,7 +11,7 @@ const AuthRedirect: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (user) {
-      navigate(getPath(Pages.Dashboard));
+      navigate(Pages.Board);
     }
   }, [user, navigate]);
 

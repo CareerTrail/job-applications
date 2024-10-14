@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import { useLazyGetUserQuery } from 'services/userApi';
 import { useAuth } from './authHooks';
 
@@ -36,9 +36,7 @@ const RequireAuth: React.FC<IRequireAuthProps> = ({ children }) => {
   }
 
   if (!isAuthenticated || isError) {
-    return (
-      <Navigate to={getPath(Pages.Login)} state={{ from: location }} replace />
-    );
+    return <Navigate to={Pages.Login} state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

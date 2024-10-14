@@ -11,9 +11,11 @@ import Settings from 'assets/images/sidebar/settings.svg';
 import Exit from 'assets/images/sidebar/Exit.svg';
 import Logo from 'components/Logo';
 import styled from 'styled-components';
-import { Colors } from 'core/variables/constants';
+import { Colors, Pages } from 'core/variables/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
+import { useAuth } from 'shared/hooks/authHooks';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   border-radius: 24px;
@@ -38,6 +40,9 @@ const Wrapper = styled.div`
     color: ${Colors.accent};
   }
   a:hover svg path {
+    stroke: ${Colors.accent};
+  }
+  a:hover svg circle {
     stroke: ${Colors.accent};
   }
   li {
@@ -93,7 +98,15 @@ const Trackers = styled.div`
 `;
 
 const SideBar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const title = useSelector((state: RootState) => state.board.title);
+
+  const handleLogout = () => {
+    logout();
+    navigate(Pages.Login);
+  };
+
   return (
     <Wrapper>
       <Logo />
@@ -166,7 +179,7 @@ const SideBar = () => {
         <div>
           <ul>
             <li>
-              <a href="#">
+              <a href="#" onClick={handleLogout}>
                 <Exit />
                 {ASIDEBAR_TEXTS.LOG_OUT}
               </a>

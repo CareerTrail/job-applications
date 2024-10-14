@@ -6,6 +6,9 @@ import AddPlus from 'components/Button/AddPlus';
 import { ButtonColor } from 'components/Button/AddPlus/AddPlus';
 import Vacancy from 'pages/Board/BordItem/components/Vacancy';
 import AddJobModal from 'components/AddVacancyModal';
+import { Droppable } from '@hello-pangea/dnd';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
 interface SectionItemProps {
   id: number;
@@ -55,6 +58,14 @@ const SectionItem: React.FC<SectionItemProps> = ({ id, title, color }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentId, setCurrentId] = useState<number>(id);
 
+  const vacanciesData = useSelector(
+    (state: RootState) => state.vacancies.vacanciesData
+  );
+
+  const vacancyCount = vacanciesData.filter(
+    (vacancy) => vacancy.sectionId === id
+  ).length;
+
   const handleOpenModal = () => {
     setCurrentId(id);
     setIsModalVisible(true);
@@ -71,14 +82,19 @@ const SectionItem: React.FC<SectionItemProps> = ({ id, title, color }) => {
           <EditIcon />
         </EditIconWrapper>
         <Title>{title}</Title>
-        <SubTitle>item</SubTitle>
+        <SubTitle>{vacancyCount} item(s)</SubTitle>
       </div>
       <Btn>
         <AddPlus color={color} onClick={handleOpenModal} />
       </Btn>
-      <VacancyWrapper>
-        <Vacancy color={color} sectionId={id} />
-      </VacancyWrapper>
+      <Droppable droppableId={id.toString()}>
+        {(provided) => (
+          <VacancyWrapper ref={provided.innerRef} {...provided.droppableProps}>
+            <Vacancy color={color} sectionId={id} />
+            {provided.placeholder}
+          </VacancyWrapper>
+        )}
+      </Droppable>
 
       {isModalVisible && (
         <AddJobModal

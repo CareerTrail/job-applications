@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'shared/hooks/authHooks';
 import { useLoginUserMutation } from 'services/userApi';
 import { useRegisterUserMutation } from 'services/userApi';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import { IServerError } from 'core/interfaces/dataModels';
 import SocialIcons from 'components/SocialIcons';
 import ImageWrapper from 'components/ImageWrapper';
@@ -74,7 +74,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
         onSuccess?.();
         const { access_token } = await loginUser(values).unwrap();
         login(access_token);
-        navigate(getPath(Pages.Applications));
+        navigate(Pages.Board);
 
         formik.resetForm();
       } catch (err) {
@@ -142,7 +142,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
                   error={
                     !!(formik.touched.firstName && formik.errors.firstName)
                   }
-                  variant={inputFiledFirstName}
+                  $variant={inputFiledFirstName}
                   children={
                     formik.touched.firstName && formik.errors.firstName
                       ? formik.errors.firstName
@@ -158,7 +158,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={!!(formik.touched.lastName && formik.errors.lastName)}
-                  variant={inputFiledlastName}
+                  $variant={inputFiledlastName}
                   children={
                     formik.touched.lastName && formik.errors.lastName
                       ? formik.errors.lastName
@@ -175,7 +175,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={!!(formik.touched.email && formik.errors.email)}
-                variant={inputFiledEmail}
+                $variant={inputFiledEmail}
                 children={
                   formik.touched.email && formik.errors.email
                     ? formik.errors.email
@@ -192,7 +192,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                variant={inputFiledPass}
+                $variant={inputFiledPass}
                 error={!!(formik.touched.password && formik.errors.password)}
                 children={
                   formik.touched.password && formik.errors.password
@@ -207,7 +207,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
             </FormFields>
             <Button
               type="submit"
-              variant={buttonVariant}
+              $variant={buttonVariant}
               disabled={isButtonDisabled}
             >
               {isLoading ? 'Registering...' : REGISTER_TEXTS.signUpButton}
@@ -216,7 +216,7 @@ export const Registration: React.FC<IRegistrationProps> = ({
             <FormAction
               helpText={REGISTER_TEXTS.alreadyHaveAccountText}
               clickText={REGISTER_TEXTS.loginLinkText}
-              redirectPath={getPath(Pages.Login)}
+              redirectPath={Pages.Login}
             />
           </div>
           <FormBody>{REGISTER_TEXTS.orText}</FormBody>

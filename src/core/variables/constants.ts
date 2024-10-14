@@ -1,21 +1,16 @@
 import { ButtonColor } from 'components/Button/AddPlus/AddPlus';
 
 export enum Pages {
-  Main = '',
-  Login = 'Login',
-  Reg = 'Sign-up',
-  Profile = 'Profile',
-  Dashboard = 'Dashboard',
-  Applications = 'Applications',
-  RecoveryPass = 'Reset-password-requests',
-  Board = 'Board',
-  Test = 'Test',
-  CheckEmail = 'CheckEmail',
-  NewPassword = 'Reset-password',
-  PasswordChanged = 'PasswordChanged',
+  Main = '/',
+  Login = '/login',
+  Reg = '/sign-up',
+  Profile = '/profile',
+  RecoveryPass = '/reset-password-requests',
+  Board = '/board',
+  CheckEmail = '/checkEmail',
+  NewPassword = '/reset-password',
+  PasswordChanged = '/passwordChanged',
 }
-
-export const getPath = (page: Pages): string => `/${page.toLowerCase()}`;
 
 export enum LocalMenu {
   Board = 'Board',

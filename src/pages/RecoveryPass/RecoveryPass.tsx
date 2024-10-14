@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import Button from 'components/Button';
 import ImageWrapper from 'components/ImageWrapper';
 import { useSendResetPasswordEmailMutation } from 'services/userApi';
@@ -37,7 +37,7 @@ export const RecoveryPass = () => {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         await sendResetPasswordEmail({ email: values.email });
-        navigate(getPath(Pages.CheckEmail), { state: { email: values.email } });
+        navigate(Pages.CheckEmail, { state: { email: values.email } });
       } catch (err) {
         setFormError('Error sending reset password email');
         setSubmitting(false);
@@ -82,14 +82,14 @@ export const RecoveryPass = () => {
               value={formik.values.email}
               onChange={handleInputChange}
               onBlur={formik.handleBlur}
-              variant={inputFieldEmail}
+              $variant={inputFieldEmail}
               error={!!(formik.touched.email && formik.errors.email)}
               children={formik.touched.email && formik.errors.email}
             />
           </FormFields>
           <Button
             type="submit"
-            variant={isButtonDisabled ? 'disabled' : 'default'}
+            $variant={isButtonDisabled ? 'disabled' : 'default'}
             disabled={isButtonDisabled}
           >
             {RECOVERY_PASS.sendLinkButton}
@@ -98,7 +98,7 @@ export const RecoveryPass = () => {
           <FormAction
             helpText={RECOVERY_PASS.goBackText}
             clickText={RECOVERY_PASS.loginLinkText}
-            redirectPath={getPath(Pages.Login)}
+            redirectPath={Pages.Login}
           />
         </form>
       </FormContainer>

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import Button from 'components/Button';
 import ImageWrapper from 'components/ImageWrapper';
 import FormHeader from 'components/FormHeader';
@@ -11,7 +11,7 @@ export const PassChanged = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(getPath(Pages.Login));
+    navigate(Pages.Login);
   };
 
   return (

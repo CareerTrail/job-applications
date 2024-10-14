@@ -54,8 +54,20 @@ const vacanciesSlice = createSlice({
         vacancy.like = !vacancy.like;
       }
     },
+    updateVacancySection: (
+      state,
+      action: PayloadAction<{ id: number; newSectionId: number }>
+    ) => {
+      const vacancy = state.vacanciesData.find(
+        (v) => v.id === action.payload.id
+      );
+      if (vacancy) {
+        vacancy.sectionId = action.payload.newSectionId;
+      }
+    },
   },
 });
 
-export const { addVacancy, setVacancies, toggleLike } = vacanciesSlice.actions;
+export const { addVacancy, setVacancies, toggleLike, updateVacancySection } =
+  vacanciesSlice.actions;
 export default vacanciesSlice.reducer;

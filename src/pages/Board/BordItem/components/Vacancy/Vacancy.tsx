@@ -9,6 +9,7 @@ import WorkIcon from 'assets/images/components/workIcon.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/store';
 import { toggleLike } from 'features/board/vacancy/vacancySlice';
+import { Draggable } from '@hello-pangea/dnd';
 
 const Wrapper = styled.div<{ color: ButtonColor }>`
   border-left: 1px solid ${({ color }) => Colors[color]};
@@ -84,7 +85,7 @@ const Vacancy: React.FC<VacancyProps> = ({ color, sectionId }) => {
   );
 
   const timeSince = (dateString: string) => {
-    const date = new Date(dateString); // Преобразуем строку в Date
+    const date = new Date(dateString);
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
     let interval;
 
@@ -107,33 +108,53 @@ const Vacancy: React.FC<VacancyProps> = ({ color, sectionId }) => {
 
   return (
     <>
-      {filteredVacancies.map((vacancy) => (
-        <Wrapper key={vacancy.id} color={color}>
-          <DescriptionVac>
-            <h3>{vacancy.jobTitle}</h3>
-            <p>
-              <WorkIcon />
-              <span>{vacancy.company}</span>
-            </p>
-          </DescriptionVac>
-          <MoveVac>
-            <AddEdit onClick={() => dispatch(toggleLike(vacancy.id))}>
-              {vacancy.like ? (
-                <ActiveIconWrapper href="#">
-                  <Active />
-                </ActiveIconWrapper>
-              ) : (
-                <ActiveIconWrapper href="#">
-                  <Simple />
-                </ActiveIconWrapper>
-              )}
-              <EditIconWrapper href="#">
-                <EditIcon />
-              </EditIconWrapper>
-            </AddEdit>
-            {timeSince(vacancy.createdDate)}
-          </MoveVac>
-        </Wrapper>
+      {filteredVacancies.map((vacancy, index) => (
+        <Draggable
+          key={vacancy.id}
+          draggableId={vacancy.id.toString()}
+          index={index}
+        >
+          {(provided, snapshot) => (
+            <Wrapper
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              color={color}
+              // Опционально можно стилизовать во время перетаскивания
+              style={{
+                ...provided.draggableProps.style,
+                boxShadow: snapshot.isDragging
+                  ? '0 2px 10px rgba(0,0,0,0.2)'
+                  : 'none',
+              }}
+            >
+              <DescriptionVac>
+                <h3>{vacancy.jobTitle}</h3>
+                <p>
+                  <WorkIcon />
+                  <span>{vacancy.company}</span>
+                </p>
+              </DescriptionVac>
+              <MoveVac>
+                <AddEdit onClick={() => dispatch(toggleLike(vacancy.id))}>
+                  {vacancy.like ? (
+                    <ActiveIconWrapper href="#">
+                      <Active />
+                    </ActiveIconWrapper>
+                  ) : (
+                    <ActiveIconWrapper href="#">
+                      <Simple />
+                    </ActiveIconWrapper>
+                  )}
+                  <EditIconWrapper href="#">
+                    <EditIcon />
+                  </EditIconWrapper>
+                </AddEdit>
+                {timeSince(vacancy.createdDate)}
+              </MoveVac>
+            </Wrapper>
+          )}
+        </Draggable>
       ))}
     </>
   );

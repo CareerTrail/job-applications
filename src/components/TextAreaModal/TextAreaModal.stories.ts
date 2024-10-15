@@ -10,10 +10,6 @@ const meta: Meta<typeof TextAreaModal> = {
       control: 'text',
       description: 'Текст плейсхолдера',
     },
-    type: {
-      control: 'radio',
-      options: ['text', 'password'],
-    },
     variant: {
       control: 'select',
       options: [
@@ -40,7 +36,6 @@ type Story = StoryObj<typeof TextAreaModal>;
 export const Default: Story = {
   args: {
     placeholder: 'Company',
-    type: 'text',
     variant: 'default',
     children: '',
   },
@@ -49,7 +44,6 @@ export const Active: Story = {
   args: {
     placeholder: undefined,
     value: 'froggy@gmail.',
-    type: 'text',
     variant: 'active',
     children: '',
   },
@@ -59,7 +53,6 @@ export const After_active: Story = {
   args: {
     placeholder: undefined,
     value: 'froggy@gmail.com',
-    type: 'text',
     variant: 'afterActive',
     children: '',
   },
@@ -69,7 +62,6 @@ export const Error: Story = {
   args: {
     placeholder: undefined,
     value: 'email.com',
-    type: 'text',
     variant: 'error',
     children: 'Invalid email format',
   },

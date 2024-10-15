@@ -30,8 +30,21 @@ const sectionSlice = createSlice({
         section.color = action.payload.color;
       }
     },
+    addSection: (state, action: PayloadAction<{ title: string }>) => {
+      const newId =
+        state.sectionData.length > 0
+          ? Math.max(...state.sectionData.map((s) => s.id)) + 1
+          : 1;
+      const color = 'purple' as ButtonColor;
+      const newSection: Section = {
+        id: newId,
+        title: action.payload.title,
+        color,
+      };
+      state.sectionData.push(newSection);
+    },
   },
 });
 
-export const { updateSectionContent } = sectionSlice.actions;
+export const { updateSectionContent, addSection } = sectionSlice.actions;
 export default sectionSlice.reducer;

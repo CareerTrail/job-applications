@@ -89,9 +89,11 @@ export const SWITCH_VALUES = {
 
 export const MODAL_VALUES = {
   ADD_JOB: 'Add Job',
+  ADD_LIST: 'Add List',
   COMPANY: 'Company',
   JOB_TITLE: 'Job Title',
   CANCEL: 'Cancel',
   SAVE: 'Save',
   DESCRIPTION: 'Description',
+  ADD_TITLE_FOR_LIST: 'Add title for list:',
 };

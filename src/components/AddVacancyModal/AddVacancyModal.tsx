@@ -9,6 +9,7 @@ import FormFieldTextAreaModal from 'components/FormField/FormFieldTextAreaModal'
 import FormField from 'components/FormField';
 import { useDispatch } from 'react-redux';
 import { addVacancy } from 'features/board/vacancy/vacancySlice';
+import { addSection } from 'features/board/section/sectionSlice';
 
 const ModalWrapper = styled.div<{ $isVisible: boolean }>`
   display: ${({ $isVisible }) => ($isVisible ? 'flex' : 'none')};
@@ -25,6 +26,7 @@ const ModalWrapper = styled.div<{ $isVisible: boolean }>`
 
 const ModalContent = styled.div`
   display: flex;
+  border: 1px solid red;
   flex-direction: column;
   justify-content: space-between;
   background: ${Colors.bg_white};
@@ -39,7 +41,7 @@ const ModalContent = styled.div`
     font-weight: 500;
     font-size: 24px;
     color: ${Colors.primary};
-    padding: 1rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid ${Colors.tertiary_stroke};
   }
 `;
@@ -48,6 +50,7 @@ const Form = styled.form`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 24px;
   height: 100%;
 `;
@@ -57,6 +60,7 @@ const Buttons = styled.div`
   flex-direction: row;
   gap: 8px;
   justify-content: flex-end;
+  margin-bottom: 1rem;
 `;
 
 const ErrorText = styled.div`
@@ -71,12 +75,14 @@ interface AddJobModalProps {
   isVisible: boolean;
   onClose: () => void;
   sectionId: number;
+  title: string;
 }
 
 const AddVacancyModal: React.FC<AddJobModalProps> = ({
   isVisible,
   onClose,
   sectionId,
+  title,
 }) => {
   const dispatch = useDispatch();
 
@@ -88,7 +94,7 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
 
   const VacancyUserSchema = Yup.object().shape({
     company: Yup.string().required('Company is required.'),
-    jobTitle: Yup.string().required('Job Title is required.'),
+    jobTitle: Yup.string(),
     description: Yup.string(),
   });
 
@@ -101,12 +107,21 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
     },
     validationSchema: VacancyUserSchema,
     onSubmit: (values) => {
-      const newVacancy = {
-        ...values,
-        like: false,
-        createdDate: new Date().toISOString(),
-      };
-      dispatch(addVacancy(newVacancy));
+      if (title === MODAL_VALUES.ADD_LIST) {
+        const newList = {
+          company: values.company,
+          sectionId,
+          createdDate: new Date().toISOString(),
+        };
+        dispatch(addSection(newList));
+      } else {
+        const newVacancy = {
+          ...values,
+          like: false,
+          createdDate: new Date().toISOString(),
+        };
+        dispatch(addVacancy(newVacancy));
+      }
       onClose();
     },
   });
@@ -114,7 +129,7 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
   return (
     <ModalWrapper $isVisible={isVisible} onClick={handleBackgroundClick}>
       <ModalContent>
-        <h2>{MODAL_VALUES.ADD_JOB}</h2>
+        <h2>{title}</h2>
         <Form onSubmit={formik.handleSubmit}>
           <div>
             <FormField
@@ -131,29 +146,35 @@ const AddVacancyModal: React.FC<AddJobModalProps> = ({
               <ErrorText>{formik.errors.company}</ErrorText>
             ) : null}
           </div>
-          <div>
-            <FormField
-              id="jobTitle"
-              label={MODAL_VALUES.JOB_TITLE}
-              name="jobTitle"
-              onChange={formik.handleChange}
-              value={formik.values.jobTitle}
-              onBlur={formik.handleBlur}
-              error={!!(formik.touched.jobTitle && formik.errors.jobTitle)}
-              required
-            />
-            {formik.touched.jobTitle && formik.errors.jobTitle ? (
-              <ErrorText>{formik.errors.jobTitle}</ErrorText>
-            ) : null}
-          </div>
-          <div>
-            <FormFieldTextAreaModal
-              label={MODAL_VALUES.DESCRIPTION}
-              onChange={formik.handleChange}
-              value={formik.values.description}
-              onBlur={formik.handleBlur}
-            />
-          </div>
+
+          {title !== MODAL_VALUES.ADD_LIST && (
+            <>
+              <div>
+                <FormField
+                  id="jobTitle"
+                  label={MODAL_VALUES.JOB_TITLE}
+                  name="jobTitle"
+                  onChange={formik.handleChange}
+                  value={formik.values.jobTitle}
+                  onBlur={formik.handleBlur}
+                  error={!!(formik.touched.jobTitle && formik.errors.jobTitle)}
+                  required
+                />
+                {formik.touched.jobTitle && formik.errors.jobTitle ? (
+                  <ErrorText>{formik.errors.jobTitle}</ErrorText>
+                ) : null}
+              </div>
+              <div>
+                <FormFieldTextAreaModal
+                  label={MODAL_VALUES.DESCRIPTION}
+                  onChange={formik.handleChange}
+                  value={formik.values.description}
+                  onBlur={formik.handleBlur}
+                />
+              </div>
+            </>
+          )}
+
           <Buttons>
             <ModalBtn
               children={MODAL_VALUES.CANCEL}

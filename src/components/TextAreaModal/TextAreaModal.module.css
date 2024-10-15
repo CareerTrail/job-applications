@@ -6,14 +6,15 @@
 .input {
   width: 100%;
   box-sizing: border-box;
-  min-height: 200px; 
+  min-height: 100px; 
+  max-height: 200px; 
   border-radius: 12px;
   border-style: solid;
   padding: 16px;
   font-family: 'onest', sans-serif;
   font-size: 16px;
-  resize: none;
-  overflow: hidden; 
+  resize: none; 
+  overflow-y: auto; 
 }
 
 textarea:focus {
@@ -45,6 +46,7 @@ textarea:focus {
   border-width: 1px;
   border-color: var(--tertiary_stroke-color);
 }
+
 .error {
   background-color: var(--error_bg-color);
   border-width: 2px;

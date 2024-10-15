@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/store';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { updateVacancySection } from 'features/board/vacancy/vacancySlice';
+import { MODAL_VALUES } from 'core/variables/locales';
+import { addSection } from 'features/board/section/sectionSlice';
 import SectionItem from './SectionItem';
 
 const Wrapper = styled.div`
@@ -48,6 +50,17 @@ const Sections: React.FC<SectionProps> = ({ isCollapsed }) => {
   );
   const dispatch = useDispatch();
 
+  const handleAddSection = () => {
+    const newSectionTitle = prompt(MODAL_VALUES.ADD_TITLE_FOR_LIST);
+    if (newSectionTitle) {
+      dispatch(
+        addSection({
+          title: newSectionTitle,
+        })
+      );
+    }
+  };
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { source, destination } = result;
@@ -77,7 +90,9 @@ const Sections: React.FC<SectionProps> = ({ isCollapsed }) => {
         ))}
         {isCollapsed && (
           <Column>
-            <AddButton $isCollapsed={isCollapsed}>+ Add List</AddButton>
+            <AddButton $isCollapsed={isCollapsed} onClick={handleAddSection}>
+              + {MODAL_VALUES.ADD_LIST}
+            </AddButton>
           </Column>
         )}
       </Wrapper>

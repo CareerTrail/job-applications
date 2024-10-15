@@ -9,6 +9,7 @@ import AddJobModal from 'components/AddVacancyModal';
 import { Droppable } from '@hello-pangea/dnd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
+import { MODAL_VALUES } from 'core/variables/locales';
 
 interface SectionItemProps {
   id: number;
@@ -101,6 +102,7 @@ const SectionItem: React.FC<SectionItemProps> = ({ id, title, color }) => {
           isVisible={isModalVisible}
           onClose={handleCloseModal}
           sectionId={currentId}
+          title={MODAL_VALUES.ADD_JOB}
         />
       )}
     </Wrapper>

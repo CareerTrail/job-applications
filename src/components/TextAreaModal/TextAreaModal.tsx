@@ -17,15 +17,6 @@ const TextAreaModal: React.FC<TextAreaModalProps> = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const target = event.target;
-    target.style.height = 'auto';
-    target.style.height = `${target.scrollHeight}px`;
-    if (onChange) {
-      onChange(event);
-    }
-  };
-
   const handleFocus = () => {
     setIsFocused(true);
   };
@@ -49,8 +40,8 @@ const TextAreaModal: React.FC<TextAreaModalProps> = ({
           className={inputClass}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onInput={handleInput}
           value={value}
+          onChange={onChange}
           {...props}
         />
       </span>

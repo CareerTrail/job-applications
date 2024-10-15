@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from 'services/userApi';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import { useAuth } from 'shared/hooks/authHooks';
 import { IServerError } from 'core/interfaces/dataModels';
 import { LOGIN_TEXTS } from 'core/variables/locales';
@@ -53,7 +53,7 @@ export const Login = () => {
       try {
         const { access_token } = await loginUser(values).unwrap();
         login(access_token);
-        navigate(getPath(Pages.Applications));
+        navigate(Pages.Board);
       } catch (err) {
         const serverError = err as IServerError;
         const errorResponse =
@@ -118,7 +118,7 @@ export const Login = () => {
                 value={formik.values.email}
                 onChange={handleInputChange}
                 onBlur={formik.handleBlur}
-                variant={inputFieldEmail}
+                $variant={inputFieldEmail}
                 error={!!(formik.touched.email && formik.errors.email)}
                 children={formik.touched.email && formik.errors.email}
               />
@@ -131,7 +131,7 @@ export const Login = () => {
                 value={formik.values.password}
                 onChange={handleInputChange}
                 onBlur={formik.handleBlur}
-                variant={inputFieldPass}
+                $variant={inputFieldPass}
                 error={!!(formik.touched.password && formik.errors.password)}
                 children={formik.touched.password && formik.errors.password}
               />
@@ -141,7 +141,7 @@ export const Login = () => {
                   onChange={formik.handleChange}
                 />
                 <div>
-                  <Link to={getPath(Pages.RecoveryPass)}>
+                  <Link to={Pages.RecoveryPass}>
                     {LOGIN_TEXTS.forgotPassword}
                   </Link>
                 </div>
@@ -149,7 +149,7 @@ export const Login = () => {
             </FormFields>
             <Button
               type="submit"
-              variant={buttonVariant}
+              $variant={buttonVariant}
               disabled={isButtonDisabled || isLoading}
             >
               {isLoading ? 'Logging in...' : LOGIN_TEXTS.title}
@@ -158,7 +158,7 @@ export const Login = () => {
             <FormAction
               helpText={LOGIN_TEXTS.noAccount}
               clickText={LOGIN_TEXTS.signUp}
-              redirectPath={getPath(Pages.Reg)}
+              redirectPath={Pages.Reg}
             />
           </div>
           <FormBody>{LOGIN_TEXTS.or}</FormBody>

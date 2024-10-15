@@ -1,15 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Dashboard from 'pages/Dashboard';
-import DashboardWrapper from 'components/DashboardWrapper';
 import Login from 'pages/Login';
 import Registration from 'pages/Registration';
-import Profile from 'pages/Profile';
-import Application from 'pages/Application';
-import Applications from 'pages/Applications';
-import AddApplication from 'pages/Applications/components';
 import RecoveryPass from 'pages/RecoveryPass';
-import Boards from 'pages/Boards';
-import { Pages, getPath } from 'core/variables/constants.ts';
+import { Pages } from 'core/variables/constants.ts';
 import RequireAuth from 'shared/hooks/RequireAuth.tsx';
 import RequireGuest from 'shared/hooks/RequireGuest.tsx';
 import Board from 'pages/Board';
@@ -21,7 +14,7 @@ import { ErrorPage } from './ErrorPage.tsx';
 
 export const router = createBrowserRouter([
   {
-    path: getPath(Pages.Reg),
+    path: Pages.Reg,
     element: (
       <RequireGuest>
         <Registration />
@@ -30,7 +23,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.Main),
+    path: Pages.Main,
     element: (
       <AuthRedirect>
         <Login />
@@ -39,7 +32,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.Login),
+    path: Pages.Login,
     element: (
       <RequireGuest>
         <Login />
@@ -48,19 +41,9 @@ export const router = createBrowserRouter([
 
     errorElement: <ErrorPage />,
   },
+
   {
-    path: getPath(Pages.Profile),
-    element: (
-      <RequireAuth>
-        <DashboardWrapper>
-          <Profile />
-        </DashboardWrapper>
-      </RequireAuth>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: getPath(Pages.RecoveryPass),
+    path: Pages.RecoveryPass,
     element: (
       <RequireGuest>
         <RecoveryPass />
@@ -69,7 +52,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.CheckEmail),
+    path: Pages.CheckEmail,
     element: (
       <RequireGuest>
         <CheckEmail />
@@ -78,7 +61,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.NewPassword),
+    path: Pages.NewPassword,
     element: (
       <RequireGuest>
         <NewPass />
@@ -87,7 +70,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: getPath(Pages.PasswordChanged),
+    path: Pages.PasswordChanged,
     element: (
       <RequireGuest>
         <PassChanged />
@@ -95,52 +78,15 @@ export const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
   },
+
   {
-    path: getPath(Pages.Board),
+    path: Pages.Board,
     element: (
       <RequireAuth>
-        <DashboardWrapper>
-          <Boards />
-        </DashboardWrapper>
+        <Board />
       </RequireAuth>
     ),
     errorElement: <ErrorPage />,
-  },
-  {
-    path: getPath(Pages.Dashboard),
-    element: (
-      <RequireAuth>
-        <DashboardWrapper>
-          <Dashboard />
-        </DashboardWrapper>
-      </RequireAuth>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: getPath(Pages.Test),
-    element: <Board />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: getPath(Pages.Applications),
-    element: (
-      <RequireAuth>
-        <DashboardWrapper>
-          <Applications />
-        </DashboardWrapper>
-      </RequireAuth>
-    ),
-    children: [
-      {
-        path: `${getPath(Pages.Applications)}/:applicationId`,
-        element: <Application />,
-      },
-      {
-        path: `${getPath(Pages.Applications)}/add`,
-        element: <AddApplication />,
-      },
-    ],
   },
   {
     path: '*',

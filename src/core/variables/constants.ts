@@ -1,19 +1,16 @@
-export enum Pages {
-  Main = '',
-  Login = 'Login',
-  Reg = 'Sign-up',
-  Profile = 'Profile',
-  Dashboard = 'Dashboard',
-  Applications = 'Applications',
-  RecoveryPass = 'Reset-password-requests',
-  Board = 'Board',
-  Test = 'Test',
-  CheckEmail = 'CheckEmail',
-  NewPassword = 'Reset-password',
-  PasswordChanged = 'PasswordChanged',
-}
+import { ButtonColor } from 'components/Button/AddPlus/AddPlus';
 
-export const getPath = (page: Pages): string => `/${page.toLowerCase()}`;
+export enum Pages {
+  Main = '/',
+  Login = '/login',
+  Reg = '/sign-up',
+  Profile = '/profile',
+  RecoveryPass = '/reset-password-requests',
+  Board = '/board',
+  CheckEmail = '/checkEmail',
+  NewPassword = '/reset-password',
+  PasswordChanged = '/passwordChanged',
+}
 
 export enum LocalMenu {
   Board = 'Board',
@@ -43,6 +40,10 @@ export enum Colors {
   input_bg_disabled = '#F9F9F9',
   primary = '#363232',
   bg_asside = '#FFE7D6',
+  purple = '#9747FF',
+  blue = '#477BFF',
+  green = '#59A40F',
+  yellow = '#FEAA06',
 }
 
 export enum SocialLinks {
@@ -50,3 +51,22 @@ export enum SocialLinks {
   Apple = 'https://apple.com',
   Facebook = 'https://facebook.com',
 }
+
+export const sectionData = [
+  { id: 1, title: 'Wishlist', color: 'purple' as ButtonColor },
+  { id: 2, title: 'Applied', color: 'blue' as ButtonColor },
+  { id: 3, title: 'Interview', color: 'yellow' as ButtonColor },
+  { id: 4, title: 'Offer', color: 'green' as ButtonColor },
+];
+
+export const vacanciesData = [
+  {
+    id: 1,
+    sectionId: 1,
+    company: 'epam',
+    jobTitle: 'designer',
+    description: 'sss',
+    like: false,
+    createdDate: new Date().toISOString(),
+  },
+];

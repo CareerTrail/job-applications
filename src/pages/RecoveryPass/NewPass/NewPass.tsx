@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useResetPasswordMutation } from 'services/userApi';
-import { Pages, getPath } from 'core/variables/constants';
+import { Pages } from 'core/variables/constants';
 import { IServerError } from 'core/interfaces/dataModels';
 import Button from 'components/Button';
 import FormHeader from 'components/FormHeader';
@@ -56,7 +56,7 @@ export const NewPass = () => {
           code: token,
           password: values.password,
         }).unwrap();
-        navigate(getPath(Pages.PasswordChanged));
+        navigate(Pages.PasswordChanged);
       } catch (err) {
         const serverError = err as IServerError;
         const errorResponse =
@@ -102,7 +102,7 @@ export const NewPass = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              variant={inputFieldPass}
+              $variant={inputFieldPass}
               error={!!(formik.touched.password && formik.errors.password)}
               children={formik.touched.password && formik.errors.password}
             />
@@ -115,7 +115,7 @@ export const NewPass = () => {
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              variant={inputFieldPassConfirm}
+              $variant={inputFieldPassConfirm}
               error={
                 !!(
                   formik.touched.confirmPassword &&
@@ -129,7 +129,7 @@ export const NewPass = () => {
           </FormFields>
           <Button
             type="submit"
-            variant={buttonVariant}
+            $variant={buttonVariant}
             disabled={isButtonDisabled}
           >
             {NEW_PASS.sendButton}

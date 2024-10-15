@@ -5,18 +5,18 @@ import styles from './Button.module.css';
 type ButtonVariant = 'default' | 'hover' | 'active' | 'disabled';
 
 interface ButtonProps extends ComponentProps<'button'> {
-  variant?: ButtonVariant;
+  $variant?: ButtonVariant;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  variant = 'default',
+  $variant = 'default',
   children,
   ...props
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  let appliedVariant = variant;
+  let appliedVariant = $variant;
   if (props.disabled) {
     appliedVariant = 'disabled';
   } else if (isActive) {

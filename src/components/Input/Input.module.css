@@ -3,12 +3,10 @@
 .inputContainer {
   position: relative;
   width: 100%;
-  max-width: 400px;
 }
 
 .input {
   width: 100%;
-  max-width: 400px;
   box-sizing: border-box;
   height: 52px;
   border-radius: 12px;
